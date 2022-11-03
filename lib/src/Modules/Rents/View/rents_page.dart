@@ -15,9 +15,16 @@ class RentsPage extends StatefulWidget {
 }
 
 class _RentsPageState extends State<RentsPage> {
+  final rentController = Modular.get<RentController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    Modular.dispose<RentController>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final rentController = Modular.get<RentController>();
     return Observer(
         name: 'observerRentPage',
         builder: (_) {
