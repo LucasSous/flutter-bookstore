@@ -21,7 +21,7 @@ class BooksList extends StatelessWidget {
       );
     } else {
       return Text(quantity.toString(),
-          style: TextStyle(color: Colors.grey.shade600));
+          style: const TextStyle(fontWeight: FontWeight.w500));
     }
   }
 
@@ -55,24 +55,28 @@ class BooksList extends StatelessWidget {
         )),
         child: ExpansionTile(
           iconColor: Colors.black,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '#${book.id}',
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Text(
-                  book.name,
-                  overflow: TextOverflow.fade,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: const TextStyle(color: Colors.black),
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '#${book.id}',
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                 ),
-              )
-            ],
+                FractionallySizedBox(
+                  widthFactor: 0.9,
+                  child: Text(
+                    book.name,
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
           ),
           children: [
             Padding(
@@ -86,13 +90,13 @@ class BooksList extends StatelessWidget {
                     children: [
                       const Text('Editora:'),
                       Text(book.publisher?.name,
-                          style: TextStyle(color: Colors.grey.shade600)),
+                          style: const TextStyle(fontWeight: FontWeight.w500)),
                       const Text('Autor'),
                       Text(book.author,
-                          style: TextStyle(color: Colors.grey.shade600)),
+                          style: const TextStyle(fontWeight: FontWeight.w500)),
                       const Text('Lançamento'),
                       Text(book.launch.toString(),
-                          style: TextStyle(color: Colors.grey.shade600)),
+                          style: const TextStyle(fontWeight: FontWeight.w500)),
                       const Text('Quantidade'),
                       quantity(book.quantity)
                     ],

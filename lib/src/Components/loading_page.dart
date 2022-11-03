@@ -66,7 +66,7 @@ class LoadingPage extends StatelessWidget {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: 9,
+              itemCount: 8,
               itemBuilder: ((context, index) => Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.grey.shade200,
@@ -75,7 +75,7 @@ class LoadingPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
                           borderRadius: BorderRadius.circular(5)),
-                      height: 50,
+                      height: 60,
                       width: double.infinity,
                     ),
                   )),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
+import 'package:flutter_bookstore2/src/Components/loading_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/finished_rents.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_in%20_progress.dart';
@@ -21,9 +22,7 @@ class _RentsPageState extends State<RentsPage> {
         name: 'observerRentPage',
         builder: (_) {
           if (rentController.loading == true) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingPage();
           } else {
             return DefaultTabController(
               length: 2,

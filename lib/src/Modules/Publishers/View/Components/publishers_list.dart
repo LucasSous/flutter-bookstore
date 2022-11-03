@@ -42,24 +42,28 @@ class PublishersList extends StatelessWidget {
         )),
         child: ExpansionTile(
           iconColor: Colors.black,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '#${publisher.id}',
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Text(
-                  publisher.name,
-                  overflow: TextOverflow.fade,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: const TextStyle(color: Colors.black),
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '#${publisher.id}',
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                 ),
-              )
-            ],
+                FractionallySizedBox(
+                  widthFactor: 0.9,
+                  child: Text(
+                    publisher.name,
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
           ),
           children: [
             Padding(
@@ -73,7 +77,7 @@ class PublishersList extends StatelessWidget {
                     children: [
                       const Text('Cidade'),
                       Text(publisher.city,
-                          style: TextStyle(color: Colors.grey.shade600))
+                          style: const TextStyle(fontWeight: FontWeight.w500))
                     ],
                   ),
                   Row(

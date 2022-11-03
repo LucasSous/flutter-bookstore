@@ -13,8 +13,14 @@ class RentsInProgress extends StatefulWidget {
 }
 
 class _RentsInProgressState extends State<RentsInProgress> {
-  final valueFilter = '';
-  final filterRents = ['Todos', 'Pendentes'];
+  final filterRents = ['Todos', 'Pendentes', 'Em andamento'];
+  late String _filterValue = 'Todos';
+
+  updateFilterValue(value) {
+    setState(() {
+      _filterValue = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +47,17 @@ class _RentsInProgressState extends State<RentsInProgress> {
                         SizedBox(
                           height: 40,
                           child: DropdownButton<String>(
-                              value: 'Todos',
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Todos',
-                                  child: Text('Todos'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Pendentes',
-                                  child: Text('Pendentes'),
-                                ),
-                              ],
+                              value: _filterValue,
+                              items: filterRents.map((item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
                               icon: const Icon(Icons.keyboard_arrow_down),
                               onChanged: (value) {
-                                setState(() {});
+                                updateFilterValue(value);
+                                rentController.filterRentsInProgress(value);
                               }),
                         )
                       ],

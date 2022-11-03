@@ -57,6 +57,41 @@ mixin _$RentController on _RentControllerBase, Store {
     });
   }
 
+  late final _$defaultValueRentsInProgressAtom = Atom(
+      name: '_RentControllerBase.defaultValueRentsInProgress',
+      context: context);
+
+  @override
+  List<Rent> get defaultValueRentsInProgress {
+    _$defaultValueRentsInProgressAtom.reportRead();
+    return super.defaultValueRentsInProgress;
+  }
+
+  @override
+  set defaultValueRentsInProgress(List<Rent> value) {
+    _$defaultValueRentsInProgressAtom
+        .reportWrite(value, super.defaultValueRentsInProgress, () {
+      super.defaultValueRentsInProgress = value;
+    });
+  }
+
+  late final _$defaultValueFinishedRentsAtom = Atom(
+      name: '_RentControllerBase.defaultValueFinishedRents', context: context);
+
+  @override
+  List<Rent> get defaultValueFinishedRents {
+    _$defaultValueFinishedRentsAtom.reportRead();
+    return super.defaultValueFinishedRents;
+  }
+
+  @override
+  set defaultValueFinishedRents(List<Rent> value) {
+    _$defaultValueFinishedRentsAtom
+        .reportWrite(value, super.defaultValueFinishedRents, () {
+      super.defaultValueFinishedRents = value;
+    });
+  }
+
   late final _$loadingAtom =
       Atom(name: '_RentControllerBase.loading', context: context);
 
@@ -98,12 +133,39 @@ mixin _$RentController on _RentControllerBase, Store {
     return _$getFinishedRentsAsyncAction.run(() => super.getFinishedRents());
   }
 
+  late final _$_RentControllerBaseActionController =
+      ActionController(name: '_RentControllerBase', context: context);
+
+  @override
+  dynamic filterFinishedRents(dynamic status) {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.filterFinishedRents');
+    try {
+      return super.filterFinishedRents(status);
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic filterRentsInProgress(dynamic status) {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.filterRentsInProgress');
+    try {
+      return super.filterRentsInProgress(status);
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 rents: ${rents},
 rentsInProgress: ${rentsInProgress},
 finishedRents: ${finishedRents},
+defaultValueRentsInProgress: ${defaultValueRentsInProgress},
+defaultValueFinishedRents: ${defaultValueFinishedRents},
 loading: ${loading}
     ''';
   }

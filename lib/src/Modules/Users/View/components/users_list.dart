@@ -42,24 +42,28 @@ class UsersList extends StatelessWidget {
         )),
         child: ExpansionTile(
           iconColor: Colors.black,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '#${user.id}',
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Text(
-                  user.name,
-                  overflow: TextOverflow.fade,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: const TextStyle(color: Colors.black),
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '#${user.id}',
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                 ),
-              )
-            ],
+                FractionallySizedBox(
+                  widthFactor: 0.9,
+                  child: Text(
+                    user.name,
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
           ),
           children: [
             Padding(
@@ -73,10 +77,10 @@ class UsersList extends StatelessWidget {
                     children: [
                       const Text('Endereço:'),
                       Text('${user.address}, ${user.city}',
-                          style: TextStyle(color: Colors.grey.shade600)),
+                          style: const TextStyle(fontWeight: FontWeight.w500)),
                       const Text('Email'),
                       Text(user.email,
-                          style: TextStyle(color: Colors.grey.shade600))
+                          style: const TextStyle(fontWeight: FontWeight.w500))
                     ],
                   ),
                   Row(

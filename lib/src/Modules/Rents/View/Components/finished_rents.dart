@@ -13,8 +13,14 @@ class FinishedRents extends StatefulWidget {
 }
 
 class _FinishedRentsState extends State<FinishedRents> {
-  final valueFilter = '';
   final filterRents = ['Todos', 'Em atraso', 'No prazo'];
+  late String _filterValue = 'Todos';
+
+  updateFilterValue(value) {
+    setState(() {
+      _filterValue = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +47,17 @@ class _FinishedRentsState extends State<FinishedRents> {
                         SizedBox(
                           height: 40,
                           child: DropdownButton<String>(
-                              value: 'Todos',
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Todos',
-                                  child: Text('Todos'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Em atraso',
-                                  child: Text('Em atraso'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'No prazo',
-                                  child: Text('No prazo'),
-                                ),
-                              ],
+                              value: _filterValue,
+                              items: filterRents.map((item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
                               icon: const Icon(Icons.keyboard_arrow_down),
                               onChanged: (value) {
-                                setState(() {});
+                                updateFilterValue(value);
+                                rentController.filterFinishedRents(value);
                               }),
                         )
                       ],

@@ -55,7 +55,6 @@ class RentsList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Tooltip(
@@ -114,8 +113,8 @@ class RentsList extends StatelessWidget {
                               Text(
                                 'Cliente: ',
                                 style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500),
+                                  color: Colors.grey.shade600,
+                                ),
                               ),
                               Expanded(
                                 child: Text(
@@ -134,8 +133,8 @@ class RentsList extends StatelessWidget {
                               Text(
                                 'Livro: ',
                                 style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500),
+                                  color: Colors.grey.shade600,
+                                ),
                               ),
                               Expanded(
                                 child: Text(rent.book!.name,
