@@ -133,6 +133,14 @@ mixin _$RentController on _RentControllerBase, Store {
     return _$getFinishedRentsAsyncAction.run(() => super.getFinishedRents());
   }
 
+  late final _$createRentAsyncAction =
+      AsyncAction('_RentControllerBase.createRent', context: context);
+
+  @override
+  Future createRent(Rent rent) {
+    return _$createRentAsyncAction.run(() => super.createRent(rent));
+  }
+
   late final _$_RentControllerBaseActionController =
       ActionController(name: '_RentControllerBase', context: context);
 

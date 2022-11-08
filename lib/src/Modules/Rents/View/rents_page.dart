@@ -3,7 +3,7 @@ import 'package:flutter_bookstore2/src/Components/default_title.dart';
 import 'package:flutter_bookstore2/src/Components/loading_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/finished_rents.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_in%20_progress.dart';
+import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_in_progress.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -16,12 +16,6 @@ class RentsPage extends StatefulWidget {
 
 class _RentsPageState extends State<RentsPage> {
   final rentController = Modular.get<RentController>();
-
-  @override
-  void dispose() {
-    super.dispose();
-    Modular.dispose<RentController>();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +38,13 @@ class _RentsPageState extends State<RentsPage> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                Modular.to.pushNamed('/users_filter');
+                                Modular.to.pushNamed('/rents/filter');
                               },
                               icon: const Icon(Icons.search),
                               color: Colors.black),
                           IconButton(
                               onPressed: () {
-                                Modular.to.pushNamed('/user_form');
+                                Modular.to.pushNamed('/rents/form');
                               },
                               icon: const Icon(Icons.add),
                               color: Colors.black)
@@ -67,7 +61,7 @@ class _RentsPageState extends State<RentsPage> {
                             indicatorColor: Theme.of(context).primaryColor,
                             labelColor: Theme.of(context).primaryColor,
                             labelStyle: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
                             tabs: [
                               Tab(
                                 child: Row(
@@ -86,8 +80,8 @@ class _RentsPageState extends State<RentsPage> {
                                       width: 5,
                                     ),
                                     Container(
-                                      height: 16,
-                                      width: 16,
+                                      height: 18,
+                                      width: 18,
                                       padding: const EdgeInsets.all(1.0),
                                       decoration: BoxDecoration(
                                           color: Theme.of(context).primaryColor,
@@ -97,7 +91,7 @@ class _RentsPageState extends State<RentsPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             rentController
@@ -105,7 +99,7 @@ class _RentsPageState extends State<RentsPage> {
                                                 .toString(),
                                             style: const TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 10),
+                                                fontSize: 12),
                                           ),
                                         ],
                                       ),

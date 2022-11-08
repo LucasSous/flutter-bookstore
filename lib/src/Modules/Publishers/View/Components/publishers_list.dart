@@ -49,7 +49,7 @@ class PublishersList extends StatelessWidget {
               children: [
                 Text(
                   '#${publisher.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -59,7 +59,9 @@ class PublishersList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w500),
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
                 )
               ],
@@ -72,19 +74,25 @@ class PublishersList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Cidade'),
-                      Text(publisher.city,
-                          style: const TextStyle(fontWeight: FontWeight.w500))
-                    ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Cidade'),
+                        Text(publisher.city,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16))
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
                       IconButton(
                           onPressed: () {
-                            Modular.to.pushNamed('/publisher_form',
+                            Modular.to.pushNamed('/publishers/form',
                                 arguments: publisher);
                           },
                           icon: const Icon(Icons.edit,

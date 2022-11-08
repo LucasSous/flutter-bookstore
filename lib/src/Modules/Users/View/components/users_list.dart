@@ -49,7 +49,7 @@ class UsersList extends StatelessWidget {
               children: [
                 Text(
                   '#${user.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -59,7 +59,9 @@ class UsersList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w500),
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
                 )
               ],
@@ -72,22 +74,33 @@ class UsersList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Endereço:'),
-                      Text('${user.address}, ${user.city}',
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      const Text('Email'),
-                      Text(user.email,
-                          style: const TextStyle(fontWeight: FontWeight.w500))
-                    ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Endereço:'),
+                        Text('${user.address}, ${user.city}',
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        const Text('Email'),
+                        Text(user.email,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16))
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
                       IconButton(
                           onPressed: () {
-                            Modular.to.pushNamed('/user_form', arguments: user);
+                            Modular.to
+                                .pushNamed('/users/user_form', arguments: user);
                           },
                           icon: const Icon(Icons.edit,
                               size: 18, color: Colors.grey)),

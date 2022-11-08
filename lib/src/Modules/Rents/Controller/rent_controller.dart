@@ -3,6 +3,7 @@
 import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Repository/rent_repository.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:intl/intl.dart';
 part 'rent_controller.g.dart';
@@ -134,8 +135,7 @@ abstract class _RentControllerBase with Store {
           .toList();
 
       rentsInProgress = filter;
-    }
-    if (status == 'Em andamento') {
+    } else if (status == 'Em andamento') {
       List<Rent> filter = defaultValueRentsInProgress
           .where(
               (e) => DateTime.parse(e.forecastDate).compareTo(currentDate) >= 0)
@@ -144,6 +144,26 @@ abstract class _RentControllerBase with Store {
       rentsInProgress = filter;
     } else {
       rentsInProgress = defaultValueRentsInProgress;
+    }
+  }
+
+  @action
+  createRent(Rent rent) async {
+    // ignore: unnecessary_null_comparison
+    if (rent != null) {
+      loading = true;
+      try {
+        await rentRepo.save(rent);
+        showSnackBar('Aluguél cadastrado com sucesso', 'success');
+        await getAllRents();
+        await getRentsInProgress();
+        await getFinishedRents();
+        Modular.to.navigate('/');
+      } catch (e) {
+        showSnackBar('Erro ao tentar cadastar aluguél', 'error');
+      } finally {
+        loading = false;
+      }
     }
   }
 }

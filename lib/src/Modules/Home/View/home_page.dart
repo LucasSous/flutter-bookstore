@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final Function()? function;
+  const HomePage({Key? key, required this.function}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ElevatedButton(onPressed: function, child: const Text('Click'));
   }
 }

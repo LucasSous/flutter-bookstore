@@ -14,9 +14,16 @@ class PublishersPage extends StatefulWidget {
 }
 
 class _PublishersPageState extends State<PublishersPage> {
+  final publisher = Modular.get<PublisherController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    Modular.dispose<PublisherController>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final publisher = Modular.get<PublisherController>();
     return Observer(
         name: 'observerPublisherPage',
         builder: (_) {
@@ -24,55 +31,49 @@ class _PublishersPageState extends State<PublishersPage> {
             return const LoadingPage();
           } else {
             return Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
-                body: NestedScrollView(
-                  floatHeaderSlivers: true,
-                  headerSliverBuilder: (context, __) => [
-                    SliverAppBar(
-                      snap: true,
-                      floating: true,
-                      title: const DefaultTitle(text: 'Editoras'),
-                      elevation: 1.0,
-                      backgroundColor: Colors.white,
-                      shape: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: Colors.grey.shade500,
-                            style: BorderStyle.solid),
-                      ),
-                      actions: <Widget>[
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  publisher.resetFilter();
-                                  Modular.to.pushNamed('/publishers_filter');
-                                },
-                                icon: const Icon(Icons.search),
-                                color: Colors.black),
-                            IconButton(
-                                onPressed: () {
-                                  Modular.to.pushNamed('/publisher_form');
-                                },
-                                icon: const Icon(Icons.add),
-                                color: Colors.black)
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                  body: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SingleChildScrollView(
-                      child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: publisher.publishers.length,
-                          itemBuilder: (ctx, i) => PublishersList(
-                              publisher: publisher.publishers[i])),
-                    ),
-                  ),
-                ));
+              backgroundColor: Theme.of(context).backgroundColor,
+              appBar: AppBar(
+                title: const DefaultTitle(text: 'Editoras'),
+                elevation: 1.0,
+                backgroundColor: Colors.white,
+                shape: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      color: Colors.grey.shade500,
+                      style: BorderStyle.solid),
+                ),
+                actions: <Widget>[
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            publisher.resetFilter();
+                            Modular.to.pushNamed('/publishers/filter');
+                          },
+                          icon: const Icon(Icons.search),
+                          color: Colors.black),
+                      IconButton(
+                          onPressed: () {
+                            Modular.to.pushNamed('/publishers/form');
+                          },
+                          icon: const Icon(Icons.add),
+                          color: Colors.black)
+                    ],
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: publisher.publishers.length,
+                      itemBuilder: (ctx, i) =>
+                          PublishersList(publisher: publisher.publishers[i])),
+                ),
+              ),
+            );
           }
         });
   }

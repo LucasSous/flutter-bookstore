@@ -14,9 +14,16 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
+  final bookController = Modular.get<BookController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    Modular.dispose<BookController>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bookController = Modular.get<BookController>();
     return Observer(
         name: 'observerPublisherPage',
         builder: (_) {
@@ -24,55 +31,49 @@ class _BooksPageState extends State<BooksPage> {
             return const LoadingPage();
           } else {
             return Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
-                body: NestedScrollView(
-                  floatHeaderSlivers: true,
-                  headerSliverBuilder: (context, __) => [
-                    SliverAppBar(
-                      snap: true,
-                      floating: true,
-                      title: const DefaultTitle(text: 'Livros'),
-                      elevation: 1.0,
-                      backgroundColor: Colors.white,
-                      shape: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: Colors.grey.shade500,
-                            style: BorderStyle.solid),
-                      ),
-                      actions: <Widget>[
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  bookController.resetFilter();
-                                  Modular.to.pushNamed('/books_filter');
-                                },
-                                icon: const Icon(Icons.search),
-                                color: Colors.black),
-                            IconButton(
-                                onPressed: () {
-                                  Modular.to.pushNamed('/book_form');
-                                },
-                                icon: const Icon(Icons.add),
-                                color: Colors.black)
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                  body: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SingleChildScrollView(
-                      child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: bookController.books.length,
-                          itemBuilder: (ctx, i) =>
-                              BooksList(book: bookController.books[i])),
-                    ),
-                  ),
-                ));
+              backgroundColor: Theme.of(context).backgroundColor,
+              appBar: AppBar(
+                title: const DefaultTitle(text: 'Livros'),
+                elevation: 1.0,
+                backgroundColor: Colors.white,
+                shape: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      color: Colors.grey.shade500,
+                      style: BorderStyle.solid),
+                ),
+                actions: <Widget>[
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            bookController.resetFilter();
+                            Modular.to.pushNamed('/books/filter');
+                          },
+                          icon: const Icon(Icons.search),
+                          color: Colors.black),
+                      IconButton(
+                          onPressed: () {
+                            Modular.to.pushNamed('/books/form');
+                          },
+                          icon: const Icon(Icons.add),
+                          color: Colors.black)
+                    ],
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: bookController.books.length,
+                      itemBuilder: (ctx, i) =>
+                          BooksList(book: bookController.books[i])),
+                ),
+              ),
+            );
           }
         });
   }

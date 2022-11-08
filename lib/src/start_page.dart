@@ -26,6 +26,7 @@ class StartPageState extends State<StartPage> {
     setState(() {
       currentPage = page;
     });
+    pc.jumpToPage(page);
   }
 
   @override
@@ -34,12 +35,15 @@ class StartPageState extends State<StartPage> {
       body: PageView(
         controller: pc,
         onPageChanged: setCurrentPage,
-        children: const [
-          HomePage(),
-          UsersPage(),
-          PublishersPage(),
-          BooksPage(),
-          RentsPage(),
+        children: [
+          HomePage(
+              function: () => {
+                    setCurrentPage(1),
+                  }),
+          const UsersPage(),
+          const PublishersPage(),
+          const BooksPage(),
+          const RentsPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -66,9 +70,8 @@ class StartPageState extends State<StartPage> {
               ),
               label: 'Aluguéis'),
         ],
-        onTap: (pagina) {
-          pc.animateToPage(pagina,
-              duration: const Duration(milliseconds: 5), curve: Curves.easeIn);
+        onTap: (page) {
+          setCurrentPage(page);
         },
       ),
     );

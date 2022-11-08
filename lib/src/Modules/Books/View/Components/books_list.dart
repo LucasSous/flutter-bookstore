@@ -17,11 +17,17 @@ class BooksList extends StatelessWidget {
     if (quantity == 0) {
       return const Text(
         'Quantidade indisponível',
-        style: TextStyle(color: Colors.red),
+        overflow: TextOverflow.fade,
+        maxLines: 1,
+        softWrap: false,
+        style: TextStyle(color: Colors.red, fontSize: 16),
       );
     } else {
       return Text(quantity.toString(),
-          style: const TextStyle(fontWeight: FontWeight.w500));
+          overflow: TextOverflow.fade,
+          maxLines: 1,
+          softWrap: false,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16));
     }
   }
 
@@ -62,7 +68,7 @@ class BooksList extends StatelessWidget {
               children: [
                 Text(
                   '#${book.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -72,7 +78,9 @@ class BooksList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w500),
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
                 )
               ],
@@ -85,27 +93,42 @@ class BooksList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Editora:'),
-                      Text(book.publisher?.name,
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      const Text('Autor'),
-                      Text(book.author,
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      const Text('Lançamento'),
-                      Text(book.launch.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      const Text('Quantidade'),
-                      quantity(book.quantity)
-                    ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Editora:'),
+                        Text(book.publisher?.name,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        const Text('Autor'),
+                        Text(book.author,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        const Text('Lançamento'),
+                        Text(book.launch.toString(),
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        const Text('Quantidade'),
+                        quantity(book.quantity)
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
                       IconButton(
                           onPressed: () {
-                            Modular.to.pushNamed('/book_form', arguments: book);
+                            Modular.to
+                                .pushNamed('/books/form', arguments: book);
                           },
                           icon: const Icon(Icons.edit,
                               size: 18, color: Colors.grey)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 class RentsList extends StatelessWidget {
@@ -64,97 +65,107 @@ class RentsList extends StatelessWidget {
                 Icon(
                   Icons.calendar_today,
                   color: color()!,
-                  size: 16,
+                  size: 20,
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
                 Text(
                   formatDate(rent.creationDate),
-                  style: TextStyle(color: color()!, fontSize: 8),
+                  style: TextStyle(color: color()!, fontSize: 10),
                 ),
                 Text(
                   ' até ',
-                  style: TextStyle(color: color()!, fontSize: 8),
+                  style: TextStyle(color: color()!, fontSize: 10),
                 ),
                 Text(
                   formatDate(rent.forecastDate),
-                  style: TextStyle(color: color()!, fontSize: 8),
+                  style: TextStyle(color: color()!, fontSize: 10),
                 ),
               ],
             ),
           ),
           const SizedBox(width: 8.0),
           Flexible(
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 7),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    spreadRadius: 0.1,
-                    blurRadius: 10,
-                    color: Colors.black26,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Cliente: ',
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
+            child: GestureDetector(
+              onTap: () {
+                Modular.to.pushNamed('/rents/details', arguments: rent);
+              },
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 7),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      spreadRadius: 0.1,
+                      blurRadius: 10,
+                      color: Colors.black26,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Cliente: ',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 18),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  rent.user!.name,
-                                  overflow: TextOverflow.fade,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Livro: ',
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(rent.book!.name,
+                                Expanded(
+                                  child: Text(
+                                    rent.user!.name,
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
                                     softWrap: false,
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w500)),
-                              )
-                            ],
-                          )
-                        ],
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Livro: ',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 18),
+                                ),
+                                Expanded(
+                                  child: Text(rent.book!.name,
+                                      overflow: TextOverflow.fade,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18)),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12,
-                      color: Colors.grey,
-                    )
-                  ],
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

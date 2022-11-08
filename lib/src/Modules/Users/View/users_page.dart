@@ -14,9 +14,16 @@ class UsersPage extends StatefulWidget {
 }
 
 class _UsersPageState extends State<UsersPage> {
+  final userController = Modular.get<UserController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    Modular.dispose<UserController>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userController = Modular.get<UserController>();
     return Observer(
         name: 'observerUserPage',
         builder: (_) {
@@ -24,55 +31,49 @@ class _UsersPageState extends State<UsersPage> {
             return const LoadingPage();
           } else {
             return Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
-                body: NestedScrollView(
-                  floatHeaderSlivers: true,
-                  headerSliverBuilder: (context, __) => [
-                    SliverAppBar(
-                      snap: true,
-                      floating: true,
-                      title: const DefaultTitle(text: 'Usuários'),
-                      elevation: 1.0,
-                      backgroundColor: Colors.white,
-                      shape: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: Colors.grey.shade500,
-                            style: BorderStyle.solid),
-                      ),
-                      actions: <Widget>[
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  userController.resetFilter();
-                                  Modular.to.pushNamed('/users_filter');
-                                },
-                                icon: const Icon(Icons.search),
-                                color: Colors.black),
-                            IconButton(
-                                onPressed: () {
-                                  Modular.to.pushNamed('/user_form');
-                                },
-                                icon: const Icon(Icons.add),
-                                color: Colors.black)
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                  body: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SingleChildScrollView(
-                      child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: userController.users.length,
-                          itemBuilder: (ctx, i) =>
-                              UsersList(user: userController.users[i])),
-                    ),
-                  ),
-                ));
+              backgroundColor: Theme.of(context).backgroundColor,
+              appBar: AppBar(
+                title: const DefaultTitle(text: 'Usuários'),
+                elevation: 1.0,
+                backgroundColor: Colors.white,
+                shape: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      color: Colors.grey.shade500,
+                      style: BorderStyle.solid),
+                ),
+                actions: <Widget>[
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            userController.resetFilter();
+                            Modular.to.pushNamed('/users/users_filter');
+                          },
+                          icon: const Icon(Icons.search),
+                          color: Colors.black),
+                      IconButton(
+                          onPressed: () {
+                            Modular.to.pushNamed('/users/user_form');
+                          },
+                          icon: const Icon(Icons.add),
+                          color: Colors.black)
+                    ],
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: userController.users.length,
+                      itemBuilder: (ctx, i) =>
+                          UsersList(user: userController.users[i])),
+                ),
+              ),
+            );
           }
         });
   }

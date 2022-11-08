@@ -11,4 +11,20 @@ class RentRepository {
     final data = body.map((item) => Rent.fromJson(item)).toList();
     return data;
   }
+
+  Future<void> save(Rent rent) async {
+    await http.post(Uri.parse('${Api.baseURL}/aluguel'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: jsonEncode({
+          'usuario_id': {'id': rent.user?.id},
+          'livro_id': {'id': rent.book?.id},
+          'data_aluguel': rent.creationDate,
+          'data_previsao': rent.forecastDate,
+          'data_devolucao': rent.returnDate
+        }),
+        encoding: Encoding.getByName("utf-8"));
+  }
 }

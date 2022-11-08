@@ -8,6 +8,6 @@ class DefaultTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         style: const TextStyle(
-            fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold));
+            fontSize: 25, color: Colors.black, fontWeight: FontWeight.w600));
   }
 }

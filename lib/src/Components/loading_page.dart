@@ -12,7 +12,7 @@ class LoadingPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 15,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -61,12 +61,9 @@ class LoadingPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: 8,
+              itemCount: 10,
               itemBuilder: ((context, index) => Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.grey.shade200,
@@ -75,7 +72,7 @@ class LoadingPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
                           borderRadius: BorderRadius.circular(5)),
-                      height: 60,
+                      height: 70,
                       width: double.infinity,
                     ),
                   )),
