@@ -51,7 +51,7 @@ abstract class _BookControllerBase with Store {
         await bookRepo.save(book);
         showSnackBar('Livro cadastrado com sucesso', 'success');
         await getAllBooks();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar cadastar livro', 'error');
       } finally {
@@ -69,7 +69,7 @@ abstract class _BookControllerBase with Store {
         await bookRepo.update(book);
         showSnackBar('Livro editado com sucesso', 'success');
         await getAllBooks();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar livro', 'error');
       } finally {
@@ -86,11 +86,11 @@ abstract class _BookControllerBase with Store {
       try {
         await bookRepo.delete(book);
         showSnackBar('Livro deletado com sucesso', 'success');
-        await getAllBooks();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar deletar livro', 'error');
       } finally {
+        await getAllBooks();
         loading = false;
       }
     }

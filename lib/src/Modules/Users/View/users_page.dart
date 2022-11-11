@@ -17,12 +17,6 @@ class _UsersPageState extends State<UsersPage> {
   final userController = Modular.get<UserController>();
 
   @override
-  void dispose() {
-    super.dispose();
-    Modular.dispose<UserController>();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Observer(
         name: 'observerUserPage',
@@ -36,6 +30,15 @@ class _UsersPageState extends State<UsersPage> {
                 title: const DefaultTitle(text: 'Usuários'),
                 elevation: 1.0,
                 backgroundColor: Colors.white,
+                leading: IconButton(
+                  onPressed: () {
+                    Modular.to.pushNamed('/menu');
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                ),
                 shape: Border(
                   bottom: BorderSide(
                       width: 1,

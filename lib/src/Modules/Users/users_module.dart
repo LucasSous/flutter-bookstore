@@ -1,3 +1,5 @@
+import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/Modules/Users/Repository/user_repository.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/View/user_form.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/View/users_filter.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/View/users_page.dart';
@@ -5,8 +7,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class UsersModule extends Module {
   @override
+  List<Bind<Object>> get binds => [
+        Bind.singleton((i) => UserController(i())),
+        Bind.factory((i) => UserRepository()),
+      ];
+
+  @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: ((context, args) => const UsersPage())),
+        ChildRoute('/',
+            child: ((context, args) => const UsersPage()),
+            transition: TransitionType.noTransition),
         ChildRoute('/user_form',
             child: (context, args) => UserForm(user: args.data),
             transition: TransitionType.rightToLeft),

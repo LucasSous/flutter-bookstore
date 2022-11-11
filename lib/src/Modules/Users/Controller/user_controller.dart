@@ -51,7 +51,7 @@ abstract class _UserControllerBase with Store {
         await userRepo.save(user);
         showSnackBar('Usuário cadastrado com sucesso', 'success');
         await getAllUsers();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar cadastar usuário', 'error');
       } finally {
@@ -69,7 +69,7 @@ abstract class _UserControllerBase with Store {
         await userRepo.update(user);
         showSnackBar('Usuário editado com sucesso', 'success');
         await getAllUsers();
-        Modular.to.navigate('/');
+        Modular.to.pop();
         // Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar usuário', 'error');
@@ -87,11 +87,11 @@ abstract class _UserControllerBase with Store {
       try {
         await userRepo.delete(user);
         showSnackBar('Usuário deletado com sucesso', 'success');
-        Modular.to.navigate('/');
-        getAllUsers();
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar deletar usuário', 'error');
       } finally {
+        await getAllUsers();
         loading = false;
       }
     }

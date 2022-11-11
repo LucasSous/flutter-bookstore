@@ -26,12 +26,6 @@ class _RentsInProgressState extends State<RentsInProgress> {
   final rentController = Modular.get<RentController>();
 
   @override
-  void dispose() {
-    super.dispose();
-    Modular.dispose<RentController>();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(8.0),

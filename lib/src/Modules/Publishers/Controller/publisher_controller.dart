@@ -52,7 +52,7 @@ abstract class _PublisherControllerBase with Store {
         await publisherRepo.save(publisher);
         showSnackBar('Editora cadastrada com sucesso', 'success');
         await getAllPublishers();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar cadastar editora', 'error');
       } finally {
@@ -70,7 +70,7 @@ abstract class _PublisherControllerBase with Store {
         await publisherRepo.update(publisher);
         showSnackBar('Editora editada com sucesso', 'success');
         await getAllPublishers();
-        Modular.to.navigate('/');
+        Modular.to.pop();
         // Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar editora', 'error');
@@ -88,11 +88,11 @@ abstract class _PublisherControllerBase with Store {
       try {
         await publisherRepo.delete(publisher);
         showSnackBar('Editora deletada com sucesso', 'success');
-        Modular.to.navigate('/');
-        getAllPublishers();
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar deletar editora', 'error');
       } finally {
+        await getAllPublishers();
         loading = false;
       }
     }

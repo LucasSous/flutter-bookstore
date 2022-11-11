@@ -27,4 +27,38 @@ class RentRepository {
         }),
         encoding: Encoding.getByName("utf-8"));
   }
+
+  Future<void> update(Rent rent) async {
+    await http.put(Uri.parse('${Api.baseURL}/aluguel'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: jsonEncode({
+          'id': rent.id,
+          'usuario_id': {'id': rent.user?.id},
+          'livro_id': {'id': rent.book?.id},
+          'data_aluguel': rent.creationDate,
+          'data_previsao': rent.forecastDate,
+          'data_devolucao': rent.returnDate
+        }),
+        encoding: Encoding.getByName("utf-8"));
+  }
+
+  Future<void> delete(Rent rent) async {
+    await http.delete(Uri.parse('${Api.baseURL}/aluguel'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: jsonEncode({
+          'id': rent.id,
+          'usuario_id': {'id': rent.user?.id},
+          'livro_id': {'id': rent.book?.id},
+          'data_aluguel': rent.creationDate,
+          'data_previsao': rent.forecastDate,
+          'data_devolucao': rent.returnDate
+        }),
+        encoding: Encoding.getByName("utf-8"));
+  }
 }

@@ -12,6 +12,13 @@ class BookRepository {
     return data;
   }
 
+  Future<List<Book>> getMostRented() async {
+    final response = await http.get(Uri.parse('${Api.baseURL}/maisalugados'));
+    final body = (jsonDecode(utf8.decode(response.bodyBytes)) as List);
+    final data = body.map((item) => Book.fromJson(item)).toList();
+    return data;
+  }
+
   Future<void> save(Book book) async {
     await http.post(Uri.parse('${Api.baseURL}/livro'),
         headers: {

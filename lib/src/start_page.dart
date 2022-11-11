@@ -35,15 +35,12 @@ class StartPageState extends State<StartPage> {
       body: PageView(
         controller: pc,
         onPageChanged: setCurrentPage,
-        children: [
-          HomePage(
-              function: () => {
-                    setCurrentPage(1),
-                  }),
-          const UsersPage(),
-          const PublishersPage(),
-          const BooksPage(),
-          const RentsPage(),
+        children: const [
+          HomePage(),
+          UsersPage(),
+          PublishersPage(),
+          BooksPage(),
+          RentsPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

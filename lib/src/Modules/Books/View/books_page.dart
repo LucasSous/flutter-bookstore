@@ -17,12 +17,6 @@ class _BooksPageState extends State<BooksPage> {
   final bookController = Modular.get<BookController>();
 
   @override
-  void dispose() {
-    super.dispose();
-    Modular.dispose<BookController>();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Observer(
         name: 'observerPublisherPage',
@@ -33,6 +27,15 @@ class _BooksPageState extends State<BooksPage> {
             return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
+                leading: IconButton(
+                  onPressed: () {
+                    Modular.to.pushNamed('/menu');
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                ),
                 title: const DefaultTitle(text: 'Livros'),
                 elevation: 1.0,
                 backgroundColor: Colors.white,

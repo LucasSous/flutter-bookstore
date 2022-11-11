@@ -1,22 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Components/default_button.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
+import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Components/outline_button.dart';
+import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
+import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
+import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
-class RentsDetail extends StatelessWidget {
+class RentsDetail extends StatefulWidget {
   final Rent rent;
   const RentsDetail({super.key, required this.rent});
+
+  @override
+  State<RentsDetail> createState() => _RentsDetailState();
+}
+
+class _RentsDetailState extends State<RentsDetail> {
+  final rentController = Modular.get<RentController>();
 
   formatDate(String date) {
     return DateFormat('dd/MM/yyy').format(DateTime.parse(date));
   }
 
   returnDate() {
-    if (rent.returnDate != null && rent.returnDate != 'in progress') {
+    if (widget.rent.returnDate != null &&
+        widget.rent.returnDate != 'in progress') {
       return Text(
-        formatDate(rent.returnDate),
+        formatDate(widget.rent.returnDate),
         style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 18,
@@ -33,15 +47,85 @@ class RentsDetail extends StatelessWidget {
     }
   }
 
+  finalizeRent() {
+    rentController.updateRent(Rent(
+        id: widget.rent.id,
+        creationDate: widget.rent.creationDate,
+        returnDate: DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+        forecastDate: widget.rent.forecastDate,
+        book: Book(
+            id: widget.rent.book!.id,
+            name: '',
+            publisher: null,
+            author: '',
+            launch: '',
+            quantity: ''),
+        user: User(
+            id: widget.rent.user!.id,
+            name: '',
+            address: '',
+            city: '',
+            email: '')));
+  }
+
+  deleteRent() {
+    rentController.deleteRent(Rent(
+        id: widget.rent.id,
+        creationDate: widget.rent.creationDate,
+        returnDate: null,
+        forecastDate: widget.rent.forecastDate,
+        book: Book(
+            id: widget.rent.book!.id,
+            name: widget.rent.book!.name,
+            publisher: null,
+            author: '',
+            launch: '',
+            quantity: ''),
+        user: User(
+            id: widget.rent.user!.id,
+            name: '',
+            address: '',
+            city: '',
+            email: '')));
+  }
+
   actionButtons() {
-    if (rent.returnDate == null || rent.returnDate == 'in progress') {
-      return Column(
-        children: [
-          DefaultButton(text: 'Finalizar', isLoading: false, click: () {}),
-          const SizedBox(height: 15),
-          OutlineButton(text: 'Cancelar', isLoading: false, click: () {})
-        ],
-      );
+    if (widget.rent.returnDate == null ||
+        widget.rent.returnDate == 'in progress') {
+      return Observer(builder: (_) {
+        return Column(
+          children: [
+            DefaultButton(
+                text: 'Finalizar',
+                isLoading: rentController.loadingFinished,
+                click: () {
+                  openDialog(
+                      context: context,
+                      title: 'Finalizar Aluguél',
+                      message: 'Este aluguél será finalizado!',
+                      confirm: () {
+                        finalizeRent();
+                        Modular.to.pop();
+                      });
+                }),
+            const SizedBox(height: 15),
+            OutlineButton(
+                text: 'Cancelar',
+                isLoading: rentController.loadingDelete,
+                click: () {
+                  openDialog(
+                      context: context,
+                      title: 'Cancelar Aluguél',
+                      message:
+                          'Este aluguél será cancelado e deletado da base de dados!',
+                      confirm: () {
+                        deleteRent();
+                        Modular.to.pop();
+                      });
+                })
+          ],
+        );
+      });
     }
     return Container();
   }
@@ -52,11 +136,12 @@ class RentsDetail extends StatelessWidget {
     DateFormat formatter = DateFormat('yyyy-MM-dd');
     String formatted = formatter.format(now);
     DateTime currentDate = DateTime.parse(formatted);
-    DateTime forecastDate = DateTime.parse(rent.forecastDate);
+    DateTime forecastDate = DateTime.parse(widget.rent.forecastDate);
 
     status() {
-      if (rent.returnDate != null && rent.returnDate != 'in progress') {
-        DateTime returnDate = DateTime.parse(rent.returnDate);
+      if (widget.rent.returnDate != null &&
+          widget.rent.returnDate != 'in progress') {
+        DateTime returnDate = DateTime.parse(widget.rent.returnDate);
         if (returnDate.compareTo(forecastDate) <= 0) {
           return const Text('Entregue no Prazo',
               style: TextStyle(
@@ -118,7 +203,7 @@ class RentsDetail extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      rent.id.toString(),
+                      widget.rent.id.toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -130,7 +215,7 @@ class RentsDetail extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      rent.user!.name,
+                      widget.rent.user!.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -142,7 +227,7 @@ class RentsDetail extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      rent.book!.name,
+                      widget.rent.book!.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -154,7 +239,7 @@ class RentsDetail extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      formatDate(rent.creationDate),
+                      formatDate(widget.rent.creationDate),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -166,7 +251,7 @@ class RentsDetail extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      formatDate(rent.forecastDate),
+                      formatDate(widget.rent.forecastDate),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,

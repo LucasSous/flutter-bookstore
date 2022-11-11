@@ -37,6 +37,12 @@ abstract class _RentControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  bool loadingDelete = false;
+
+  @observable
+  bool loadingFinished = false;
+
   @action
   getAllRents() async {
     loading = true;
@@ -148,6 +154,12 @@ abstract class _RentControllerBase with Store {
   }
 
   @action
+  updateLists() {
+    finishedRents = defaultValueFinishedRents;
+    rentsInProgress = defaultValueRentsInProgress;
+  }
+
+  @action
   createRent(Rent rent) async {
     // ignore: unnecessary_null_comparison
     if (rent != null) {
@@ -155,14 +167,50 @@ abstract class _RentControllerBase with Store {
       try {
         await rentRepo.save(rent);
         showSnackBar('Aluguél cadastrado com sucesso', 'success');
-        await getAllRents();
-        await getRentsInProgress();
-        await getFinishedRents();
-        Modular.to.navigate('/');
+        Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar cadastar aluguél', 'error');
       } finally {
+        await getAllRents();
+        await getRentsInProgress();
         loading = false;
+      }
+    }
+  }
+
+  @action
+  updateRent(Rent rent) async {
+    // ignore: unnecessary_null_comparison
+    if (rent != null) {
+      loadingFinished = true;
+      try {
+        await rentRepo.update(rent);
+        showSnackBar('Aluguél finalizado com sucesso', 'success');
+        Modular.to.pop();
+      } catch (e) {
+        showSnackBar('Erro ao tentar finalizar aluguél', 'error');
+      } finally {
+        await getRentsInProgress();
+        await getFinishedRents();
+        loadingFinished = false;
+      }
+    }
+  }
+
+  @action
+  deleteRent(Rent rent) async {
+    // ignore: unnecessary_null_comparison
+    if (rent != null) {
+      loadingDelete = true;
+      try {
+        await rentRepo.delete(rent);
+        showSnackBar('Aluguél cancelado com sucesso', 'success');
+        Modular.to.pop();
+      } catch (e) {
+        showSnackBar('Erro ao tentar cancelar aluguél', 'error');
+      } finally {
+        await getRentsInProgress();
+        loadingDelete = false;
       }
     }
   }

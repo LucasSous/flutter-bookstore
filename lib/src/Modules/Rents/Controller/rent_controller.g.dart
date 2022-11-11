@@ -108,6 +108,38 @@ mixin _$RentController on _RentControllerBase, Store {
     });
   }
 
+  late final _$loadingDeleteAtom =
+      Atom(name: '_RentControllerBase.loadingDelete', context: context);
+
+  @override
+  bool get loadingDelete {
+    _$loadingDeleteAtom.reportRead();
+    return super.loadingDelete;
+  }
+
+  @override
+  set loadingDelete(bool value) {
+    _$loadingDeleteAtom.reportWrite(value, super.loadingDelete, () {
+      super.loadingDelete = value;
+    });
+  }
+
+  late final _$loadingFinishedAtom =
+      Atom(name: '_RentControllerBase.loadingFinished', context: context);
+
+  @override
+  bool get loadingFinished {
+    _$loadingFinishedAtom.reportRead();
+    return super.loadingFinished;
+  }
+
+  @override
+  set loadingFinished(bool value) {
+    _$loadingFinishedAtom.reportWrite(value, super.loadingFinished, () {
+      super.loadingFinished = value;
+    });
+  }
+
   late final _$getAllRentsAsyncAction =
       AsyncAction('_RentControllerBase.getAllRents', context: context);
 
@@ -141,6 +173,22 @@ mixin _$RentController on _RentControllerBase, Store {
     return _$createRentAsyncAction.run(() => super.createRent(rent));
   }
 
+  late final _$updateRentAsyncAction =
+      AsyncAction('_RentControllerBase.updateRent', context: context);
+
+  @override
+  Future updateRent(Rent rent) {
+    return _$updateRentAsyncAction.run(() => super.updateRent(rent));
+  }
+
+  late final _$deleteRentAsyncAction =
+      AsyncAction('_RentControllerBase.deleteRent', context: context);
+
+  @override
+  Future deleteRent(Rent rent) {
+    return _$deleteRentAsyncAction.run(() => super.deleteRent(rent));
+  }
+
   late final _$_RentControllerBaseActionController =
       ActionController(name: '_RentControllerBase', context: context);
 
@@ -167,6 +215,17 @@ mixin _$RentController on _RentControllerBase, Store {
   }
 
   @override
+  dynamic updateLists() {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.updateLists');
+    try {
+      return super.updateLists();
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 rents: ${rents},
@@ -174,7 +233,9 @@ rentsInProgress: ${rentsInProgress},
 finishedRents: ${finishedRents},
 defaultValueRentsInProgress: ${defaultValueRentsInProgress},
 defaultValueFinishedRents: ${defaultValueFinishedRents},
-loading: ${loading}
+loading: ${loading},
+loadingDelete: ${loadingDelete},
+loadingFinished: ${loadingFinished}
     ''';
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
 import 'package:flutter_bookstore2/src/Components/loading_page.dart';
@@ -18,6 +20,12 @@ class _RentsPageState extends State<RentsPage> {
   final rentController = Modular.get<RentController>();
 
   @override
+  void dispose() {
+    super.dispose();
+    Modular.dispose<RentController>();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(
         name: 'observerRentPage',
@@ -30,6 +38,15 @@ class _RentsPageState extends State<RentsPage> {
               child: Scaffold(
                   backgroundColor: Theme.of(context).backgroundColor,
                   appBar: AppBar(
+                    leading: IconButton(
+                      onPressed: () {
+                        Modular.to.pushNamed('/menu');
+                      },
+                      icon: const Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
+                    ),
                     title: const DefaultTitle(text: 'Aluguéis'),
                     elevation: 0,
                     backgroundColor: Colors.white,
@@ -62,6 +79,10 @@ class _RentsPageState extends State<RentsPage> {
                             labelColor: Theme.of(context).primaryColor,
                             labelStyle: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
+                            onTap: (value) => {
+                                  Timer(const Duration(seconds: 1),
+                                      () => rentController.updateLists())
+                                },
                             tabs: [
                               Tab(
                                 child: Row(
@@ -95,7 +116,8 @@ class _RentsPageState extends State<RentsPage> {
                                         children: [
                                           Text(
                                             rentController
-                                                .rentsInProgress.length
+                                                .defaultValueRentsInProgress
+                                                .length
                                                 .toString(),
                                             style: const TextStyle(
                                                 color: Colors.white,

@@ -7,15 +7,16 @@ class Book {
   Publisher? publisher;
   dynamic launch;
   dynamic quantity;
+  dynamic totalRented;
 
-  Book({
-    this.id,
-    required this.name,
-    required this.publisher,
-    required this.author,
-    required this.launch,
-    required this.quantity,
-  });
+  Book(
+      {this.id,
+      required this.name,
+      required this.publisher,
+      required this.author,
+      required this.launch,
+      required this.quantity,
+      this.totalRented});
 
   Book.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -25,6 +26,7 @@ class Book {
     author = json['autor'];
     launch = json['lancamento'];
     quantity = json['quantidade'];
+    totalRented = json['totalalugado'];
   }
 
   Map<String, dynamic> toJson() {
@@ -37,6 +39,7 @@ class Book {
     data['autor'] = author;
     data['lancamento'] = launch;
     data['quantidade'] = quantity;
+    data['totalalugado'] = totalRented;
     return data;
   }
 }

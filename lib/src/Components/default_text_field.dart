@@ -7,14 +7,18 @@ class DefaultTextField extends StatelessWidget {
   final IconData icon;
   final String? Function(String?) validation;
   final Function(String?) onSaved;
+  final Function()? onTap;
+  final TextEditingController? controller;
   const DefaultTextField(
       {Key? key,
       required this.labelText,
       required this.hintText,
-      required this.initialValue,
+      this.initialValue,
       required this.icon,
       required this.validation,
-      required this.onSaved})
+      required this.onSaved,
+      this.onTap,
+      this.controller})
       : super(key: key);
 
   @override
@@ -24,6 +28,8 @@ class DefaultTextField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validation,
       onSaved: onSaved,
+      controller: controller,
+      onTap: onTap,
       decoration: InputDecoration(
         labelText: labelText,
         filled: true, //<-- SEE HERE

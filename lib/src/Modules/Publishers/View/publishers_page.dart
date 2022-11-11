@@ -17,12 +17,6 @@ class _PublishersPageState extends State<PublishersPage> {
   final publisher = Modular.get<PublisherController>();
 
   @override
-  void dispose() {
-    super.dispose();
-    Modular.dispose<PublisherController>();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Observer(
         name: 'observerPublisherPage',
@@ -33,6 +27,15 @@ class _PublishersPageState extends State<PublishersPage> {
             return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
+                leading: IconButton(
+                  onPressed: () {
+                    Modular.to.pushNamed('/menu');
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                ),
                 title: const DefaultTitle(text: 'Editoras'),
                 elevation: 1.0,
                 backgroundColor: Colors.white,

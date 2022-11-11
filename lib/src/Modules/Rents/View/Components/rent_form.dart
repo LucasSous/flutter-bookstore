@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Components/default_button.dart';
+import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
 import 'package:flutter_bookstore2/src/Components/select.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
+import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 
 class RentForm extends StatefulWidget {
   final Rent? rent;
@@ -38,6 +42,8 @@ class _RentFormState extends State<RentForm> {
       }
     }
   }
+
+  final TextEditingController _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -103,12 +109,93 @@ class _RentFormState extends State<RentForm> {
                         }).toList(),
                       ),
                       const SizedBox(
+                        height: 15,
+                      ),
+                      DefaultTextField(
+                        labelText: 'Previsão de entrega',
+                        hintText: 'Selecione uma data',
+                        controller: _date,
+                        icon: Icons.calendar_today_outlined,
+                        onTap: () async {
+                          DateTime? pickeddate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now()
+                                .subtract(const Duration(days: 0)),
+                            lastDate:
+                                DateTime.now().add(const Duration(days: 365)),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary: Theme.of(context).primaryColor,
+                                    onPrimary: Colors.white,
+                                    onSurface: Colors.black,
+                                  ),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
+
+                          if (pickeddate != null) {
+                            setState(() {
+                              _date.text =
+                                  DateFormat('dd/MM/yyyy').format(pickeddate);
+                            });
+                          }
+                        },
+                        validation: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Campo obrigatório';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _formData['forecastDate'] = value!,
+                      ),
+                      const SizedBox(
                         height: 25,
                       ),
                       DefaultButton(
                         text: 'Salvar',
                         isLoading: rentController.loading,
-                        click: () {},
+                        click: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+
+                            String? date = _formData['forecastDate'];
+                            List<String> returnDate = date!.split('/');
+                            DateTime? forecastDate = DateTime.parse(
+                                '${returnDate[2]}-${returnDate[1]}-${returnDate[0]}');
+                            rentController.createRent(Rent(
+                              user: User(
+                                  id: _formData['user'],
+                                  name: '',
+                                  city: '',
+                                  address: '',
+                                  email: ''),
+                              book: Book(
+                                  id: _formData['book'],
+                                  name: '',
+                                  author: '',
+                                  publisher: null,
+                                  launch: '',
+                                  quantity: ''),
+                              creationDate: DateFormat('yyyy-MM-dd')
+                                  .format(DateTime.now())
+                                  .toString(),
+                              forecastDate: DateFormat('yyyy-MM-dd')
+                                  .format(forecastDate)
+                                  .toString(),
+                              returnDate: null,
+                            ));
+                          }
+                        },
                       )
                     ],
                   ),

@@ -18,7 +18,7 @@ class OutlineButton extends StatelessWidget {
           height: 20.0,
           width: 20.0,
           child: CircularProgressIndicator(
-            color: Colors.white,
+            color: Color(0xff123142),
             strokeWidth: 2.0,
           ),
         ),
