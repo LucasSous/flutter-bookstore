@@ -27,6 +27,15 @@ class HomePage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.settings_outlined,
+              color: Colors.black,
+            ),
+          )
+        ],
       ),
       body: Observer(builder: (_) {
         if (homeController.loadingRents ||

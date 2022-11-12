@@ -93,19 +93,14 @@ class RentsList extends StatelessWidget {
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 7),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5),
-                      topLeft: Radius.circular(5),
-                      topRight: Radius.circular(5)),
-                  boxShadow: <BoxShadow>[
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: const [
                     BoxShadow(
-                      spreadRadius: 0.1,
-                      blurRadius: 10,
-                      color: Colors.black26,
-                    )
+                        blurRadius: 4,
+                        color: Colors.black26,
+                        offset: Offset(0, 0))
                   ],
                 ),
                 child: Padding(

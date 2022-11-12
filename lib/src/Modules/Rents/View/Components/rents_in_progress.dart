@@ -27,16 +27,16 @@ class _RentsInProgressState extends State<RentsInProgress> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Observer(
-            name: 'observerRentsInProgress',
-            builder: (_) {
-              if (rentController.loading == true) {
-                return const LoadingPage();
-              } else {
-                return SingleChildScrollView(
-                  child: Column(
+    return SingleChildScrollView(
+      child: Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 80, left: 8, right: 8),
+          child: Observer(
+              name: 'observerRentsInProgress',
+              builder: (_) {
+                if (rentController.loading == true) {
+                  return const LoadingPage();
+                } else {
+                  return Column(
                     children: [
                       Row(
                         children: [
@@ -74,9 +74,9 @@ class _RentsInProgressState extends State<RentsInProgress> {
                           itemBuilder: (ctx, i) => RentsList(
                               rent: rentController.rentsInProgress[i])),
                     ],
-                  ),
-                );
-              }
-            }));
+                  );
+                }
+              })),
+    );
   }
 }

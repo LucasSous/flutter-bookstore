@@ -52,9 +52,12 @@ class _ChartState extends State<Chart> {
                       show: false,
                     ),
                     sectionsSpace: 2,
-                    centerSpaceRadius: 80,
+                    centerSpaceRadius: 90,
                     sections: showingSections(),
                   ),
+                  swapAnimationDuration:
+                      const Duration(milliseconds: 250), // Optional
+                  swapAnimationCurve: Curves.ease,
                 ),
               ),
             ),

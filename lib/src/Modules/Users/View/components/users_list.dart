@@ -17,19 +17,11 @@ class UsersList extends StatelessWidget {
     final userController = Modular.get<UserController>();
     return Container(
       margin: const EdgeInsets.only(bottom: 7),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(5),
-            bottomRight: Radius.circular(5),
-            topLeft: Radius.circular(5),
-            topRight: Radius.circular(5)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            spreadRadius: 0.1,
-            blurRadius: 4,
-            color: Colors.black26,
-          )
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: const [
+          BoxShadow(blurRadius: 4, color: Colors.black26, offset: Offset(0, 0))
         ],
       ),
       child: Container(

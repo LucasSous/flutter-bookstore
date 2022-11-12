@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
+import 'package:flutter_bookstore2/src/Components/add_button.dart';
+import 'package:flutter_bookstore2/src/Components/default_app_bar.dart';
 import 'package:flutter_bookstore2/src/Components/loading_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/View/Components/books_list.dart';
@@ -26,48 +27,17 @@ class _BooksPageState extends State<BooksPage> {
           } else {
             return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
-              appBar: AppBar(
-                leading: IconButton(
-                  onPressed: () {
-                    Modular.to.pushNamed('/menu');
+              appBar: DefaultAppBar(
+                  title: 'Livros',
+                  search: () {
+                    bookController.resetFilter();
+                    Modular.to.pushNamed('/books/filter');
                   },
-                  icon: const Icon(
-                    Icons.menu,
-                    color: Colors.black,
-                  ),
-                ),
-                title: const DefaultTitle(text: 'Livros'),
-                elevation: 1.0,
-                backgroundColor: Colors.white,
-                shape: Border(
-                  bottom: BorderSide(
-                      width: 1,
-                      color: Colors.grey.shade500,
-                      style: BorderStyle.solid),
-                ),
-                actions: <Widget>[
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            bookController.resetFilter();
-                            Modular.to.pushNamed('/books/filter');
-                          },
-                          icon: const Icon(Icons.search),
-                          color: Colors.black),
-                      IconButton(
-                          onPressed: () {
-                            Modular.to.pushNamed('/books/form');
-                          },
-                          icon: const Icon(Icons.add),
-                          color: Colors.black)
-                    ],
-                  )
-                ],
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
+                  border: true),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8, bottom: 80, left: 8, right: 8),
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -76,6 +46,7 @@ class _BooksPageState extends State<BooksPage> {
                           BooksList(book: bookController.books[i])),
                 ),
               ),
+              floatingActionButton: const AddButton(route: '/books/form'),
             );
           }
         });

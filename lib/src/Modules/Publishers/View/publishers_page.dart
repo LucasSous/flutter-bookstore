@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
+import 'package:flutter_bookstore2/src/Components/add_button.dart';
+import 'package:flutter_bookstore2/src/Components/default_app_bar.dart';
 import 'package:flutter_bookstore2/src/Components/loading_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/View/Components/publishers_list.dart';
@@ -26,48 +27,18 @@ class _PublishersPageState extends State<PublishersPage> {
           } else {
             return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
-              appBar: AppBar(
-                leading: IconButton(
-                  onPressed: () {
-                    Modular.to.pushNamed('/menu');
-                  },
-                  icon: const Icon(
-                    Icons.menu,
-                    color: Colors.black,
-                  ),
-                ),
-                title: const DefaultTitle(text: 'Editoras'),
-                elevation: 1.0,
-                backgroundColor: Colors.white,
-                shape: Border(
-                  bottom: BorderSide(
-                      width: 1,
-                      color: Colors.grey.shade500,
-                      style: BorderStyle.solid),
-                ),
-                actions: <Widget>[
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            publisher.resetFilter();
-                            Modular.to.pushNamed('/publishers/filter');
-                          },
-                          icon: const Icon(Icons.search),
-                          color: Colors.black),
-                      IconButton(
-                          onPressed: () {
-                            Modular.to.pushNamed('/publishers/form');
-                          },
-                          icon: const Icon(Icons.add),
-                          color: Colors.black)
-                    ],
-                  )
-                ],
+              appBar: DefaultAppBar(
+                title: 'Editoras',
+                search: () {
+                  publisher.resetFilter();
+                  Modular.to.pushNamed('/publishers/filter');
+                },
+                border: true,
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8, bottom: 80, left: 8, right: 8),
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -76,6 +47,7 @@ class _PublishersPageState extends State<PublishersPage> {
                           PublishersList(publisher: publisher.publishers[i])),
                 ),
               ),
+              floatingActionButton: const AddButton(route: '/publishers/form'),
             );
           }
         });

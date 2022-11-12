@@ -21,62 +21,39 @@ class LoadingPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade200,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 25,
-                            width: 25,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade200,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(5)),
-                            height: 20,
-                            width: 100,
-                          ),
-                        ),
-                      ],
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade200,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            borderRadius: BorderRadius.circular(20)),
+                        height: 25,
+                        width: 25,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade200,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 25,
-                            width: 25,
-                          ),
-                        ),
-                        Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade200,
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 25,
-                            width: 25,
-                          ),
-                        )
-                      ],
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade200,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            borderRadius: BorderRadius.circular(5)),
+                        height: 20,
+                        width: 100,
+                      ),
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade200,
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            borderRadius: BorderRadius.circular(20)),
+                        height: 25,
+                        width: 25,
+                      ),
                     )
                   ],
                 ),
