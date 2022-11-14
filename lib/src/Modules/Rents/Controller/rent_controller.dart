@@ -35,6 +35,9 @@ abstract class _RentControllerBase with Store {
   List<Rent> defaultValueFinishedRents = [];
 
   @observable
+  List<Rent> rentsFilter = [];
+
+  @observable
   bool loading = false;
 
   @observable
@@ -126,6 +129,30 @@ abstract class _RentControllerBase with Store {
     } else {
       finishedRents = defaultValueFinishedRents;
     }
+  }
+
+  @action
+  filterRents(date) {
+    if (date.isEmpty) {
+      rentsFilter = [];
+      return;
+    }
+    List<String> searchDate = date.split('/');
+    String formatDate = '${searchDate[2]}-${searchDate[1]}-${searchDate[0]}';
+
+    List<Rent> noNullDate = rents.map((e) {
+      e.returnDate ??= 'in progress';
+      return e;
+    }).toList();
+
+    List<Rent> list = noNullDate
+        .where((rent) =>
+            rent.creationDate.toString().contains(formatDate) ||
+            rent.forecastDate.toString().contains(formatDate) ||
+            rent.returnDate.toString().contains(formatDate))
+        .toList();
+
+    rentsFilter = list;
   }
 
   @action

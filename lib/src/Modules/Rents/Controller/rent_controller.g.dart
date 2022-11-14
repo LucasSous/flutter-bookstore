@@ -92,6 +92,22 @@ mixin _$RentController on _RentControllerBase, Store {
     });
   }
 
+  late final _$rentsFilterAtom =
+      Atom(name: '_RentControllerBase.rentsFilter', context: context);
+
+  @override
+  List<Rent> get rentsFilter {
+    _$rentsFilterAtom.reportRead();
+    return super.rentsFilter;
+  }
+
+  @override
+  set rentsFilter(List<Rent> value) {
+    _$rentsFilterAtom.reportWrite(value, super.rentsFilter, () {
+      super.rentsFilter = value;
+    });
+  }
+
   late final _$loadingAtom =
       Atom(name: '_RentControllerBase.loading', context: context);
 
@@ -204,6 +220,17 @@ mixin _$RentController on _RentControllerBase, Store {
   }
 
   @override
+  dynamic filterRents(dynamic date) {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.filterRents');
+    try {
+      return super.filterRents(date);
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic filterRentsInProgress(dynamic status) {
     final _$actionInfo = _$_RentControllerBaseActionController.startAction(
         name: '_RentControllerBase.filterRentsInProgress');
@@ -233,6 +260,7 @@ rentsInProgress: ${rentsInProgress},
 finishedRents: ${finishedRents},
 defaultValueRentsInProgress: ${defaultValueRentsInProgress},
 defaultValueFinishedRents: ${defaultValueFinishedRents},
+rentsFilter: ${rentsFilter},
 loading: ${loading},
 loadingDelete: ${loadingDelete},
 loadingFinished: ${loadingFinished}
