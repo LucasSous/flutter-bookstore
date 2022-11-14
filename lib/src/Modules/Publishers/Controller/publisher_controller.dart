@@ -65,17 +65,14 @@ abstract class _PublisherControllerBase with Store {
   updatePublisher(Publisher publisher) async {
     // ignore: unnecessary_null_comparison
     if (publisher != null && publisher.id != null) {
-      loading = true;
       try {
         await publisherRepo.update(publisher);
         showSnackBar('Editora editada com sucesso', 'success');
-        await getAllPublishers();
         Modular.to.pop();
-        // Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar editora', 'error');
       } finally {
-        loading = false;
+        await getAllPublishers();
       }
     }
   }
@@ -84,16 +81,14 @@ abstract class _PublisherControllerBase with Store {
   deletePublisher(Publisher publisher) async {
     // ignore: unnecessary_null_comparison
     if (publisher != null) {
-      loading = true;
       try {
         await publisherRepo.delete(publisher);
         showSnackBar('Editora deletada com sucesso', 'success');
-        Modular.to.pop();
+        Modular.to.navigate('/publishers/');
       } catch (e) {
-        showSnackBar('Erro ao tentar deletar editora', 'error');
+        showSnackBar('Erro: Não é posivel deletar esta editora', 'error');
       } finally {
         await getAllPublishers();
-        loading = false;
       }
     }
   }

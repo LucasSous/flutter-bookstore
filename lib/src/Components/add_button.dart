@@ -9,7 +9,6 @@ class AddButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => {Modular.to.pushNamed(route)},
-      backgroundColor: Theme.of(context).primaryColor,
       child: const Icon(Icons.add),
     );
   }

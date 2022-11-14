@@ -30,10 +30,10 @@ class DefaultTextField extends StatelessWidget {
       onSaved: onSaved,
       controller: controller,
       onTap: onTap,
+      style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
       decoration: InputDecoration(
         labelText: labelText,
         filled: true, //<-- SEE HERE
-        fillColor: Colors.grey.shade200,
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
         hintText: hintText,
@@ -41,8 +41,12 @@ class DefaultTextField extends StatelessWidget {
           icon,
           color: Colors.grey.shade600,
         ),
+        labelStyle:
+            TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
         floatingLabelStyle: TextStyle(
-            color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+            color: Theme.of(context).textTheme.bodyText2?.color,
+            fontWeight: FontWeight.bold),
+        hintStyle: const TextStyle(color: Colors.grey),
         enabledBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(4.0)),

@@ -23,6 +23,8 @@ class Select extends StatelessWidget {
       child: DropdownButtonFormField<String>(
         value: value,
         isExpanded: true,
+        style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
+        dropdownColor: Theme.of(context).colorScheme.primaryContainer,
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: Icon(
@@ -30,9 +32,10 @@ class Select extends StatelessWidget {
             color: Colors.grey.shade600,
           ),
           filled: true,
-          fillColor: Colors.grey.shade200,
           errorBorder: InputBorder.none,
           focusedErrorBorder: InputBorder.none,
+          hintStyle:
+              TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
           floatingLabelStyle: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold),

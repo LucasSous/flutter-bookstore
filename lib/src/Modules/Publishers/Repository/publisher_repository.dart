@@ -26,7 +26,7 @@ class PublisherRepository {
   }
 
   Future<void> update(Publisher publisher) async {
-    await http.put(Uri.parse('${Api.baseURL}/editora'),
+    final response = await http.put(Uri.parse('${Api.baseURL}/editora'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -37,10 +37,14 @@ class PublisherRepository {
           'cidade': publisher.city,
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 
   Future<void> delete(Publisher publisher) async {
-    await http.delete(Uri.parse('${Api.baseURL}/editora'),
+    final response = await http.delete(Uri.parse('${Api.baseURL}/editora'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -51,5 +55,9 @@ class PublisherRepository {
           'cidade': publisher.city,
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 }

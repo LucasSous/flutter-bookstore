@@ -37,6 +37,7 @@ class _BookFormState extends State<BookForm> {
         _formData['publisher'] = book.publisher!.id.toString();
         _formData['launch'] = book.launch.toString();
         _formData['quantity'] = book.quantity.toString();
+        _formData['totalRented'] = book.totalRented.toString();
       }
     }
   }
@@ -64,11 +65,8 @@ class _BookFormState extends State<BookForm> {
     final publishers = publisherController.publishers;
     return Scaffold(
         appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Theme.of(context).primaryColor,
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent),
+          elevation: 0,
+        ),
         body: Observer(builder: (_) {
           return SingleChildScrollView(
             child: Padding(
@@ -186,16 +184,16 @@ class _BookFormState extends State<BookForm> {
                             formKey.currentState!.save();
                             if (_formData['id'] != null) {
                               bookController.updateBook(Book(
-                                id: _formData['id'],
-                                name: _formData['name'],
-                                author: _formData['author'],
-                                publisher: Publisher(
-                                    id: _formData['publisher'],
-                                    name: '',
-                                    city: ''),
-                                launch: _formData['launch'],
-                                quantity: _formData['quantity'],
-                              ));
+                                  id: _formData['id'],
+                                  name: _formData['name'],
+                                  author: _formData['author'],
+                                  publisher: Publisher(
+                                      id: _formData['publisher'],
+                                      name: '',
+                                      city: ''),
+                                  launch: _formData['launch'],
+                                  quantity: _formData['quantity'],
+                                  totalRented: _formData['totalRented']));
                             } else {
                               bookController.createBook(Book(
                                 name: _formData['name'],

@@ -18,7 +18,7 @@ class UsersList extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(5),
         boxShadow: const [
           BoxShadow(blurRadius: 4, color: Colors.black26, offset: Offset(0, 0))
@@ -33,7 +33,6 @@ class UsersList extends StatelessWidget {
               style: BorderStyle.solid),
         )),
         child: ExpansionTile(
-          iconColor: Colors.black,
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Column(
@@ -41,7 +40,9 @@ class UsersList extends StatelessWidget {
               children: [
                 Text(
                   '#${user.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyText2?.color,
+                      fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -51,9 +52,7 @@ class UsersList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                        fontWeight: FontWeight.w500, fontSize: 18),
                   ),
                 )
               ],
@@ -70,20 +69,28 @@ class UsersList extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Endereço:'),
+                        const Text(
+                          'Endereço:',
+                        ),
                         Text('${user.address}, ${user.city}',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16)),
-                        const Text('Email'),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            )),
+                        const Text(
+                          'Email',
+                        ),
                         Text(user.email,
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16))
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ))
                       ],
                     ),
                   ),
@@ -94,8 +101,7 @@ class UsersList extends StatelessWidget {
                             Modular.to
                                 .pushNamed('/users/user_form', arguments: user);
                           },
-                          icon: const Icon(Icons.edit,
-                              size: 18, color: Colors.grey)),
+                          icon: const Icon(Icons.edit, size: 18)),
                       IconButton(
                           onPressed: () {
                             openDialog(
@@ -114,8 +120,7 @@ class UsersList extends StatelessWidget {
                                   Modular.to.pop();
                                 });
                           },
-                          icon: const Icon(Icons.delete,
-                              size: 18, color: Colors.grey))
+                          icon: const Icon(Icons.delete, size: 18))
                     ],
                   )
                 ],

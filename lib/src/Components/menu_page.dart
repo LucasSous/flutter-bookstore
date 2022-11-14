@@ -45,13 +45,9 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Theme.of(context).primaryColor,
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent),
+          elevation: 0,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child:

@@ -7,7 +7,9 @@ class DefaultTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: const TextStyle(
-            fontSize: 25, color: Colors.black, fontWeight: FontWeight.w600));
+        style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).textTheme.bodyText2?.color));
   }
 }

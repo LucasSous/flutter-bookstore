@@ -36,7 +36,7 @@ class BookRepository {
   }
 
   Future<void> update(Book book) async {
-    await http.put(Uri.parse('${Api.baseURL}/livro'),
+    final response = await http.put(Uri.parse('${Api.baseURL}/livro'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -47,13 +47,18 @@ class BookRepository {
           'autor': book.author,
           'editora': {'id': book.publisher?.id},
           'lancamento': book.launch,
-          'quantidade': book.quantity
+          'quantidade': book.quantity,
+          'totalalugado': book.totalRented
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 
   Future<void> delete(Book book) async {
-    await http.delete(Uri.parse('${Api.baseURL}/livro'),
+    final response = await http.delete(Uri.parse('${Api.baseURL}/livro'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -64,8 +69,13 @@ class BookRepository {
           'autor': book.author,
           'editora': {'id': book.publisher?.id},
           'lancamento': book.launch,
-          'quantidade': book.quantity
+          'quantidade': book.quantity,
+          'totalalugado': book.totalRented
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 }

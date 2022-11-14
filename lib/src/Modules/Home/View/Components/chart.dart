@@ -68,14 +68,17 @@ class _ChartState extends State<Chart> {
         children: [
           Text(
             shartLabel,
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 79, 79, 79)),
+                color: Theme.of(context).textTheme.bodyText2?.color),
           ),
           Text(
             quantity,
-            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).textTheme.bodyText2?.color),
           ),
         ],
       )
@@ -86,29 +89,24 @@ class _ChartState extends State<Chart> {
     if (index < 0) return;
     switch (index) {
       case 0:
-        setState(() {
-          shartLabel = 'Em Andamento';
-          quantity = widget.inProgress.toString();
-        });
+        shartLabel = 'Em Andamento';
+        quantity = widget.inProgress.toString();
 
         break;
       case 1:
-        setState(() {
-          shartLabel = 'No Prazo';
-          quantity = widget.onTime.toString();
-        });
+        shartLabel = 'No Prazo';
+        quantity = widget.onTime.toString();
+
         break;
       case 2:
-        setState(() {
-          shartLabel = 'Pendentes';
-          quantity = widget.pending.toString();
-        });
+        shartLabel = 'Pendentes';
+        quantity = widget.pending.toString();
+
         break;
       case 3:
-        setState(() {
-          shartLabel = 'Em Atraso';
-          quantity = widget.late.toString();
-        });
+        shartLabel = 'Em Atraso';
+        quantity = widget.late.toString();
+
         break;
     }
   }
@@ -128,7 +126,7 @@ class _ChartState extends State<Chart> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Theme.of(context).primaryColor,
+            color: const Color(0xFF0FCCF2),
             value: widget.inProgress.toDouble(),
             title: '${returnPercentage(widget.inProgress).toString()}%',
             radius: radius,
@@ -140,7 +138,7 @@ class _ChartState extends State<Chart> {
           );
         case 1:
           return PieChartSectionData(
-            color: const Color.fromARGB(177, 38, 214, 44),
+            color: const Color(0xFF00B2D6),
             value: widget.onTime.toDouble(),
             title: '${returnPercentage(widget.onTime).toString()}%',
             radius: radius,
@@ -152,7 +150,7 @@ class _ChartState extends State<Chart> {
           );
         case 2:
           return PieChartSectionData(
-            color: const Color.fromARGB(255, 255, 126, 13),
+            color: const Color(0xFF0092AF),
             value: widget.pending.toDouble(),
             title: '${returnPercentage(widget.pending).toString()}%',
             radius: radius,
@@ -164,7 +162,7 @@ class _ChartState extends State<Chart> {
           );
         case 3:
           return PieChartSectionData(
-            color: const Color.fromARGB(176, 255, 57, 57),
+            color: const Color(0xFF007187),
             value: widget.late.toDouble(),
             title: '${returnPercentage(widget.late).toString()}%',
             radius: radius,

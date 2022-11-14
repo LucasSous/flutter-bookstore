@@ -17,11 +17,11 @@ class ItemCard extends StatelessWidget {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: cardColor ?? Colors.white,
+          color: cardColor ?? Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
-              color: Color.fromARGB(255, 214, 214, 214),
+              color: Colors.black26,
               blurRadius: 20,
               offset: Offset(0, 0), // Shadow position
             ),
@@ -35,7 +35,9 @@ class ItemCard extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: cardColor != null ? Colors.white70 : Colors.black,
+                  color: cardColor != null
+                      ? Colors.white
+                      : Theme.of(context).textTheme.bodyText2?.color,
                 ),
                 const SizedBox(
                   width: 10,
@@ -43,7 +45,9 @@ class ItemCard extends StatelessWidget {
                 Text(
                   name,
                   style: TextStyle(
-                      color: cardColor != null ? Colors.white70 : Colors.black,
+                      color: cardColor != null
+                          ? Colors.white
+                          : Theme.of(context).textTheme.bodyText2?.color,
                       fontSize: 16),
                 )
               ],
@@ -57,13 +61,17 @@ class ItemCard extends StatelessWidget {
                 Text(
                   quantity,
                   style: TextStyle(
-                    color: cardColor != null ? Colors.white : Colors.black,
+                    color: cardColor != null
+                        ? Colors.white
+                        : Theme.of(context).textTheme.bodyText2?.color,
                     fontSize: 25,
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: Colors.grey,
+                  color: cardColor != null
+                      ? Colors.white70
+                      : Theme.of(context).iconTheme.color,
                   size: 14,
                 ),
               ],

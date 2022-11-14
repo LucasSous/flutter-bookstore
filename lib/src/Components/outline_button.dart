@@ -11,7 +11,7 @@ class OutlineButton extends StatelessWidget {
       required this.click})
       : super(key: key);
 
-  loading() {
+  loading(Text text) {
     if (isLoading) {
       return const Center(
         child: SizedBox(
@@ -24,8 +24,7 @@ class OutlineButton extends StatelessWidget {
         ),
       );
     } else {
-      return Text(text,
-          style: const TextStyle(fontSize: 16, color: Color(0xff123142)));
+      return text;
     }
   }
 
@@ -36,13 +35,16 @@ class OutlineButton extends StatelessWidget {
         height: 40,
         child: ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).colorScheme.primaryContainer),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(
-                            color: Theme.of(context).primaryColor, width: 2)))),
+                        side: const BorderSide(color: Colors.grey, width: 1)))),
             onPressed: click,
-            child: loading()));
+            child: loading(Text(text,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).textTheme.bodyText2?.color)))));
   }
 }

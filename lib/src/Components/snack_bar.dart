@@ -8,11 +8,13 @@ showSnackBar(message, status) {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            message,
-            style: TextStyle(
-                color: status == 'success' ? Colors.green : Colors.red,
-                fontWeight: FontWeight.bold),
+          Flexible(
+            child: Text(
+              message,
+              style: TextStyle(
+                  color: status == 'success' ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
           status == 'success'
               ? const Icon(
@@ -28,5 +30,5 @@ showSnackBar(message, status) {
       backgroundColor:
           status == 'success' ? Colors.green.shade100 : Colors.red.shade100,
       elevation: 5.0,
-      behavior: SnackBarBehavior.floating));
+      behavior: SnackBarBehavior.fixed));
 }

@@ -7,14 +7,14 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade200,
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: Theme.of(context).cardColor,
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.shade400,
@@ -30,8 +30,8 @@ class LoadingPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade200,
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: Theme.of(context).cardColor,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
@@ -45,8 +45,8 @@ class LoadingPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade200,
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: Theme.of(context).cardColor,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
@@ -64,8 +64,8 @@ class LoadingPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade200,
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: Theme.of(context).cardColor,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
@@ -79,8 +79,8 @@ class LoadingPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade200,
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: Theme.of(context).cardColor,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.grey.shade400,
@@ -95,8 +95,8 @@ class LoadingPage extends StatelessWidget {
               height: 20,
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade200,
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: Theme.of(context).cardColor,
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.shade400,
@@ -109,8 +109,8 @@ class LoadingPage extends StatelessWidget {
               height: 20,
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade200,
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: Theme.of(context).cardColor,
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.shade400,

@@ -28,7 +28,7 @@ class UserRepository {
   }
 
   Future<void> update(User user) async {
-    await http.put(Uri.parse('${Api.baseURL}/usuario'),
+    final response = await http.put(Uri.parse('${Api.baseURL}/usuario'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -41,10 +41,14 @@ class UserRepository {
           'email': user.email
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 
   Future<void> delete(User user) async {
-    await http.delete(Uri.parse('${Api.baseURL}/usuario'),
+    final response = await http.delete(Uri.parse('${Api.baseURL}/usuario'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -57,5 +61,9 @@ class UserRepository {
           'email': user.email
         }),
         encoding: Encoding.getByName("utf-8"));
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 }

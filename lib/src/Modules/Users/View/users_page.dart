@@ -26,7 +26,6 @@ class _UsersPageState extends State<UsersPage> {
             return const LoadingPage();
           } else {
             return Scaffold(
-              backgroundColor: Theme.of(context).backgroundColor,
               appBar: DefaultAppBar(
                   title: 'Usuários',
                   border: true,
@@ -37,7 +36,7 @@ class _UsersPageState extends State<UsersPage> {
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 8, bottom: 80, left: 8, right: 8),
+                      top: 12, bottom: 80, left: 12, right: 12),
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

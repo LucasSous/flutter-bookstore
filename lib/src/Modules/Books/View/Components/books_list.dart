@@ -37,7 +37,7 @@ class BooksList extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(5),
         boxShadow: const [
           BoxShadow(blurRadius: 4, color: Colors.black26, offset: Offset(0, 0))
@@ -52,7 +52,6 @@ class BooksList extends StatelessWidget {
               style: BorderStyle.solid),
         )),
         child: ExpansionTile(
-          iconColor: Colors.black,
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Column(
@@ -60,7 +59,7 @@ class BooksList extends StatelessWidget {
               children: [
                 Text(
                   '#${book.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -70,9 +69,7 @@ class BooksList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                        fontWeight: FontWeight.w500, fontSize: 18),
                   ),
                 )
               ],
@@ -122,8 +119,7 @@ class BooksList extends StatelessWidget {
                             Modular.to
                                 .pushNamed('/books/form', arguments: book);
                           },
-                          icon: const Icon(Icons.edit,
-                              size: 18, color: Colors.grey)),
+                          icon: const Icon(Icons.edit, size: 18)),
                       IconButton(
                           onPressed: () {
                             openDialog(
@@ -132,21 +128,20 @@ class BooksList extends StatelessWidget {
                                 message: 'O livro ${book.name} será deletado!',
                                 confirm: () {
                                   bookController.deleteBook(Book(
-                                    id: book.id,
-                                    name: book.name,
-                                    author: book.author,
-                                    publisher: Publisher(
-                                        id: book.publisher?.id,
-                                        name: '',
-                                        city: ''),
-                                    launch: book.launch,
-                                    quantity: book.quantity,
-                                  ));
+                                      id: book.id,
+                                      name: book.name,
+                                      author: book.author,
+                                      publisher: Publisher(
+                                          id: book.publisher?.id,
+                                          name: '',
+                                          city: ''),
+                                      launch: book.launch,
+                                      quantity: book.quantity,
+                                      totalRented: book.totalRented));
                                   Modular.to.pop();
                                 });
                           },
-                          icon: const Icon(Icons.delete,
-                              size: 18, color: Colors.grey))
+                          icon: const Icon(Icons.delete, size: 18))
                     ],
                   )
                 ],

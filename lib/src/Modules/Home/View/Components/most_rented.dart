@@ -10,11 +10,11 @@ class MostRentedCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(255, 214, 214, 214),
+            color: Colors.black26,
             blurRadius: 20,
             offset: Offset(0, 0), // Shadow position
           ),
@@ -25,16 +25,29 @@ class MostRentedCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              children: const [
-                Icon(
-                  Icons.bar_chart_rounded,
-                  size: 30,
-                  color: Colors.grey,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3FCEEB),
+                    borderRadius: BorderRadius.circular(4),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 20,
+                        offset: Offset(0, 0), // Shadow position
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.bar_chart_rounded,
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
-                Text(
+                const Text(
                   'Livro mais alugado',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),

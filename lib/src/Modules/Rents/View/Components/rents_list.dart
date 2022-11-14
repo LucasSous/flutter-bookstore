@@ -94,7 +94,7 @@ class RentsList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 7),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(5),
                   boxShadow: const [
                     BoxShadow(
@@ -113,11 +113,9 @@ class RentsList extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Cliente: ',
-                                  style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 18),
+                                  style: TextStyle(fontSize: 18),
                                 ),
                                 Expanded(
                                   child: Text(
@@ -134,11 +132,9 @@ class RentsList extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Livro: ',
-                                  style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 18),
+                                  style: TextStyle(fontSize: 18),
                                 ),
                                 Expanded(
                                   child: Text(rent.book!.name,
@@ -157,7 +153,6 @@ class RentsList extends StatelessWidget {
                       const Icon(
                         Icons.arrow_forward_ios,
                         size: 12,
-                        color: Colors.grey,
                       )
                     ],
                   ),

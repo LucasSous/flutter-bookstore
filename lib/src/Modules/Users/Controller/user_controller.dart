@@ -64,17 +64,14 @@ abstract class _UserControllerBase with Store {
   updateUser(User user) async {
     // ignore: unnecessary_null_comparison
     if (user != null && user.id != null) {
-      loading = true;
       try {
         await userRepo.update(user);
         showSnackBar('Usuário editado com sucesso', 'success');
-        await getAllUsers();
         Modular.to.pop();
-        // Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar usuário', 'error');
       } finally {
-        loading = false;
+        await getAllUsers();
       }
     }
   }
@@ -83,16 +80,14 @@ abstract class _UserControllerBase with Store {
   deleteUser(User user) async {
     // ignore: unnecessary_null_comparison
     if (user != null) {
-      loading = true;
       try {
         await userRepo.delete(user);
         showSnackBar('Usuário deletado com sucesso', 'success');
-        Modular.to.pop();
+        Modular.to.navigate('/users/');
       } catch (e) {
-        showSnackBar('Erro ao tentar deletar usuário', 'error');
+        showSnackBar('Erro: Não é possivel deletar este usuário', 'error');
       } finally {
         await getAllUsers();
-        loading = false;
       }
     }
   }

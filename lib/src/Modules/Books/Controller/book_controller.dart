@@ -63,16 +63,16 @@ abstract class _BookControllerBase with Store {
   @action
   updateBook(Book book) async {
     // ignore: unnecessary_null_comparison
-    if (book != null) {
+    if (book != null && book.id != null) {
       loading = true;
       try {
         await bookRepo.update(book);
         showSnackBar('Livro editado com sucesso', 'success');
-        await getAllBooks();
         Modular.to.pop();
       } catch (e) {
         showSnackBar('Erro ao tentar editar livro', 'error');
       } finally {
+        await getAllBooks();
         loading = false;
       }
     }
@@ -82,16 +82,14 @@ abstract class _BookControllerBase with Store {
   deleteBook(Book book) async {
     // ignore: unnecessary_null_comparison
     if (book != null) {
-      loading = true;
       try {
         await bookRepo.delete(book);
         showSnackBar('Livro deletado com sucesso', 'success');
-        Modular.to.pop();
+        Modular.to.navigate('/books/');
       } catch (e) {
-        showSnackBar('Erro ao tentar deletar livro', 'error');
+        showSnackBar('Não é possivel deletar este livro', 'error');
       } finally {
         await getAllBooks();
-        loading = false;
       }
     }
   }

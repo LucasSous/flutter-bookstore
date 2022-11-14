@@ -29,7 +29,8 @@ class _RentsInProgressState extends State<RentsInProgress> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 80, left: 8, right: 8),
+          padding:
+              const EdgeInsets.only(top: 12, bottom: 80, left: 12, right: 12),
           child: Observer(
               name: 'observerRentsInProgress',
               builder: (_) {
@@ -53,6 +54,10 @@ class _RentsInProgressState extends State<RentsInProgress> {
                             height: 40,
                             child: DropdownButton<String>(
                                 value: _filterValue,
+                                style: Theme.of(context).textTheme.bodyText2,
+                                dropdownColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
                                 items: filterRents.map((item) {
                                   return DropdownMenuItem(
                                     value: item,

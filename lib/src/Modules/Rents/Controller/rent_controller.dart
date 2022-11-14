@@ -205,7 +205,7 @@ abstract class _RentControllerBase with Store {
       try {
         await rentRepo.delete(rent);
         showSnackBar('Aluguél cancelado com sucesso', 'success');
-        Modular.to.pop();
+        Modular.to.navigate('/rents/');
       } catch (e) {
         showSnackBar('Erro ao tentar cancelar aluguél', 'error');
       } finally {

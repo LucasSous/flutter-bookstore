@@ -58,11 +58,8 @@ class _UserFormState extends State<UserForm> {
     final userController = Modular.get<UserController>();
     return Scaffold(
         appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Theme.of(context).primaryColor,
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent),
+          elevation: 0,
+        ),
         body: Observer(builder: (_) {
           return SingleChildScrollView(
             child: Padding(

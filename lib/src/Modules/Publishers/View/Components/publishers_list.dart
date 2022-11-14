@@ -18,7 +18,7 @@ class PublishersList extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(5),
         boxShadow: const [
           BoxShadow(blurRadius: 4, color: Colors.black26, offset: Offset(0, 0))
@@ -33,7 +33,6 @@ class PublishersList extends StatelessWidget {
               style: BorderStyle.solid),
         )),
         child: ExpansionTile(
-          iconColor: Colors.black,
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Column(
@@ -41,7 +40,7 @@ class PublishersList extends StatelessWidget {
               children: [
                 Text(
                   '#${publisher.id}',
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -51,9 +50,7 @@ class PublishersList extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                        fontWeight: FontWeight.w500, fontSize: 18),
                   ),
                 )
               ],
@@ -87,8 +84,7 @@ class PublishersList extends StatelessWidget {
                             Modular.to.pushNamed('/publishers/form',
                                 arguments: publisher);
                           },
-                          icon: const Icon(Icons.edit,
-                              size: 18, color: Colors.grey)),
+                          icon: const Icon(Icons.edit, size: 18)),
                       IconButton(
                           onPressed: () {
                             openDialog(
@@ -104,8 +100,7 @@ class PublishersList extends StatelessWidget {
                                   Modular.to.pop();
                                 });
                           },
-                          icon: const Icon(Icons.delete,
-                              size: 18, color: Colors.grey))
+                          icon: const Icon(Icons.delete, size: 18))
                     ],
                   )
                 ],

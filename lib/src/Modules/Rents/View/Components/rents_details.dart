@@ -173,13 +173,9 @@ class _RentsDetailState extends State<RentsDetail> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Theme.of(context).primaryColor,
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent),
+        elevation: 0,
+      ),
       body: Builder(builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(18.0),

@@ -17,15 +17,11 @@ class DefaultAppBar extends StatelessWidget with PreferredSizeWidget {
       title: DefaultTitle(text: title ?? ''),
       centerTitle: true,
       elevation: elevation ?? 1,
-      backgroundColor: Colors.white,
       leading: IconButton(
         onPressed: () {
           Modular.to.pushNamed('/menu');
         },
-        icon: const Icon(
-          Icons.menu,
-          color: Colors.black,
-        ),
+        icon: const Icon(Icons.menu),
       ),
       shape: border == true
           ? Border(
@@ -37,9 +33,9 @@ class DefaultAppBar extends StatelessWidget with PreferredSizeWidget {
           : null,
       actions: <Widget>[
         IconButton(
-            onPressed: search,
-            icon: const Icon(Icons.search),
-            color: Colors.black)
+          onPressed: search,
+          icon: const Icon(Icons.search),
+        )
       ],
     );
   }

@@ -14,28 +14,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Modular.get<HomeController>();
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
             Modular.to.pushNamed('/menu');
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
+          icon: const Icon(Icons.menu),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings_outlined,
-              color: Colors.black,
-            ),
-          )
-        ],
       ),
       body: Observer(builder: (_) {
         if (homeController.loadingRents ||
@@ -47,14 +33,16 @@ class HomePage extends StatelessWidget {
         } else {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Informações Gerais',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -102,11 +90,11 @@ class HomePage extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color.fromARGB(255, 214, 214, 214),
+                            color: Colors.black26,
                             blurRadius: 10,
                             offset: Offset(0, 0), // Shadow position
                           ),
@@ -120,7 +108,9 @@ class HomePage extends StatelessWidget {
                             const Text(
                               'Status dos Aluguéis',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             const SizedBox(
                               height: 10,

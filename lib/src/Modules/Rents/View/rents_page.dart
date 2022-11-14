@@ -37,7 +37,6 @@ class _RentsPageState extends State<RentsPage> {
             return DefaultTabController(
               length: 2,
               child: Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
                 appBar: DefaultAppBar(
                   title: 'Aluguéis',
                   search: () {},
@@ -45,69 +44,61 @@ class _RentsPageState extends State<RentsPage> {
                 ),
                 body: Column(
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: TabBar(
-                          indicatorWeight: 3.0,
-                          indicatorColor: Theme.of(context).primaryColor,
-                          labelColor: Theme.of(context).primaryColor,
-                          labelStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          onTap: (value) => {
-                                Timer(const Duration(seconds: 1),
-                                    () => rentController.updateLists())
-                              },
-                          tabs: [
-                            Tab(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Expanded(
-                                      child: Text(
-                                    'Em Andamento',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.fade,
-                                    softWrap: false,
-                                    textAlign: TextAlign.center,
-                                  )),
-                                  const SizedBox(
-                                    width: 5,
+                    TabBar(
+                        indicatorWeight: 3.0,
+                        indicatorColor: Theme.of(context).primaryColor,
+                        labelStyle: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        onTap: (value) => {
+                              Timer(const Duration(seconds: 1),
+                                  () => rentController.updateLists())
+                            },
+                        tabs: [
+                          Tab(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Expanded(
+                                    child: Text(
+                                  'Em Andamento',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.fade,
+                                  softWrap: false,
+                                  textAlign: TextAlign.center,
+                                )),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  height: 18,
+                                  width: 18,
+                                  padding: const EdgeInsets.all(1.0),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        rentController
+                                            .defaultValueRentsInProgress.length
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    height: 18,
-                                    width: 18,
-                                    padding: const EdgeInsets.all(1.0),
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          rentController
-                                              .defaultValueRentsInProgress
-                                              .length
-                                              .toString(),
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                            const Tab(
-                              text: 'Finalizados',
-                            )
-                          ]),
-                    ),
+                          ),
+                          const Tab(
+                            text: 'Finalizados',
+                          )
+                        ]),
                     const Expanded(
                       child: TabBarView(
                         children: [RentsInProgress(), FinishedRents()],

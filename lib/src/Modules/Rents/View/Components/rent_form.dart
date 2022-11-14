@@ -54,11 +54,8 @@ class _RentFormState extends State<RentForm> {
     final books = bookController.books;
     return Scaffold(
         appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Theme.of(context).primaryColor,
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent),
+          elevation: 0,
+        ),
         body: Observer(builder: (_) {
           return SingleChildScrollView(
             child: Padding(
@@ -130,11 +127,15 @@ class _RentFormState extends State<RentForm> {
                                   colorScheme: ColorScheme.light(
                                     primary: Theme.of(context).primaryColor,
                                     onPrimary: Colors.white,
-                                    onSurface: Colors.black,
+                                    onSurface:
+                                        Theme.of(context).colorScheme.onSurface,
                                   ),
                                   textButtonTheme: TextButtonThemeData(
                                     style: TextButton.styleFrom(
-                                      foregroundColor: Colors.black,
+                                      foregroundColor: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.color,
                                     ),
                                   ),
                                 ),

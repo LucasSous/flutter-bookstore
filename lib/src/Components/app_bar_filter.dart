@@ -16,14 +16,15 @@ class AppBarFilter extends StatelessWidget implements PreferredSizeWidget {
         child: TextField(
           onChanged: onChanged,
           autofocus: true,
+          style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
             hintText: "Pesquisar",
-            suffixIcon: const Icon(
+            suffixIcon: Icon(
               Icons.search,
-              color: Colors.black,
+              color: Theme.of(context).iconTheme.color,
             ),
+            hintStyle: const TextStyle(color: Colors.grey),
             filled: true, //<-- SEE HERE
-            fillColor: Colors.grey.shade200,
             enabledBorder: UnderlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(4.0)),
@@ -33,9 +34,7 @@ class AppBarFilter extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-      leading: const BackButton(color: Colors.black),
       leadingWidth: 30,
-      backgroundColor: Colors.white,
       shape: Border(
         bottom: BorderSide(
             width: 1, color: Colors.grey.shade500, style: BorderStyle.solid),
