@@ -4,6 +4,7 @@ import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.
 import 'package:flutter_bookstore2/src/Modules/Rents/Repository/rent_repository.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rent_form.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_details.dart';
+import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_filter.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/View/rents_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Repository/user_repository.dart';
@@ -32,5 +33,9 @@ class RentsModlule extends Module {
         ChildRoute('/form',
             child: (context, args) => RentForm(rent: args.data),
             transition: TransitionType.rightToLeft),
+        ChildRoute('/filter',
+            child: (context, args) => const RentsFilter(),
+            transition: TransitionType.downToUp,
+            duration: const Duration(milliseconds: 150)),
       ];
 }

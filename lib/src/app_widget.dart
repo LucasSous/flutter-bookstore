@@ -12,42 +12,44 @@ class AppWidget extends StatefulWidget {
 
 class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   final ThemeData _lightTheme = ThemeData(
-    primaryColor: const Color(0xFF00B2D6),
-    backgroundColor: Colors.white,
-    cardColor: Colors.grey.shade300,
-    scaffoldBackgroundColor: Colors.white,
-    iconTheme: const IconThemeData(
-      color: Colors.black,
-    ),
-    textTheme: const TextTheme(
-      bodyText2: TextStyle(color: Colors.black),
-    ),
-    inputDecorationTheme: InputDecorationTheme(fillColor: Colors.grey.shade200),
-    appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        )),
-    tabBarTheme: const TabBarTheme(labelColor: Colors.black),
-    expansionTileTheme: const ExpansionTileThemeData(
-      iconColor: Colors.black,
-      collapsedIconColor: Colors.black,
-      textColor: Colors.black,
-      collapsedTextColor: Colors.black,
-    ),
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: Colors.black,
-        secondary: const Color(0xFF00B2D6),
-        primaryContainer: Colors.white,
-        secondaryContainer: const Color(0xFF00B2D6),
-        onSurface: Colors.black),
-  );
+      primaryColor: const Color(0xFF00B2D6),
+      backgroundColor: Colors.white,
+      cardColor: Colors.grey.shade300,
+      scaffoldBackgroundColor: Colors.white,
+      iconTheme: const IconThemeData(
+        color: Colors.black,
+      ),
+      textTheme: const TextTheme(
+        bodyText2: TextStyle(color: Colors.black),
+      ),
+      inputDecorationTheme:
+          InputDecorationTheme(fillColor: Colors.grey.shade200),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          )),
+      tabBarTheme: const TabBarTheme(labelColor: Colors.black),
+      expansionTileTheme: const ExpansionTileThemeData(
+        iconColor: Colors.black,
+        collapsedIconColor: Colors.black,
+        textColor: Colors.black,
+        collapsedTextColor: Colors.black,
+      ),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.black,
+          secondary: const Color(0xFF00B2D6),
+          primaryContainer: Colors.white,
+          secondaryContainer: const Color(0xFF00B2D6),
+          onSurface: Colors.black),
+      shadowColor: Colors.black26,
+      dividerColor: Colors.grey.shade300);
 
   final ThemeData _darkTheme = ThemeData(
       primaryColor: const Color(0xFF00B2D6),
       cardColor: const Color(0xFF3F3F3F),
       backgroundColor: Colors.white,
-      scaffoldBackgroundColor: const Color(0xFF242424),
+      scaffoldBackgroundColor: const Color(0xFF2A2A2A),
       iconTheme: const IconThemeData(
         color: Colors.grey,
       ),
@@ -57,7 +59,7 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
       inputDecorationTheme:
           const InputDecorationTheme(fillColor: Color(0xFF3B3B3B)),
       appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF242424),
+          backgroundColor: Color(0xFF2A2A2A),
           iconTheme: IconThemeData(
             color: Colors.grey,
           )),
@@ -72,7 +74,7 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
       colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Colors.white,
           secondary: const Color(0xFF00B2D6),
-          primaryContainer: const Color(0xFF3B3B3B),
+          primaryContainer: const Color(0xFF303030),
           secondaryContainer: const Color(0xFF00B2D6),
           onSurface: Colors.white),
       dialogTheme: const DialogTheme(
@@ -80,7 +82,9 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
             0xFF4F4F4F,
           ),
           titleTextStyle: TextStyle(color: Colors.white),
-          contentTextStyle: TextStyle(color: Colors.white)));
+          contentTextStyle: TextStyle(color: Colors.white)),
+      shadowColor: Colors.black54,
+      dividerColor: Colors.grey.shade700);
 
   bool isDark = false;
 

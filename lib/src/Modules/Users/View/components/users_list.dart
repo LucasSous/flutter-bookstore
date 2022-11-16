@@ -20,8 +20,11 @@ class UsersList extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(5),
-        boxShadow: const [
-          BoxShadow(blurRadius: 4, color: Colors.black26, offset: Offset(0, 0))
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 10,
+              color: Theme.of(context).shadowColor,
+              offset: const Offset(0, 0))
         ],
       ),
       child: Container(

@@ -96,11 +96,11 @@ class RentsList extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black26,
-                        offset: Offset(0, 0))
+                        blurRadius: 20,
+                        color: Theme.of(context).shadowColor,
+                        offset: const Offset(0, 0))
                   ],
                 ),
                 child: Padding(

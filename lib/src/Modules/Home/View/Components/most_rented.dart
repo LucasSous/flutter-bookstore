@@ -30,11 +30,11 @@ class MostRentedCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFF3FCEEB),
                     borderRadius: BorderRadius.circular(4),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 20,
-                        offset: Offset(0, 0), // Shadow position
+                        offset: const Offset(0, 0), // Shadow position
                       ),
                     ],
                   ),
