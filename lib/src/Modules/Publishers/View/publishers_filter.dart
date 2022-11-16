@@ -34,7 +34,7 @@ class PublishersFilter extends StatelessWidget {
         appBar: AppBarFilter(
             onChanged: (text) => publisher.filter(text.toString())),
         body: Padding(
-            padding: const EdgeInsets.all(8.0), child: returns(publisher)),
+            padding: const EdgeInsets.all(12.0), child: returns(publisher)),
       );
     });
   }

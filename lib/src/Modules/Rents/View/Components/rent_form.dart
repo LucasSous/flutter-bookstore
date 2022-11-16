@@ -112,6 +112,7 @@ class _RentFormState extends State<RentForm> {
                         labelText: 'Previsão de entrega',
                         hintText: 'Selecione uma data',
                         controller: _date,
+                        readOnly: true,
                         icon: Icons.calendar_today_outlined,
                         onTap: () async {
                           DateTime? pickeddate = await showDatePicker(

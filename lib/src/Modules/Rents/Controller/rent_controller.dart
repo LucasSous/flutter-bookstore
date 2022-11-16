@@ -15,8 +15,6 @@ abstract class _RentControllerBase with Store {
 
   _RentControllerBase(this.rentRepo) {
     getAllRents();
-    getRentsInProgress();
-    getFinishedRents();
   }
 
   @observable
@@ -53,6 +51,8 @@ abstract class _RentControllerBase with Store {
       final response = await rentRepo.getAll();
       response.sort((a, b) => b.id.compareTo(a.id));
       rents = response;
+      getRentsInProgress();
+      getFinishedRents();
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis', 'error');
     } finally {
@@ -62,10 +62,8 @@ abstract class _RentControllerBase with Store {
 
   @action
   getRentsInProgress() async {
-    loading = true;
     try {
-      final response = await rentRepo.getAll();
-      List<Rent> noNullDate = response.map((e) {
+      List<Rent> noNullDate = rents.map((e) {
         e.returnDate ??= 'in progress';
         return e;
       }).toList();
@@ -78,17 +76,13 @@ abstract class _RentControllerBase with Store {
       defaultValueRentsInProgress = filter;
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis em andamento', 'error');
-    } finally {
-      loading = false;
     }
   }
 
   @action
   getFinishedRents() async {
-    loading = true;
     try {
-      final response = await rentRepo.getAll();
-      List<Rent> noNullDate = response.map((e) {
+      List<Rent> noNullDate = rents.map((e) {
         e.returnDate ??= 'in progress';
         return e;
       }).toList();
@@ -101,8 +95,6 @@ abstract class _RentControllerBase with Store {
       defaultValueFinishedRents = filter;
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis finalizados', 'error');
-    } finally {
-      loading = false;
     }
   }
 
@@ -182,8 +174,8 @@ abstract class _RentControllerBase with Store {
 
   @action
   updateLists() {
-    finishedRents = defaultValueFinishedRents;
-    rentsInProgress = defaultValueRentsInProgress;
+    getFinishedRents();
+    getRentsInProgress();
   }
 
   @action
@@ -199,7 +191,6 @@ abstract class _RentControllerBase with Store {
         showSnackBar('Erro ao tentar cadastar aluguél', 'error');
       } finally {
         await getAllRents();
-        await getRentsInProgress();
         loading = false;
       }
     }
@@ -217,8 +208,7 @@ abstract class _RentControllerBase with Store {
       } catch (e) {
         showSnackBar('Erro ao tentar finalizar aluguél', 'error');
       } finally {
-        await getRentsInProgress();
-        await getFinishedRents();
+        await getAllRents();
         loadingFinished = false;
       }
     }
@@ -236,7 +226,7 @@ abstract class _RentControllerBase with Store {
       } catch (e) {
         showSnackBar('Erro ao tentar cancelar aluguél', 'error');
       } finally {
-        await getRentsInProgress();
+        await getAllRents();
         loadingDelete = false;
       }
     }

@@ -54,6 +54,7 @@ class HomePage extends StatelessWidget {
                           icon: Icons.person_outline,
                           quantity: homeController.users.length.toString(),
                           cardColor: Theme.of(context).primaryColor,
+                          route: '/users/',
                         ),
                         const SizedBox(
                           width: 10,
@@ -62,6 +63,7 @@ class HomePage extends StatelessWidget {
                           name: 'Editoras',
                           icon: Icons.person_outline,
                           quantity: homeController.publishers.length.toString(),
+                          route: '/publishers/',
                         )
                       ],
                     ),
@@ -74,6 +76,7 @@ class HomePage extends StatelessWidget {
                           name: 'Livros',
                           icon: Icons.book_outlined,
                           quantity: homeController.books.length.toString(),
+                          route: '/books/',
                         ),
                         const SizedBox(
                           width: 10,
@@ -82,6 +85,7 @@ class HomePage extends StatelessWidget {
                           name: 'Aluguéis',
                           icon: Icons.calendar_today_outlined,
                           quantity: homeController.rents.length.toString(),
+                          route: '/rents/',
                         )
                       ],
                     ),
@@ -92,11 +96,11 @@ class HomePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            offset: Offset(0, 0), // Shadow position
+                            color: Theme.of(context).shadowColor,
+                            blurRadius: 20,
+                            offset: const Offset(0, 0), // Shadow position
                           ),
                         ],
                       ),

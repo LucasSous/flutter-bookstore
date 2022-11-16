@@ -39,7 +39,10 @@ class _RentsPageState extends State<RentsPage> {
               child: Scaffold(
                 appBar: DefaultAppBar(
                   title: 'Aluguéis',
-                  search: () {},
+                  search: () {
+                    Modular.to.pushNamed('/rents/filter');
+                    rentController.filterRents('');
+                  },
                   elevation: 0,
                 ),
                 body: Column(

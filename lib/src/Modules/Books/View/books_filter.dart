@@ -33,7 +33,8 @@ class BooksFilter extends StatelessWidget {
         appBar: AppBarFilter(
             onChanged: (text) => bookController.filter(text.toString())),
         body: Padding(
-            padding: const EdgeInsets.all(8.0), child: returns(bookController)),
+            padding: const EdgeInsets.all(12.0),
+            child: returns(bookController)),
       );
     });
   }

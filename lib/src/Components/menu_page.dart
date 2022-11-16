@@ -17,7 +17,7 @@ class MenuPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(icon),
                   const SizedBox(
@@ -55,14 +55,14 @@ class MenuPage extends StatelessWidget {
             const DefaultTitle(text: 'Menu'),
             const SizedBox(height: 30),
             itemStyle('Dashboard', Icons.dashboard_outlined, '/'),
-            Divider(color: Colors.grey.shade300),
+            const Divider(),
             itemStyle('Usuários', Icons.people_alt_outlined, '/users/'),
-            Divider(color: Colors.grey.shade300),
+            const Divider(),
             itemStyle(
                 'Editoras', Icons.align_vertical_bottom_sharp, '/publishers/'),
-            Divider(color: Colors.grey.shade300),
+            const Divider(),
             itemStyle('Livros', Icons.book_outlined, '/books/'),
-            Divider(color: Colors.grey.shade300),
+            const Divider(),
             itemStyle('Aluguéis', Icons.calendar_today, '/rents/'),
           ]),
         ));

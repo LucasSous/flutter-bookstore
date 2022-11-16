@@ -122,7 +122,7 @@ class _ChartState extends State<Chart> {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final radius = isTouched ? 50.0 : 40.0;
       switch (i) {
         case 0:
           return PieChartSectionData(

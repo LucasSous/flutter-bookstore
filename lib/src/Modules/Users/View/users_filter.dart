@@ -33,7 +33,8 @@ class UsersFilter extends StatelessWidget {
         appBar: AppBarFilter(
             onChanged: (text) => userController.filter(text.toString())),
         body: Padding(
-            padding: const EdgeInsets.all(8.0), child: returns(userController)),
+            padding: const EdgeInsets.all(12.0),
+            child: returns(userController)),
       );
     });
   }

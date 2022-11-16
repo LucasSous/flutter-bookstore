@@ -9,6 +9,7 @@ class DefaultTextField extends StatelessWidget {
   final Function(String?) onSaved;
   final Function()? onTap;
   final TextEditingController? controller;
+  final bool? readOnly;
   const DefaultTextField(
       {Key? key,
       required this.labelText,
@@ -18,7 +19,8 @@ class DefaultTextField extends StatelessWidget {
       required this.validation,
       required this.onSaved,
       this.onTap,
-      this.controller})
+      this.controller,
+      this.readOnly})
       : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class DefaultTextField extends StatelessWidget {
       onSaved: onSaved,
       controller: controller,
       onTap: onTap,
+      readOnly: readOnly ?? false,
       style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
       decoration: InputDecoration(
         labelText: labelText,
