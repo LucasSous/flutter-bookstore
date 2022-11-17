@@ -49,6 +49,7 @@ class _RentsPageState extends State<RentsPage> {
                   children: [
                     TabBar(
                         indicatorWeight: 3.0,
+                        physics: const NeverScrollableScrollPhysics(),
                         indicatorColor: Theme.of(context).primaryColor,
                         labelStyle: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),

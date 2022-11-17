@@ -36,131 +36,117 @@ class RentsList extends StatelessWidget {
       }
     }
 
-    tooltipMessage() {
-      if (rent.returnDate != null && rent.returnDate != 'in progress') {
-        DateTime returnDate = DateTime.parse(rent.returnDate);
-        if (returnDate.compareTo(forecastDate) <= 0) {
-          return 'No prazo';
-        } else {
-          return 'Em atraso';
-        }
-      } else {
-        if (forecastDate.compareTo(currentDate) < 0) {
-          return "Pendente";
-        } else {
-          return 'Em andamento';
-        }
-      }
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Tooltip(
-            message: tooltipMessage(),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  color: color()!,
-                  size: 20,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  formatDate(rent.creationDate),
-                  style: TextStyle(color: color()!, fontSize: 10),
-                ),
-                Text(
-                  ' até ',
-                  style: TextStyle(color: color()!, fontSize: 10),
-                ),
-                Text(
-                  formatDate(rent.forecastDate),
-                  style: TextStyle(color: color()!, fontSize: 10),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8.0),
-          Flexible(
-            child: GestureDetector(
-              onTap: () {
-                Modular.to.pushNamed('/rents/details', arguments: rent);
-              },
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 7),
+    return GestureDetector(
+      onTap: () {
+        Modular.to.pushNamed('/rents/details', arguments: rent);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 7),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 10,
+                color: Theme.of(context).shadowColor,
+                offset: const Offset(0, 0))
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(4),
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 20,
+                        blurRadius: 10,
                         color: Theme.of(context).shadowColor,
                         offset: const Offset(0, 0))
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  'Cliente: ',
-                                  style: TextStyle(fontSize: 18),
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.calendar_today,
+                    color: color()!,
+                    size: 18,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'Cliente: ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  rent.user!.name,
+                                  overflow: TextOverflow.fade,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    rent.user!.name,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Livro: ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Expanded(
+                                child: Text(rent.book!.name,
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
                                     softWrap: false,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Livro: ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Expanded(
-                                  child: Text(rent.book!.name,
-                                      overflow: TextOverflow.fade,
-                                      maxLines: 1,
-                                      softWrap: false,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18)),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+                                        fontSize: 18)),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${formatDate(rent.creationDate)} até ${formatDate(rent.forecastDate)}',
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 12),
+                          ),
+                        ],
                       ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 12,
-                      )
-                    ],
-                  ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 12,
+                    )
+                  ],
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

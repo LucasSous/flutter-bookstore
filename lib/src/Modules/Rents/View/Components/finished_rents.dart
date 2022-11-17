@@ -17,10 +17,32 @@ class _FinishedRentsState extends State<FinishedRents> {
   final filterRents = ['Todos', 'Em atraso', 'No prazo'];
   late String _filterValue = 'Todos';
 
+  final ScrollController _scrollController = ScrollController();
+
   updateFilterValue(value) {
     setState(() {
       _filterValue = value;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(findAll);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  findAll() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        _filterValue == 'Todos') {
+      rentController.getFinishedRents(false);
+    }
   }
 
   final rentController = Modular.get<RentController>();
@@ -28,6 +50,7 @@ class _FinishedRentsState extends State<FinishedRents> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Padding(
           padding:
               const EdgeInsets.only(top: 12, bottom: 80, left: 12, right: 12),
@@ -72,8 +95,12 @@ class _FinishedRentsState extends State<FinishedRents> {
                           )
                         ],
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: rentController.finishedRents.length,
                           itemBuilder: (ctx, i) =>

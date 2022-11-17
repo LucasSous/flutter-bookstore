@@ -16,6 +16,7 @@ class RentsInProgress extends StatefulWidget {
 class _RentsInProgressState extends State<RentsInProgress> {
   final filterRents = ['Todos', 'Pendentes', 'Em andamento'];
   late String _filterValue = 'Todos';
+  final ScrollController _scrollController = ScrollController();
 
   updateFilterValue(value) {
     setState(() {
@@ -23,11 +24,32 @@ class _RentsInProgressState extends State<RentsInProgress> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(findAll);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  findAll() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        _filterValue == 'Todos') {
+      rentController.getRentsInProgress(false);
+    }
+  }
+
   final rentController = Modular.get<RentController>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Padding(
           padding:
               const EdgeInsets.only(top: 12, bottom: 80, left: 12, right: 12),
@@ -71,6 +93,9 @@ class _RentsInProgressState extends State<RentsInProgress> {
                                 }),
                           )
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),

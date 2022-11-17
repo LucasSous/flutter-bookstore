@@ -168,17 +168,18 @@ mixin _$RentController on _RentControllerBase, Store {
       AsyncAction('_RentControllerBase.getRentsInProgress', context: context);
 
   @override
-  Future getRentsInProgress() {
+  Future getRentsInProgress(bool showAll) {
     return _$getRentsInProgressAsyncAction
-        .run(() => super.getRentsInProgress());
+        .run(() => super.getRentsInProgress(showAll));
   }
 
   late final _$getFinishedRentsAsyncAction =
       AsyncAction('_RentControllerBase.getFinishedRents', context: context);
 
   @override
-  Future getFinishedRents() {
-    return _$getFinishedRentsAsyncAction.run(() => super.getFinishedRents());
+  Future getFinishedRents(bool showAll) {
+    return _$getFinishedRentsAsyncAction
+        .run(() => super.getFinishedRents(showAll));
   }
 
   late final _$createRentAsyncAction =

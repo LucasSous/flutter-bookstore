@@ -6,10 +6,19 @@ import 'package:http/http.dart' as http;
 
 class UserRepository {
   Future<List<User>> getAll() async {
-    final response = await http.get(Uri.parse('${Api.baseURL}/usuarios'));
-    final body = (jsonDecode(utf8.decode(response.bodyBytes)) as List);
-    final data = body.map((item) => User.fromJson(item)).toList();
-    return data;
+    try {
+      final response = await http.get(Uri.parse('${Api.baseURL}/usuarios'));
+
+      if (response.statusCode != 200) {
+        throw Exception();
+      } else {
+        final body = (jsonDecode(utf8.decode(response.bodyBytes)) as List);
+        final data = body.map((item) => User.fromJson(item)).toList();
+        return data;
+      }
+    } catch (e) {
+      return List.empty();
+    }
   }
 
   Future<void> save(User user) async {

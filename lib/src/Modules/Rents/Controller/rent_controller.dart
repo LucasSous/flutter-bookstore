@@ -51,8 +51,8 @@ abstract class _RentControllerBase with Store {
       final response = await rentRepo.getAll();
       response.sort((a, b) => b.id.compareTo(a.id));
       rents = response;
-      getRentsInProgress();
-      getFinishedRents();
+      getRentsInProgress(true);
+      getFinishedRents(true);
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis', 'error');
     } finally {
@@ -61,7 +61,8 @@ abstract class _RentControllerBase with Store {
   }
 
   @action
-  getRentsInProgress() async {
+  getRentsInProgress(bool showAll) async {
+    List<Rent> list = [];
     try {
       List<Rent> noNullDate = rents.map((e) {
         e.returnDate ??= 'in progress';
@@ -72,7 +73,17 @@ abstract class _RentControllerBase with Store {
           .where((e) => e.returnDate.toString() == 'in progress')
           .toList();
 
-      rentsInProgress = filter;
+      if (showAll) {
+        if (filter.length > 10) {
+          list = filter.sublist(0, 10);
+        } else {
+          list = filter;
+        }
+      } else {
+        list = filter;
+      }
+
+      rentsInProgress = list;
       defaultValueRentsInProgress = filter;
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis em andamento', 'error');
@@ -80,7 +91,8 @@ abstract class _RentControllerBase with Store {
   }
 
   @action
-  getFinishedRents() async {
+  getFinishedRents(bool showAll) async {
+    List<Rent> list = [];
     try {
       List<Rent> noNullDate = rents.map((e) {
         e.returnDate ??= 'in progress';
@@ -91,7 +103,17 @@ abstract class _RentControllerBase with Store {
           .where((e) => e.returnDate.toString() != 'in progress')
           .toList();
 
-      finishedRents = filter;
+      if (showAll) {
+        if (filter.length > 10) {
+          list = filter.sublist(0, 10);
+        } else {
+          list = filter;
+        }
+      } else {
+        list = filter;
+      }
+
+      finishedRents = list;
       defaultValueFinishedRents = filter;
     } catch (e) {
       showSnackBar('Erro ao tentar listar aluguéis finalizados', 'error');
@@ -174,8 +196,8 @@ abstract class _RentControllerBase with Store {
 
   @action
   updateLists() {
-    getFinishedRents();
-    getRentsInProgress();
+    getFinishedRents(true);
+    getRentsInProgress(true);
   }
 
   @action
