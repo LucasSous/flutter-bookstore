@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bookstore2/src/Components/default_button.dart';
 import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
@@ -87,6 +88,7 @@ class _BookFormState extends State<BookForm> {
                         initialValue: _formData['name'],
                         icon: Icons.book_outlined,
                         validation: (text) {
+                          final validation = RegExp('[^A-Za-zÀ-ú ]');
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
                           }
@@ -95,6 +97,9 @@ class _BookFormState extends State<BookForm> {
                           }
                           if (text.length > 30) {
                             return 'O máximo de caracteres é 30';
+                          }
+                          if (validation.hasMatch(text)) {
+                            return 'Nome inválido';
                           }
                           return null;
                         },
@@ -109,8 +114,15 @@ class _BookFormState extends State<BookForm> {
                         initialValue: _formData['author'],
                         icon: Icons.person_outline,
                         validation: (text) {
+                          final validation = RegExp('[^A-Za-zÀ-ú ]');
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
+                          }
+                          if (text.length < 3) {
+                            return 'O mínimo de caracteres é 3';
+                          }
+                          if (validation.hasMatch(text)) {
+                            return 'Nome de Autor inválido';
                           }
                           return null;
                         },
@@ -143,11 +155,17 @@ class _BookFormState extends State<BookForm> {
                         hintText: 'Digite o ano de lançamento do livro',
                         initialValue: _formData['launch'],
                         icon: Icons.calendar_today_outlined,
-                        validation: (text) {
-                          if (text == null || text.isEmpty) {
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        validation: (year) {
+                          final int currentYear = DateTime.now().year;
+                          if (year == null || year.isEmpty) {
                             return 'Campo obrigatório';
                           }
-                          if (text.length < 4 || text.length > 4) {
+                          if (int.parse(year) > currentYear ||
+                              int.parse(year) < 1000) {
                             return 'Ano inválido';
                           }
                           return null;
@@ -162,12 +180,19 @@ class _BookFormState extends State<BookForm> {
                         hintText: 'Digite a quantidade de livros',
                         initialValue: _formData['quantity'],
                         icon: Icons.library_books_outlined,
-                        validation: (text) {
-                          if (text == null || text.isEmpty) {
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        validation: (number) {
+                          if (number == null || number.isEmpty) {
                             return 'Campo obrigatório';
                           }
-                          if (text.length > 20) {
-                            return 'O máximo de caracteres é 20';
+                          if (int.parse(number) < 1) {
+                            return 'Valor mínimo é 1';
+                          }
+                          if (int.parse(number) > 100000) {
+                            return 'Valor mínimo é 100.000';
                           }
                           return null;
                         },

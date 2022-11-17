@@ -25,6 +25,12 @@ class Select extends StatelessWidget {
         isExpanded: true,
         style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
         dropdownColor: Theme.of(context).colorScheme.primaryContainer,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Campo obrigatório';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: Icon(

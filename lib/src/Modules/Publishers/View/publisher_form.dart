@@ -79,6 +79,7 @@ class _PublisherFormState extends State<PublisherForm> {
                         initialValue: _formData['name'],
                         icon: Icons.person_outline,
                         validation: (text) {
+                          final validation = RegExp('[^A-Za-zÀ-ú ]');
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
                           }
@@ -87,6 +88,9 @@ class _PublisherFormState extends State<PublisherForm> {
                           }
                           if (text.length > 30) {
                             return 'O máximo de caracteres é 30';
+                          }
+                          if (validation.hasMatch(text)) {
+                            return 'Nome inválido';
                           }
                           return null;
                         },
@@ -101,6 +105,7 @@ class _PublisherFormState extends State<PublisherForm> {
                         initialValue: _formData['city'],
                         icon: Icons.location_city,
                         validation: (text) {
+                          final validation = RegExp('[^A-Za-zÀ-ú ]');
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
                           }
@@ -109,6 +114,9 @@ class _PublisherFormState extends State<PublisherForm> {
                           }
                           if (text.length > 20) {
                             return 'O máximo de caracteres é 20';
+                          }
+                          if (validation.hasMatch(text)) {
+                            return 'Cidade inválida';
                           }
                           return null;
                         },

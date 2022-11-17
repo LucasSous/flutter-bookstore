@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DefaultTextField extends StatelessWidget {
   final String labelText;
@@ -10,6 +11,8 @@ class DefaultTextField extends StatelessWidget {
   final Function()? onTap;
   final TextEditingController? controller;
   final bool? readOnly;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   const DefaultTextField(
       {Key? key,
       required this.labelText,
@@ -20,7 +23,9 @@ class DefaultTextField extends StatelessWidget {
       required this.onSaved,
       this.onTap,
       this.controller,
-      this.readOnly})
+      this.readOnly,
+      this.keyboardType,
+      this.inputFormatters})
       : super(key: key);
 
   @override
@@ -33,6 +38,8 @@ class DefaultTextField extends StatelessWidget {
       controller: controller,
       onTap: onTap,
       readOnly: readOnly ?? false,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
       decoration: InputDecoration(
         labelText: labelText,

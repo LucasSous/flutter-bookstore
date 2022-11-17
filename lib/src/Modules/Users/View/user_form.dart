@@ -80,6 +80,7 @@ class _UserFormState extends State<UserForm> {
                         initialValue: _formData['name'],
                         icon: Icons.person_outline,
                         validation: (text) {
+                          final validation = RegExp('[^A-Za-zÀ-ú ]');
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
                           }
@@ -88,6 +89,9 @@ class _UserFormState extends State<UserForm> {
                           }
                           if (text.length > 30) {
                             return 'O máximo de caracteres é 30';
+                          }
+                          if (validation.hasMatch(text)) {
+                            return 'Nome inválido';
                           }
                           return null;
                         },
@@ -102,8 +106,13 @@ class _UserFormState extends State<UserForm> {
                         initialValue: _formData['email'],
                         icon: Icons.email_outlined,
                         validation: (text) {
+                          final validation =
+                              RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
                           if (text == null || text.isEmpty) {
                             return 'Campo obrigatório';
+                          }
+                          if (!validation.hasMatch(text)) {
+                            return 'E-mail inválido!';
                           }
                           return null;
                         },
@@ -172,7 +181,9 @@ class _UserFormState extends State<UserForm> {
                                   email: _formData['email']));
                             } else {
                               userController.createUser(User(
-                                name: _formData['name'],
+                                name: _formData['name']
+                                    .toString()
+                                    .replaceAll(RegExp('/( )+/g'), " "),
                                 address: _formData['address'],
                                 city: _formData['city'],
                                 email: _formData['email'],
