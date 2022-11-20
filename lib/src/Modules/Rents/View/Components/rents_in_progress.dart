@@ -58,6 +58,8 @@ class _RentsInProgressState extends State<RentsInProgress> {
               builder: (_) {
                 if (rentController.loading == true) {
                   return const LoadingPage();
+                } else if (rentController.rentsInProgress.isEmpty) {
+                  return const Text('Nenhum aluguél em andamento');
                 } else {
                   return Column(
                     children: [

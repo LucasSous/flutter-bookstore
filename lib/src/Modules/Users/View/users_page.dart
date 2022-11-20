@@ -19,35 +19,38 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-        name: 'observerUserPage',
-        builder: (_) {
-          if (userController.loading == true) {
-            return const LoadingPage();
-          } else {
-            return Scaffold(
-              appBar: DefaultAppBar(
-                  title: 'Usuários',
-                  border: true,
-                  search: () => {
-                        userController.resetFilter(),
-                        Modular.to.pushNamed('/users/users_filter')
-                      }),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12, bottom: 80, left: 12, right: 12),
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: userController.users.length,
-                      itemBuilder: (ctx, i) =>
-                          UsersList(user: userController.users[i])),
-                ),
-              ),
-              floatingActionButton: const AddButton(route: '/users/user_form'),
-            );
-          }
-        });
+    return Scaffold(
+      appBar: DefaultAppBar(
+          title: 'Usuários',
+          border: true,
+          search: () => {
+                userController.resetFilter(),
+                Modular.to.pushNamed('/users/users_filter')
+              }),
+      body: Observer(builder: (_) {
+        if (userController.loading == true) {
+          return const LoadingPage();
+        } else if (userController.users.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text('Nenhum usuário cadastrado'),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 80, left: 12, right: 12),
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: userController.users.length,
+                  itemBuilder: (ctx, i) =>
+                      UsersList(user: userController.users[i])),
+            ),
+          );
+        }
+      }),
+      floatingActionButton: const AddButton(route: '/users/user_form'),
+    );
   }
 }

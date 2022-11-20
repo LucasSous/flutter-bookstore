@@ -19,36 +19,39 @@ class _PublishersPageState extends State<PublishersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-        name: 'observerPublisherPage',
-        builder: (_) {
-          if (publisher.loading == true) {
-            return const LoadingPage();
-          } else {
-            return Scaffold(
-              appBar: DefaultAppBar(
-                title: 'Editoras',
-                search: () {
-                  publisher.resetFilter();
-                  Modular.to.pushNamed('/publishers/filter');
-                },
-                border: true,
-              ),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12, bottom: 80, left: 12, right: 12),
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: publisher.publishers.length,
-                      itemBuilder: (ctx, i) =>
-                          PublishersList(publisher: publisher.publishers[i])),
-                ),
-              ),
-              floatingActionButton: const AddButton(route: '/publishers/form'),
-            );
-          }
-        });
+    return Scaffold(
+      appBar: DefaultAppBar(
+        title: 'Editoras',
+        search: () {
+          publisher.resetFilter();
+          Modular.to.pushNamed('/publishers/filter');
+        },
+        border: true,
+      ),
+      body: Observer(builder: (_) {
+        if (publisher.loading == true) {
+          return const LoadingPage();
+        } else if (publisher.publishers.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text('Nenhuma editora cadastrada'),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 80, left: 12, right: 12),
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: publisher.publishers.length,
+                  itemBuilder: (ctx, i) =>
+                      PublishersList(publisher: publisher.publishers[i])),
+            ),
+          );
+        }
+      }),
+      floatingActionButton: const AddButton(route: '/publishers/form'),
+    );
   }
 }

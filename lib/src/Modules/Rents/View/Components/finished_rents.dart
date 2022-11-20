@@ -59,6 +59,8 @@ class _FinishedRentsState extends State<FinishedRents> {
               builder: (_) {
                 if (rentController.loading == true) {
                   return const LoadingPage();
+                } else if (rentController.finishedRents.isEmpty) {
+                  return const Text('Nenhum aluguél finalizado no momento');
                 } else {
                   return Column(
                     children: [

@@ -19,35 +19,38 @@ class _BooksPageState extends State<BooksPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-        name: 'observerPublisherPage',
-        builder: (_) {
-          if (bookController.loading == true) {
-            return const LoadingPage();
-          } else {
-            return Scaffold(
-              appBar: DefaultAppBar(
-                  title: 'Livros',
-                  search: () {
-                    bookController.resetFilter();
-                    Modular.to.pushNamed('/books/filter');
-                  },
-                  border: true),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12, bottom: 80, left: 12, right: 12),
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: bookController.books.length,
-                      itemBuilder: (ctx, i) =>
-                          BooksList(book: bookController.books[i])),
-                ),
-              ),
-              floatingActionButton: const AddButton(route: '/books/form'),
-            );
-          }
-        });
+    return Scaffold(
+      appBar: DefaultAppBar(
+          title: 'Livros',
+          search: () {
+            bookController.resetFilter();
+            Modular.to.pushNamed('/books/filter');
+          },
+          border: true),
+      body: Observer(builder: (_) {
+        if (bookController.loading == true) {
+          return const LoadingPage();
+        } else if (bookController.books.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text('Nenhum livro cadastrado'),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 80, left: 12, right: 12),
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: bookController.books.length,
+                  itemBuilder: (ctx, i) =>
+                      BooksList(book: bookController.books[i])),
+            ),
+          );
+        }
+      }),
+      floatingActionButton: const AddButton(route: '/books/form'),
+    );
   }
 }
