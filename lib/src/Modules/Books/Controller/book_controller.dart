@@ -14,6 +14,7 @@ abstract class _BookControllerBase with Store {
 
   _BookControllerBase(this.bookRepo) {
     getAllBooks();
+    getMostRented();
   }
 
   @observable
@@ -23,10 +24,16 @@ abstract class _BookControllerBase with Store {
   List<Book> booksFilter = [];
 
   @observable
+  List<Book> mostRented = [];
+
+  @observable
   bool isEmptyInput = true;
 
   @observable
   bool loading = false;
+
+  @observable
+  bool loadingMostRenteds = false;
 
   @action
   getAllBooks() async {
@@ -39,6 +46,19 @@ abstract class _BookControllerBase with Store {
       showSnackBar('Erro ao tentar listar livros', 'error');
     } finally {
       loading = false;
+    }
+  }
+
+  @action
+  getMostRented() async {
+    loadingMostRenteds = true;
+    try {
+      final response = await bookRepo.getMostRented();
+      mostRented = response;
+    } catch (e) {
+      showSnackBar('Erro ao tentar listar livros mais alugados', 'error');
+    } finally {
+      loadingMostRenteds = false;
     }
   }
 

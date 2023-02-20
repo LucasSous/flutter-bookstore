@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Home/Controller/home_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Home/View/Components/chart.dart';
 import 'package:flutter_bookstore2/src/Modules/Home/View/Components/item_card.dart';
 import 'package:flutter_bookstore2/src/Modules/Home/View/Components/loading_page.dart';
 import 'package:flutter_bookstore2/src/Modules/Home/View/Components/most_rented.dart';
+import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
+import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final homeController = Modular.get<HomeController>();
+  final userController = Modular.get<UserController>();
+  final publisherController = Modular.get<PublisherController>();
+  final bookController = Modular.get<BookController>();
+  final rentController = Modular.get<RentController>();
+
+  @override
+  void initState() {
+    homeController.setValues();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final homeController = Modular.get<HomeController>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,11 +44,11 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Observer(builder: (_) {
-        if (homeController.loadingRents ||
-            homeController.loadingBooks ||
-            homeController.loadingMostRenteds ||
-            homeController.loadingPublishers ||
-            homeController.loadingUsers) {
+        if (rentController.loading ||
+            bookController.loading ||
+            bookController.loadingMostRenteds ||
+            publisherController.loading ||
+            userController.loading) {
           return const LoadingPage();
         } else {
           return SingleChildScrollView(
@@ -52,7 +72,7 @@ class HomePage extends StatelessWidget {
                         ItemCard(
                           name: 'Usuários',
                           icon: Icons.person_outline,
-                          quantity: homeController.users.length.toString(),
+                          quantity: userController.users.length.toString(),
                           cardColor: Theme.of(context).primaryColor,
                           route: '/users/',
                         ),
@@ -62,7 +82,8 @@ class HomePage extends StatelessWidget {
                         ItemCard(
                           name: 'Editoras',
                           icon: Icons.person_outline,
-                          quantity: homeController.publishers.length.toString(),
+                          quantity:
+                              publisherController.publishers.length.toString(),
                           route: '/publishers/',
                         )
                       ],
@@ -75,7 +96,7 @@ class HomePage extends StatelessWidget {
                         ItemCard(
                           name: 'Livros',
                           icon: Icons.book_outlined,
-                          quantity: homeController.books.length.toString(),
+                          quantity: bookController.books.length.toString(),
                           route: '/books/',
                         ),
                         const SizedBox(
@@ -84,7 +105,7 @@ class HomePage extends StatelessWidget {
                         ItemCard(
                           name: 'Aluguéis',
                           icon: Icons.calendar_today_outlined,
-                          quantity: homeController.rents.length.toString(),
+                          quantity: rentController.rents.length.toString(),
                           route: '/rents/',
                         )
                       ],
@@ -92,51 +113,57 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).shadowColor,
-                            blurRadius: 20,
-                            offset: const Offset(0, 0), // Shadow position
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Status dos Aluguéis',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                    rentController.rents.isNotEmpty
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Theme.of(context).shadowColor,
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 0), // Shadow position
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Status dos Aluguéis',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Chart(
+                                    inProgress: 1,
+                                    onTime: 1,
+                                    late: 1,
+                                    pending: 1,
+                                  )
+                                ],
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Chart(
-                              inProgress: homeController.inProgress,
-                              onTime: homeController.onTime,
-                              late: homeController.late,
-                              pending: homeController.pending,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                          )
+                        : const SizedBox(),
                     const SizedBox(
                       height: 20,
                     ),
-                    MostRentedCard(
-                      name: homeController.mostRented[0].name,
-                      quantity:
-                          homeController.mostRented[0].totalRented.toString(),
-                    )
+                    bookController.mostRented.isNotEmpty
+                        ? MostRentedCard(
+                            name: bookController.mostRented[0].name,
+                            quantity: bookController.mostRented[0].totalRented
+                                .toString(),
+                          )
+                        : const SizedBox()
                   ]),
             ),
           );

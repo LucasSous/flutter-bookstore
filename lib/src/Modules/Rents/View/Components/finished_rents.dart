@@ -19,11 +19,7 @@ class _FinishedRentsState extends State<FinishedRents> {
 
   final ScrollController _scrollController = ScrollController();
 
-  updateFilterValue(value) {
-    setState(() {
-      _filterValue = value;
-    });
-  }
+  final rentController = Modular.get<RentController>();
 
   @override
   void initState() {
@@ -37,16 +33,6 @@ class _FinishedRentsState extends State<FinishedRents> {
     _scrollController.dispose();
   }
 
-  findAll() {
-    if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent &&
-        _filterValue == 'Todos') {
-      rentController.getFinishedRents(false);
-    }
-  }
-
-  final rentController = Modular.get<RentController>();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -57,10 +43,8 @@ class _FinishedRentsState extends State<FinishedRents> {
           child: Observer(
               name: 'observerFinishedRents',
               builder: (_) {
-                if (rentController.loading == true) {
+                if (rentController.loading) {
                   return const LoadingPage();
-                } else if (rentController.finishedRents.isEmpty) {
-                  return const Text('Nenhum aluguél finalizado no momento');
                 } else {
                   return Column(
                     children: [
@@ -79,7 +63,7 @@ class _FinishedRentsState extends State<FinishedRents> {
                             height: 40,
                             child: DropdownButton<String>(
                                 value: _filterValue,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 dropdownColor: Theme.of(context)
                                     .colorScheme
                                     .primaryContainer,
@@ -100,17 +84,33 @@ class _FinishedRentsState extends State<FinishedRents> {
                       const SizedBox(
                         height: 10,
                       ),
-                      ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: rentController.finishedRents.length,
-                          itemBuilder: (ctx, i) =>
-                              RentsList(rent: rentController.finishedRents[i])),
+                      rentController.finishedRents.isEmpty
+                          ? const Text('Nenhum dado encontrado')
+                          : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const ClampingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: rentController.finishedRents.length,
+                              itemBuilder: (ctx, i) => RentsList(
+                                  rent: rentController.finishedRents[i])),
                     ],
                   );
                 }
               })),
     );
+  }
+
+  updateFilterValue(value) {
+    setState(() {
+      _filterValue = value;
+    });
+  }
+
+  findAll() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        _filterValue == 'Todos') {
+      rentController.getFinishedRents(false);
+    }
   }
 }

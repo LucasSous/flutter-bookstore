@@ -16,13 +16,10 @@ class RentsInProgress extends StatefulWidget {
 class _RentsInProgressState extends State<RentsInProgress> {
   final filterRents = ['Todos', 'Pendentes', 'Em andamento'];
   late String _filterValue = 'Todos';
+
   final ScrollController _scrollController = ScrollController();
 
-  updateFilterValue(value) {
-    setState(() {
-      _filterValue = value;
-    });
-  }
+  final rentController = Modular.get<RentController>();
 
   @override
   void initState() {
@@ -36,16 +33,6 @@ class _RentsInProgressState extends State<RentsInProgress> {
     _scrollController.dispose();
   }
 
-  findAll() {
-    if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent &&
-        _filterValue == 'Todos') {
-      rentController.getRentsInProgress(false);
-    }
-  }
-
-  final rentController = Modular.get<RentController>();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -56,10 +43,8 @@ class _RentsInProgressState extends State<RentsInProgress> {
           child: Observer(
               name: 'observerRentsInProgress',
               builder: (_) {
-                if (rentController.loading == true) {
+                if (rentController.loading) {
                   return const LoadingPage();
-                } else if (rentController.rentsInProgress.isEmpty) {
-                  return const Text('Nenhum aluguél em andamento');
                 } else {
                   return Column(
                     children: [
@@ -78,7 +63,7 @@ class _RentsInProgressState extends State<RentsInProgress> {
                             height: 40,
                             child: DropdownButton<String>(
                                 value: _filterValue,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 dropdownColor: Theme.of(context)
                                     .colorScheme
                                     .primaryContainer,
@@ -99,16 +84,32 @@ class _RentsInProgressState extends State<RentsInProgress> {
                       const SizedBox(
                         height: 10,
                       ),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: rentController.rentsInProgress.length,
-                          itemBuilder: (ctx, i) => RentsList(
-                              rent: rentController.rentsInProgress[i])),
+                      rentController.rentsInProgress.isEmpty
+                          ? const Text('Nenhum dado encontrado')
+                          : ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: rentController.rentsInProgress.length,
+                              itemBuilder: (ctx, i) => RentsList(
+                                  rent: rentController.rentsInProgress[i])),
                     ],
                   );
                 }
               })),
     );
+  }
+
+  updateFilterValue(value) {
+    setState(() {
+      _filterValue = value;
+    });
+  }
+
+  findAll() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        _filterValue == 'Todos') {
+      rentController.getRentsInProgress(false);
+    }
   }
 }
