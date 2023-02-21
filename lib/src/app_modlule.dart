@@ -10,6 +10,7 @@ import 'package:flutter_bookstore2/src/Modules/Publishers/publishers_module.dart
 import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Repository/rent_repository.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/rents_module.dart';
+import 'package:flutter_bookstore2/src/Modules/SplashScreen/view/splash_screen.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Repository/user_repository.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/users_module.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
@@ -32,7 +33,10 @@ class AppModlule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/',
-            child: (context, args) => const HomePage(),
+            child: (context, args) => const SplashScreen(),
+            transition: TransitionType.noTransition),
+        ChildRoute('/home',
+            child: ((context, args) => const HomePage()),
             transition: TransitionType.noTransition),
         ChildRoute('/menu',
             child: ((context, args) => const MenuPage()),

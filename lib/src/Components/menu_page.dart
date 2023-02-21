@@ -54,7 +54,7 @@ class MenuPage extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const DefaultTitle(text: 'Menu'),
             const SizedBox(height: 30),
-            itemStyle('Dashboard', Icons.dashboard_outlined, '/'),
+            itemStyle('Dashboard', Icons.dashboard_outlined, '/home'),
             const Divider(),
             itemStyle('Usuários', Icons.people_alt_outlined, '/users/'),
             const Divider(),
