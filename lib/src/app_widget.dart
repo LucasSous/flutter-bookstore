@@ -54,7 +54,7 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
         color: Colors.grey,
       ),
       textTheme: const TextTheme(
-        bodyText2: TextStyle(color: Colors.white),
+        bodyMedium: TextStyle(color: Colors.white),
       ),
       inputDecorationTheme:
           const InputDecorationTheme(fillColor: Color(0xFF3B3B3B)),
