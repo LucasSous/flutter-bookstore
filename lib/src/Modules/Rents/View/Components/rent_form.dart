@@ -122,6 +122,7 @@ class _RentFormState extends State<RentForm> {
                                 .subtract(const Duration(days: 0)),
                             lastDate:
                                 DateTime.now().add(const Duration(days: 365)),
+                            initialEntryMode: DatePickerEntryMode.calendarOnly,
                             builder: (context, child) {
                               return Theme(
                                 data: Theme.of(context).copyWith(
@@ -135,7 +136,7 @@ class _RentFormState extends State<RentForm> {
                                     style: TextButton.styleFrom(
                                       foregroundColor: Theme.of(context)
                                           .textTheme
-                                          .bodyText2
+                                          .bodyMedium
                                           ?.color,
                                     ),
                                   ),

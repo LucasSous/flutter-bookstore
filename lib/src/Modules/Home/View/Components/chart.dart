@@ -18,7 +18,7 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-  int touchedIndex = 0;
+  int touchedIndex = -1;
   String shartLabel = '';
   String quantity = '';
 
@@ -71,14 +71,14 @@ class _ChartState extends State<Chart> {
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.bodyText2?.color),
+                color: Theme.of(context).textTheme.bodyMedium?.color),
           ),
           Text(
             quantity,
             style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.bodyText2?.color),
+                color: Theme.of(context).textTheme.bodyMedium?.color),
           ),
         ],
       )
@@ -114,7 +114,7 @@ class _ChartState extends State<Chart> {
   returnPercentage(value) {
     int sum = widget.inProgress + widget.late + widget.onTime + widget.pending;
     double percentage = (value * 100) / sum;
-    return percentage.toStringAsPrecision(2);
+    return percentage.toStringAsFixed(0);
   }
 
   List<PieChartSectionData> showingSections() {
@@ -163,7 +163,7 @@ class _ChartState extends State<Chart> {
         case 3:
           return PieChartSectionData(
             color: const Color(0xFF007187),
-            value: widget.late.toDouble(),
+            value: 0,
             title: '${returnPercentage(widget.late).toString()}%',
             radius: radius,
             titleStyle: TextStyle(

@@ -71,6 +71,7 @@ class _RentsFilterState extends State<RentsFilter> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1999),
                         lastDate: DateTime(2100),
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
                         builder: (context, child) {
                           return Theme(
                             data: Theme.of(context).copyWith(
@@ -84,7 +85,7 @@ class _RentsFilterState extends State<RentsFilter> {
                                 style: TextButton.styleFrom(
                                   foregroundColor: Theme.of(context)
                                       .textTheme
-                                      .bodyText2
+                                      .bodyMedium
                                       ?.color,
                                 ),
                               ),

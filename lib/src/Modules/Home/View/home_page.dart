@@ -113,7 +113,10 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    rentController.rents.isNotEmpty
+                    homeController.inProgress > 1 ||
+                            homeController.onTime > 1 ||
+                            homeController.late > 1 ||
+                            homeController.pending > 1
                         ? Container(
                             decoration: BoxDecoration(
                               color: Theme.of(context)
@@ -144,10 +147,10 @@ class _HomePageState extends State<HomePage> {
                                     height: 10,
                                   ),
                                   Chart(
-                                    inProgress: 1,
-                                    onTime: 1,
-                                    late: 1,
-                                    pending: 1,
+                                    inProgress: homeController.inProgress,
+                                    onTime: homeController.onTime,
+                                    late: homeController.late,
+                                    pending: homeController.pending,
                                   )
                                 ],
                               ),
