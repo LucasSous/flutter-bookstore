@@ -23,13 +23,13 @@ class RentsList extends StatelessWidget {
       if (rent.returnDate != null && rent.returnDate != 'in progress') {
         DateTime returnDate = DateTime.parse(rent.returnDate);
         if (returnDate.compareTo(forecastDate) <= 0) {
-          return const Color.fromARGB(177, 38, 214, 44);
+          return const Color(0xFF54D572);
         } else {
-          return const Color.fromARGB(176, 255, 57, 57);
+          return const Color(0xFFFF7E7E);
         }
       } else {
         if (forecastDate.compareTo(currentDate) < 0) {
-          return const Color.fromARGB(255, 255, 126, 13);
+          return const Color(0xFFFFE941);
         } else {
           return Theme.of(context).primaryColor;
         }

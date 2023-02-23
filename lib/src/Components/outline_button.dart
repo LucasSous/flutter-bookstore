@@ -45,6 +45,6 @@ class OutlineButton extends StatelessWidget {
             child: loading(Text(text,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyText2?.color)))));
+                    color: Theme.of(context).textTheme.bodyMedium?.color)))));
   }
 }

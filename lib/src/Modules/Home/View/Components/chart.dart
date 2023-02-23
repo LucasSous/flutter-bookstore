@@ -24,91 +24,97 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.center, children: [
-      AspectRatio(
-        aspectRatio: 1.1,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                    pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                        setState(() {
-                          if (!event.isInterestedForInteractions ||
-                              pieTouchResponse == null ||
-                              pieTouchResponse.touchedSection == null) {
-                            touchedIndex = -1;
-                            return;
-                          }
-                          touchedIndex = pieTouchResponse
-                              .touchedSection!.touchedSectionIndex;
-                        });
-                      },
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 1.3,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: PieChart(
+                    PieChartData(
+                      pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        },
+                      ),
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      sectionsSpace: 2,
+                      centerSpaceRadius: 80,
+                      sections: showingSections(),
                     ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    sectionsSpace: 2,
-                    centerSpaceRadius: 90,
-                    sections: showingSections(),
+                    swapAnimationDuration:
+                        const Duration(milliseconds: 250), // Optional
+                    swapAnimationCurve: Curves.ease,
                   ),
-                  swapAnimationDuration:
-                      const Duration(milliseconds: 250), // Optional
-                  swapAnimationCurve: Curves.ease,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      Column(
-        children: [
-          Text(
-            shartLabel,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.bodyMedium?.color),
-          ),
-          Text(
-            quantity,
-            style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.bodyMedium?.color),
-          ),
-        ],
-      )
-    ]);
-  }
-
-  shartData(int index) {
-    if (index < 0) return;
-    switch (index) {
-      case 0:
-        shartLabel = 'Em Andamento';
-        quantity = widget.inProgress.toString();
-
-        break;
-      case 1:
-        shartLabel = 'No Prazo';
-        quantity = widget.onTime.toString();
-
-        break;
-      case 2:
-        shartLabel = 'Pendentes';
-        quantity = widget.pending.toString();
-
-        break;
-      case 3:
-        shartLabel = 'Em Atraso';
-        quantity = widget.late.toString();
-
-        break;
-    }
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(children: [
+            Row(
+              children: [
+                Container(
+                    height: 15, width: 15, color: const Color(0xFF0FCCF2)),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text('Em andamento - ${widget.inProgress}'),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Container(
+                    height: 15, width: 15, color: const Color(0xFF54D572)),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text('No prazo - ${widget.onTime}'),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Container(
+                    height: 15, width: 15, color: const Color(0xFFFF7E7E)),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text('Em atraso - ${widget.late}'),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Container(
+                    height: 15, width: 15, color: const Color(0xFFFFE941)),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text('Pendentes - ${widget.pending}'),
+              ],
+            )
+          ]),
+        )
+      ],
+    );
   }
 
   returnPercentage(value) {
@@ -118,11 +124,9 @@ class _ChartState extends State<Chart> {
   }
 
   List<PieChartSectionData> showingSections() {
-    shartData(touchedIndex);
     return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 50.0 : 40.0;
+      double fontSize = 16.0;
+      double radius = 40.0;
       switch (i) {
         case 0:
           return PieChartSectionData(
@@ -138,7 +142,7 @@ class _ChartState extends State<Chart> {
           );
         case 1:
           return PieChartSectionData(
-            color: const Color(0xFF00B2D6),
+            color: const Color(0xFF54D572),
             value: widget.onTime.toDouble(),
             title: '${returnPercentage(widget.onTime).toString()}%',
             radius: radius,
@@ -150,20 +154,20 @@ class _ChartState extends State<Chart> {
           );
         case 2:
           return PieChartSectionData(
-            color: const Color(0xFF0092AF),
+            color: const Color(0xFFFFE941),
             value: widget.pending.toDouble(),
             title: '${returnPercentage(widget.pending).toString()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
+              color: Colors.black,
             ),
           );
         case 3:
           return PieChartSectionData(
-            color: const Color(0xFF007187),
-            value: 0,
+            color: const Color(0xFFFF7E7E),
+            value: widget.late.toDouble(),
             title: '${returnPercentage(widget.late).toString()}%',
             radius: radius,
             titleStyle: TextStyle(

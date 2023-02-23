@@ -47,7 +47,7 @@ class _RentsFilterState extends State<RentsFilter> {
                   child: TextField(
                     onChanged: (value) {},
                     controller: _date,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     readOnly: true,
                     decoration: InputDecoration(
                       hintText: "Pesquisar por data",

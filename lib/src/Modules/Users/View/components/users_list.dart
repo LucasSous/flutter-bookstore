@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bookstore2/src/Components/button_icon.dart';
 import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
 
@@ -44,7 +45,7 @@ class UsersList extends StatelessWidget {
                 Text(
                   '#${user.id}',
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText2?.color,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                       fontSize: 16),
                 ),
                 FractionallySizedBox(
@@ -66,7 +67,7 @@ class UsersList extends StatelessWidget {
               padding: const EdgeInsets.all(9.9),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Flexible(
                     child: Column(
@@ -83,6 +84,7 @@ class UsersList extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                             )),
+                        const SizedBox(height: 10),
                         const Text(
                           'Email',
                         ),
@@ -99,31 +101,34 @@ class UsersList extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Modular.to
-                                .pushNamed('/users/user_form', arguments: user);
-                          },
-                          icon: const Icon(Icons.edit, size: 18)),
-                      IconButton(
-                          onPressed: () {
-                            openDialog(
-                                context: context,
-                                title: 'Deletar Usuário',
-                                message:
-                                    'O usuário ${user.name} será deletado!',
-                                confirm: () {
-                                  userController.deleteUser(User(
-                                    id: user.id,
-                                    name: user.name,
-                                    address: user.address,
-                                    city: user.city,
-                                    email: user.email,
-                                  ));
-                                  Modular.to.pop();
-                                });
-                          },
-                          icon: const Icon(Icons.delete, size: 18))
+                      ButtonIcon(
+                        onTap: () {
+                          Modular.to
+                              .pushNamed('/users/user_form', arguments: user);
+                        },
+                        icon: Icons.edit,
+                      ),
+                      const SizedBox(width: 10),
+                      ButtonIcon(
+                        onTap: () {
+                          openDialog(
+                              context: context,
+                              title: 'Deletar Usuário',
+                              message: 'O usuário ${user.name} será deletado!',
+                              confirm: () {
+                                userController.deleteUser(User(
+                                  id: user.id,
+                                  name: user.name,
+                                  address: user.address,
+                                  city: user.city,
+                                  email: user.email,
+                                ));
+                                Modular.to.pop();
+                              });
+                        },
+                        icon: Icons.delete,
+                        color: const Color(0xFFFF7E7E),
+                      ),
                     ],
                   )
                 ],

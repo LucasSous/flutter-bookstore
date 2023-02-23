@@ -23,7 +23,8 @@ abstract class HomeControllerBase with Store {
   int pending = 0;
 
   @action
-  setValues() {
+  setValues() async {
+    await _rentController.getAllRents();
     List<Rent> noNullDate = _rentController.rents.map((e) {
       e.returnDate ??= 'in progress';
       return e;

@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ItemCard(
                           name: 'Editoras',
-                          icon: Icons.person_outline,
+                          icon: Icons.align_vertical_bottom_sharp,
                           quantity:
                               publisherController.publishers.length.toString(),
                           route: '/publishers/',
@@ -113,11 +113,9 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    homeController.inProgress > 1 ||
-                            homeController.onTime > 1 ||
-                            homeController.late > 1 ||
-                            homeController.pending > 1
-                        ? Container(
+                    bookController.mostRented[0].totalRented < 1
+                        ? const SizedBox()
+                        : Container(
                             decoration: BoxDecoration(
                               color: Theme.of(context)
                                   .colorScheme
@@ -155,8 +153,7 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                          )
-                        : const SizedBox(),
+                          ),
                     const SizedBox(
                       height: 20,
                     ),

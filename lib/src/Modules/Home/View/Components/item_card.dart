@@ -43,7 +43,7 @@ class ItemCard extends StatelessWidget {
                     icon,
                     color: cardColor != null
                         ? Colors.white
-                        : Theme.of(context).textTheme.bodyText2?.color,
+                        : Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                   const SizedBox(
                     width: 10,
@@ -53,7 +53,7 @@ class ItemCard extends StatelessWidget {
                     style: TextStyle(
                         color: cardColor != null
                             ? Colors.white
-                            : Theme.of(context).textTheme.bodyText2?.color,
+                            : Theme.of(context).textTheme.bodyMedium?.color,
                         fontSize: 16),
                   )
                 ],
@@ -69,7 +69,7 @@ class ItemCard extends StatelessWidget {
                     style: TextStyle(
                       color: cardColor != null
                           ? Colors.white
-                          : Theme.of(context).textTheme.bodyText2?.color,
+                          : Theme.of(context).textTheme.bodyMedium?.color,
                       fontSize: 25,
                     ),
                   ),

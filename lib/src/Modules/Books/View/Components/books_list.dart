@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bookstore2/src/Components/button_icon.dart';
 import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
@@ -83,7 +84,7 @@ class BooksList extends StatelessWidget {
               padding: const EdgeInsets.all(9.9),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Flexible(
                     child: Column(
@@ -96,6 +97,7 @@ class BooksList extends StatelessWidget {
                             softWrap: false,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16)),
+                        const SizedBox(height: 10),
                         const Text('Autor'),
                         Text(book.author,
                             overflow: TextOverflow.fade,
@@ -103,6 +105,7 @@ class BooksList extends StatelessWidget {
                             softWrap: false,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16)),
+                        const SizedBox(height: 10),
                         const Text('Lançamento'),
                         Text(book.launch.toString(),
                             overflow: TextOverflow.fade,
@@ -110,6 +113,7 @@ class BooksList extends StatelessWidget {
                             softWrap: false,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16)),
+                        const SizedBox(height: 10),
                         const Text('Quantidade'),
                         quantity(book.quantity)
                       ],
@@ -117,34 +121,37 @@ class BooksList extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Modular.to
-                                .pushNamed('/books/form', arguments: book);
-                          },
-                          icon: const Icon(Icons.edit, size: 18)),
-                      IconButton(
-                          onPressed: () {
-                            openDialog(
-                                context: context,
-                                title: 'Deletar Livro',
-                                message: 'O livro ${book.name} será deletado!',
-                                confirm: () {
-                                  bookController.deleteBook(Book(
-                                      id: book.id,
-                                      name: book.name,
-                                      author: book.author,
-                                      publisher: Publisher(
-                                          id: book.publisher?.id,
-                                          name: '',
-                                          city: ''),
-                                      launch: book.launch,
-                                      quantity: book.quantity,
-                                      totalRented: book.totalRented));
-                                  Modular.to.pop();
-                                });
-                          },
-                          icon: const Icon(Icons.delete, size: 18))
+                      ButtonIcon(
+                        onTap: () {
+                          Modular.to.pushNamed('/books/form', arguments: book);
+                        },
+                        icon: Icons.edit,
+                      ),
+                      const SizedBox(width: 10),
+                      ButtonIcon(
+                        onTap: () {
+                          openDialog(
+                              context: context,
+                              title: 'Deletar Livro',
+                              message: 'O livro ${book.name} será deletado!',
+                              confirm: () {
+                                bookController.deleteBook(Book(
+                                    id: book.id,
+                                    name: book.name,
+                                    author: book.author,
+                                    publisher: Publisher(
+                                        id: book.publisher?.id,
+                                        name: '',
+                                        city: ''),
+                                    launch: book.launch,
+                                    quantity: book.quantity,
+                                    totalRented: book.totalRented));
+                                Modular.to.pop();
+                              });
+                        },
+                        icon: Icons.delete,
+                        color: const Color(0xFFFF7E7E),
+                      ),
                     ],
                   )
                 ],

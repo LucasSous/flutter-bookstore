@@ -40,7 +40,7 @@ class DefaultTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
-      style: TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
+      style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
       decoration: InputDecoration(
         labelText: labelText,
         filled: true, //<-- SEE HERE
@@ -52,9 +52,9 @@ class DefaultTextField extends StatelessWidget {
           color: Colors.grey.shade600,
         ),
         labelStyle:
-            TextStyle(color: Theme.of(context).textTheme.bodyText2?.color),
+            TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
         floatingLabelStyle: TextStyle(
-            color: Theme.of(context).textTheme.bodyText2?.color,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
             fontWeight: FontWeight.bold),
         hintStyle: const TextStyle(color: Colors.grey),
         enabledBorder: UnderlineInputBorder(
