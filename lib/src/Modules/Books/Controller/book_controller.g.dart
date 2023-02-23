@@ -41,6 +41,22 @@ mixin _$BookController on _BookControllerBase, Store {
     });
   }
 
+  late final _$mostRentedAtom =
+      Atom(name: '_BookControllerBase.mostRented', context: context);
+
+  @override
+  List<Book> get mostRented {
+    _$mostRentedAtom.reportRead();
+    return super.mostRented;
+  }
+
+  @override
+  set mostRented(List<Book> value) {
+    _$mostRentedAtom.reportWrite(value, super.mostRented, () {
+      super.mostRented = value;
+    });
+  }
+
   late final _$isEmptyInputAtom =
       Atom(name: '_BookControllerBase.isEmptyInput', context: context);
 
@@ -73,12 +89,36 @@ mixin _$BookController on _BookControllerBase, Store {
     });
   }
 
+  late final _$loadingMostRentedsAtom =
+      Atom(name: '_BookControllerBase.loadingMostRenteds', context: context);
+
+  @override
+  bool get loadingMostRenteds {
+    _$loadingMostRentedsAtom.reportRead();
+    return super.loadingMostRenteds;
+  }
+
+  @override
+  set loadingMostRenteds(bool value) {
+    _$loadingMostRentedsAtom.reportWrite(value, super.loadingMostRenteds, () {
+      super.loadingMostRenteds = value;
+    });
+  }
+
   late final _$getAllBooksAsyncAction =
       AsyncAction('_BookControllerBase.getAllBooks', context: context);
 
   @override
   Future getAllBooks() {
     return _$getAllBooksAsyncAction.run(() => super.getAllBooks());
+  }
+
+  late final _$getMostRentedAsyncAction =
+      AsyncAction('_BookControllerBase.getMostRented', context: context);
+
+  @override
+  Future getMostRented() {
+    return _$getMostRentedAsyncAction.run(() => super.getMostRented());
   }
 
   late final _$createBookAsyncAction =
@@ -132,8 +172,10 @@ mixin _$BookController on _BookControllerBase, Store {
     return '''
 books: ${books},
 booksFilter: ${booksFilter},
+mostRented: ${mostRented},
 isEmptyInput: ${isEmptyInput},
-loading: ${loading}
+loading: ${loading},
+loadingMostRenteds: ${loadingMostRenteds}
     ''';
   }
 }

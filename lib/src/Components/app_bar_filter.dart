@@ -16,7 +16,7 @@ class AppBarFilter extends StatelessWidget implements PreferredSizeWidget {
         child: TextField(
           onChanged: onChanged,
           autofocus: true,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
           decoration: InputDecoration(
             hintText: "Pesquisar",
             suffixIcon: Icon(

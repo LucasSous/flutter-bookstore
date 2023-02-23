@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bookstore2/src/Components/button_icon.dart';
 import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
@@ -64,7 +65,7 @@ class PublishersList extends StatelessWidget {
               padding: const EdgeInsets.all(9.9),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Flexible(
                     child: Column(
@@ -82,28 +83,32 @@ class PublishersList extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Modular.to.pushNamed('/publishers/form',
-                                arguments: publisher);
-                          },
-                          icon: const Icon(Icons.edit, size: 18)),
-                      IconButton(
-                          onPressed: () {
-                            openDialog(
-                                context: context,
-                                title: 'Deletar Editora',
-                                message:
-                                    'A editora ${publisher.name} será deletada!',
-                                confirm: () {
-                                  publisherController.deletePublisher(Publisher(
-                                      id: publisher.id,
-                                      name: publisher.name,
-                                      city: publisher.city));
-                                  Modular.to.pop();
-                                });
-                          },
-                          icon: const Icon(Icons.delete, size: 18))
+                      ButtonIcon(
+                        onTap: () {
+                          Modular.to.pushNamed('/publishers/form',
+                              arguments: publisher);
+                        },
+                        icon: Icons.edit,
+                      ),
+                      const SizedBox(width: 10),
+                      ButtonIcon(
+                        onTap: () {
+                          openDialog(
+                              context: context,
+                              title: 'Deletar Editora',
+                              message:
+                                  'A editora ${publisher.name} será deletada!',
+                              confirm: () {
+                                publisherController.deletePublisher(Publisher(
+                                    id: publisher.id,
+                                    name: publisher.name,
+                                    city: publisher.city));
+                                Modular.to.pop();
+                              });
+                        },
+                        icon: Icons.delete,
+                        color: const Color(0xFFFF7E7E),
+                      ),
                     ],
                   )
                 ],

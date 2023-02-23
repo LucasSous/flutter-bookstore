@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
+import 'package:flutter_bookstore2/src/Modules/Home/Controller/home_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
 import 'package:flutter_bookstore2/src/Modules/Rents/Repository/rent_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';

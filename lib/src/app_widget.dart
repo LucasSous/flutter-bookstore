@@ -13,14 +13,13 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   final ThemeData _lightTheme = ThemeData(
       primaryColor: const Color(0xFF00B2D6),
-      backgroundColor: Colors.white,
       cardColor: Colors.grey.shade300,
       scaffoldBackgroundColor: Colors.white,
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
       textTheme: const TextTheme(
-        bodyText2: TextStyle(color: Colors.black),
+        bodyMedium: TextStyle(color: Colors.black),
       ),
       inputDecorationTheme:
           InputDecorationTheme(fillColor: Colors.grey.shade200),
@@ -48,13 +47,12 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   final ThemeData _darkTheme = ThemeData(
       primaryColor: const Color(0xFF00B2D6),
       cardColor: const Color(0xFF3F3F3F),
-      backgroundColor: Colors.white,
       scaffoldBackgroundColor: const Color(0xFF2A2A2A),
       iconTheme: const IconThemeData(
         color: Colors.grey,
       ),
       textTheme: const TextTheme(
-        bodyText2: TextStyle(color: Colors.white),
+        bodyMedium: TextStyle(color: Colors.white),
       ),
       inputDecorationTheme:
           const InputDecorationTheme(fillColor: Color(0xFF3B3B3B)),

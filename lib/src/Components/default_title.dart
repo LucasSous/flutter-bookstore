@@ -10,6 +10,6 @@ class DefaultTitle extends StatelessWidget {
         style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).textTheme.bodyText2?.color));
+            color: Theme.of(context).textTheme.bodyMedium?.color));
   }
 }
