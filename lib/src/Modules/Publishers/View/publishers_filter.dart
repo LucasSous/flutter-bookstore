@@ -8,7 +8,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 class PublishersFilter extends StatelessWidget {
   const PublishersFilter({Key? key}) : super(key: key);
 
-  returns(PublisherController publisher) {
+  @override
+  Widget build(BuildContext context) {
+    final publisher = Modular.get<PublisherController>();
+    return Observer(builder: (_) {
+      return Scaffold(
+        appBar: AppBarFilter(
+            onChanged: (text) => publisher.filter(text.toString())),
+        body: Padding(
+            padding: const EdgeInsets.all(12.0), child: returns(publisher)),
+      );
+    });
+  }
+
+  Widget returns(PublisherController publisher) {
     if (publisher.isEmptyInput) {
       return Container();
     } else if (!publisher.isEmptyInput && publisher.publishersFilter.isEmpty) {
@@ -24,18 +37,5 @@ class PublishersFilter extends StatelessWidget {
                 PublishersList(publisher: publisher.publishersFilter[i])),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final publisher = Modular.get<PublisherController>();
-    return Observer(builder: (_) {
-      return Scaffold(
-        appBar: AppBarFilter(
-            onChanged: (text) => publisher.filter(text.toString())),
-        body: Padding(
-            padding: const EdgeInsets.all(12.0), child: returns(publisher)),
-      );
-    });
   }
 }

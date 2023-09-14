@@ -7,7 +7,7 @@ import 'package:flutter_bookstore2/src/Components/select.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -212,8 +212,8 @@ class _BookFormState extends State<BookForm> {
                                   id: _formData['id'],
                                   name: _formData['name'],
                                   author: _formData['author'],
-                                  publisher: Publisher(
-                                      id: _formData['publisher'],
+                                  publisher: PublisherModel(
+                                      id: int.parse(_formData['publisher']!),
                                       name: '',
                                       city: ''),
                                   launch: _formData['launch'],
@@ -223,8 +223,8 @@ class _BookFormState extends State<BookForm> {
                               bookController.createBook(Book(
                                 name: _formData['name'],
                                 author: _formData['author'],
-                                publisher: Publisher(
-                                    id: _formData['publisher'],
+                                publisher: PublisherModel(
+                                    id: int.parse(_formData['publisher']!),
                                     name: '',
                                     city: ''),
                                 launch: _formData['launch'],

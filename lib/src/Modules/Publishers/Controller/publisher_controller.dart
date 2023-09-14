@@ -1,27 +1,25 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Repository/publisher_repository.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/useCases/publishers_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'publisher_controller.g.dart';
 
-class PublisherController = _PublisherControllerBase with _$PublisherController;
+class PublisherController = PublisherControllerBase with _$PublisherController;
 
-abstract class _PublisherControllerBase with Store {
-  final PublisherRepository publisherRepo;
+abstract class PublisherControllerBase with Store {
+  final PublishersUseCase _publishersUseCase;
 
-  _PublisherControllerBase(this.publisherRepo) {
+  PublisherControllerBase(this._publishersUseCase) {
     getAllPublishers();
   }
 
   @observable
-  List<Publisher> publishers = [];
+  List<PublisherModel> publishers = [];
 
   @observable
-  List<Publisher> publishersFilter = [];
+  List<PublisherModel> publishersFilter = [];
 
   @observable
   bool isEmptyInput = true;
@@ -30,11 +28,10 @@ abstract class _PublisherControllerBase with Store {
   bool loading = false;
 
   @action
-  getAllPublishers() async {
+  Future<void> getAllPublishers() async {
     loading = true;
     try {
-      final response = await publisherRepo.getAll();
-      response.sort((a, b) => b.id.compareTo(a.id));
+      final response = await _publishersUseCase.getAll();
       publishers = response;
     } catch (e) {
       showSnackBar('Erro ao tentar listar editoras', 'error');
@@ -44,29 +41,25 @@ abstract class _PublisherControllerBase with Store {
   }
 
   @action
-  createPublisher(Publisher publisher) async {
-    // ignore: unnecessary_null_comparison
-    if (publisher != null) {
-      loading = true;
-      try {
-        await publisherRepo.save(publisher);
-        showSnackBar('Editora cadastrada com sucesso', 'success');
-        await getAllPublishers();
-        Modular.to.pop();
-      } catch (e) {
-        showSnackBar('Erro ao tentar cadastar editora', 'error');
-      } finally {
-        loading = false;
-      }
+  Future<void> createPublisher(PublisherModel publisher) async {
+    loading = true;
+    try {
+      await _publishersUseCase.save(publisher);
+      showSnackBar('Editora cadastrada com sucesso', 'success');
+      await getAllPublishers();
+      Modular.to.pop();
+    } catch (e) {
+      showSnackBar('Erro ao tentar cadastrar editora', 'error');
+    } finally {
+      loading = false;
     }
   }
 
   @action
-  updatePublisher(Publisher publisher) async {
-    // ignore: unnecessary_null_comparison
-    if (publisher != null && publisher.id != null) {
+  Future<void> updatePublisher(PublisherModel publisher) async {
+    if (publisher.id != null) {
       try {
-        await publisherRepo.update(publisher);
+        await _publishersUseCase.update(publisher);
         showSnackBar('Editora editada com sucesso', 'success');
         Modular.to.pop();
       } catch (e) {
@@ -78,23 +71,20 @@ abstract class _PublisherControllerBase with Store {
   }
 
   @action
-  deletePublisher(Publisher publisher) async {
-    // ignore: unnecessary_null_comparison
-    if (publisher != null) {
-      try {
-        await publisherRepo.delete(publisher);
-        showSnackBar('Editora deletada com sucesso', 'success');
-        Modular.to.navigate('/publishers/');
-      } catch (e) {
-        showSnackBar('Erro: Não é posivel deletar esta editora', 'error');
-      } finally {
-        await getAllPublishers();
-      }
+  Future<void> deletePublisher(PublisherModel publisher) async {
+    try {
+      await _publishersUseCase.delete(publisher);
+      showSnackBar('Editora deletada com sucesso', 'success');
+      Modular.to.navigate('/publishers/');
+    } catch (e) {
+      showSnackBar('Erro: Não é posivel deletar esta editora', 'error');
+    } finally {
+      await getAllPublishers();
     }
   }
 
   @action
-  filter(String value) async {
+  void filter(String value) {
     if (value.isEmpty) {
       publishersFilter = [];
       isEmptyInput = true;
@@ -103,7 +93,7 @@ abstract class _PublisherControllerBase with Store {
       isEmptyInput = false;
     }
 
-    List<Publisher> list = publishers
+    List<PublisherModel> list = publishers
         .where(
           (e) =>
               e.id.toString().toLowerCase().contains(
@@ -122,7 +112,7 @@ abstract class _PublisherControllerBase with Store {
   }
 
   @action
-  resetFilter() {
+  void resetFilter() {
     publishersFilter = [];
     isEmptyInput = true;
   }

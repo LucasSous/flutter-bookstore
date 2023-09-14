@@ -1,3 +1,3 @@
 class Api {
-  static String baseURL = 'http://wdaw.hopto.org:8185/api';
+  static String baseURL = 'https://livraria-api-linux.altislabtech.com.br/api';
 }

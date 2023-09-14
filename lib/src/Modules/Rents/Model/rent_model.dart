@@ -28,18 +28,18 @@ class Rent {
         json['usuario_id'] != null ? User.fromJson(json['usuario_id']) : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['data_aluguel'] = creationDate;
-    data['data_devolucao'] = returnDate;
-    data['data_previsao'] = forecastDate;
-    if (book != null) {
-      data['livro_id'] = book!.toJson();
-    }
-    if (user != null) {
-      data['usuario_id'] = user!.toJson();
-    }
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['id'] = id;
+  //   data['data_aluguel'] = creationDate;
+  //   data['data_devolucao'] = returnDate;
+  //   data['data_previsao'] = forecastDate;
+  //   if (book != null) {
+  //     data['livro_id'] = book!.toJson();
+  //   }
+  //   if (user != null) {
+  //     data['usuario_id'] = user!.toJson();
+  //   }
+  //   return data;
+  // }
 }

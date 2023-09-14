@@ -73,18 +73,12 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
-  late final _$HomeControllerBaseActionController =
-      ActionController(name: 'HomeControllerBase', context: context);
+  late final _$setValuesAsyncAction =
+      AsyncAction('HomeControllerBase.setValues', context: context);
 
   @override
-  dynamic setValues() {
-    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.setValues');
-    try {
-      return super.setValues();
-    } finally {
-      _$HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future setValues() {
+    return _$setValuesAsyncAction.run(() => super.setValues());
   }
 
   @override

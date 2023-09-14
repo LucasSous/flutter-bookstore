@@ -3,12 +3,12 @@ import 'package:flutter_bookstore2/src/Components/default_button.dart';
 import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
 import 'package:flutter_bookstore2/src/Components/default_title.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PublisherForm extends StatefulWidget {
-  final Publisher? publisher;
+  final PublisherModel? publisher;
   const PublisherForm({Key? key, required this.publisher}) : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class _PublisherFormState extends State<PublisherForm> {
     }
   }
 
-  titulo() {
+  String titulo() {
     if (_formData['id'] != null) {
       return 'Editar Editora';
     } else {
@@ -43,7 +43,7 @@ class _PublisherFormState extends State<PublisherForm> {
     }
   }
 
-  buttomText() {
+  String buttomText() {
     if (_formData['id'] != null) {
       return 'Editar';
     } else {
@@ -133,14 +133,14 @@ class _PublisherFormState extends State<PublisherForm> {
                               formKey.currentState!.save();
 
                               if (_formData['id'] != null) {
-                                publisher.updatePublisher(Publisher(
-                                    id: _formData['id'],
-                                    name: _formData['name'],
-                                    city: _formData['city']));
+                                publisher.updatePublisher(PublisherModel(
+                                    id: int.parse(_formData['id']!),
+                                    name: _formData['name']!,
+                                    city: _formData['city']!));
                               } else {
-                                publisher.createPublisher(Publisher(
-                                    name: _formData['name'],
-                                    city: _formData['city']));
+                                publisher.createPublisher(PublisherModel(
+                                    name: _formData['name']!,
+                                    city: _formData['city']!));
                               }
                             }
                           })

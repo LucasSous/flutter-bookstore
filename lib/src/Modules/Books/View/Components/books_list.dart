@@ -3,7 +3,7 @@ import 'package:flutter_bookstore2/src/Components/button_icon.dart';
 import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
 import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -91,7 +91,7 @@ class BooksList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Editora:'),
-                        Text(book.publisher?.name,
+                        Text(book.publisher!.name,
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -139,8 +139,8 @@ class BooksList extends StatelessWidget {
                                     id: book.id,
                                     name: book.name,
                                     author: book.author,
-                                    publisher: Publisher(
-                                        id: book.publisher?.id,
+                                    publisher: PublisherModel(
+                                        id: book.publisher!.id,
                                         name: '',
                                         city: ''),
                                     launch: book.launch,

@@ -8,41 +8,41 @@ part of 'publisher_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$PublisherController on _PublisherControllerBase, Store {
+mixin _$PublisherController on PublisherControllerBase, Store {
   late final _$publishersAtom =
-      Atom(name: '_PublisherControllerBase.publishers', context: context);
+      Atom(name: 'PublisherControllerBase.publishers', context: context);
 
   @override
-  List<Publisher> get publishers {
+  List<PublisherModel> get publishers {
     _$publishersAtom.reportRead();
     return super.publishers;
   }
 
   @override
-  set publishers(List<Publisher> value) {
+  set publishers(List<PublisherModel> value) {
     _$publishersAtom.reportWrite(value, super.publishers, () {
       super.publishers = value;
     });
   }
 
   late final _$publishersFilterAtom =
-      Atom(name: '_PublisherControllerBase.publishersFilter', context: context);
+      Atom(name: 'PublisherControllerBase.publishersFilter', context: context);
 
   @override
-  List<Publisher> get publishersFilter {
+  List<PublisherModel> get publishersFilter {
     _$publishersFilterAtom.reportRead();
     return super.publishersFilter;
   }
 
   @override
-  set publishersFilter(List<Publisher> value) {
+  set publishersFilter(List<PublisherModel> value) {
     _$publishersFilterAtom.reportWrite(value, super.publishersFilter, () {
       super.publishersFilter = value;
     });
   }
 
   late final _$isEmptyInputAtom =
-      Atom(name: '_PublisherControllerBase.isEmptyInput', context: context);
+      Atom(name: 'PublisherControllerBase.isEmptyInput', context: context);
 
   @override
   bool get isEmptyInput {
@@ -58,7 +58,7 @@ mixin _$PublisherController on _PublisherControllerBase, Store {
   }
 
   late final _$loadingAtom =
-      Atom(name: '_PublisherControllerBase.loading', context: context);
+      Atom(name: 'PublisherControllerBase.loading', context: context);
 
   @override
   bool get loading {
@@ -73,61 +73,63 @@ mixin _$PublisherController on _PublisherControllerBase, Store {
     });
   }
 
-  late final _$getAllPublishersAsyncAction = AsyncAction(
-      '_PublisherControllerBase.getAllPublishers',
-      context: context);
+  late final _$getAllPublishersAsyncAction =
+      AsyncAction('PublisherControllerBase.getAllPublishers', context: context);
 
   @override
-  Future getAllPublishers() {
+  Future<void> getAllPublishers() {
     return _$getAllPublishersAsyncAction.run(() => super.getAllPublishers());
   }
 
   late final _$createPublisherAsyncAction =
-      AsyncAction('_PublisherControllerBase.createPublisher', context: context);
+      AsyncAction('PublisherControllerBase.createPublisher', context: context);
 
   @override
-  Future createPublisher(Publisher publisher) {
+  Future<void> createPublisher(PublisherModel publisher) {
     return _$createPublisherAsyncAction
         .run(() => super.createPublisher(publisher));
   }
 
   late final _$updatePublisherAsyncAction =
-      AsyncAction('_PublisherControllerBase.updatePublisher', context: context);
+      AsyncAction('PublisherControllerBase.updatePublisher', context: context);
 
   @override
-  Future updatePublisher(Publisher publisher) {
+  Future<void> updatePublisher(PublisherModel publisher) {
     return _$updatePublisherAsyncAction
         .run(() => super.updatePublisher(publisher));
   }
 
   late final _$deletePublisherAsyncAction =
-      AsyncAction('_PublisherControllerBase.deletePublisher', context: context);
+      AsyncAction('PublisherControllerBase.deletePublisher', context: context);
 
   @override
-  Future deletePublisher(Publisher publisher) {
+  Future<void> deletePublisher(PublisherModel publisher) {
     return _$deletePublisherAsyncAction
         .run(() => super.deletePublisher(publisher));
   }
 
-  late final _$filterAsyncAction =
-      AsyncAction('_PublisherControllerBase.filter', context: context);
+  late final _$PublisherControllerBaseActionController =
+      ActionController(name: 'PublisherControllerBase', context: context);
 
   @override
-  Future filter(String value) {
-    return _$filterAsyncAction.run(() => super.filter(value));
+  void filter(String value) {
+    final _$actionInfo = _$PublisherControllerBaseActionController.startAction(
+        name: 'PublisherControllerBase.filter');
+    try {
+      return super.filter(value);
+    } finally {
+      _$PublisherControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
-  late final _$_PublisherControllerBaseActionController =
-      ActionController(name: '_PublisherControllerBase', context: context);
-
   @override
-  dynamic resetFilter() {
-    final _$actionInfo = _$_PublisherControllerBaseActionController.startAction(
-        name: '_PublisherControllerBase.resetFilter');
+  void resetFilter() {
+    final _$actionInfo = _$PublisherControllerBaseActionController.startAction(
+        name: 'PublisherControllerBase.resetFilter');
     try {
       return super.resetFilter();
     } finally {
-      _$_PublisherControllerBaseActionController.endAction(_$actionInfo);
+      _$PublisherControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bookstore2/src/Components/button_icon.dart';
 import 'package:flutter_bookstore2/src/Components/dialog.dart';
 import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Model/publisher_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PublishersList extends StatelessWidget {
-  final Publisher publisher;
+  final PublisherModel publisher;
   const PublishersList({
     Key? key,
     required this.publisher,
@@ -99,10 +99,11 @@ class PublishersList extends StatelessWidget {
                               message:
                                   'A editora ${publisher.name} será deletada!',
                               confirm: () {
-                                publisherController.deletePublisher(Publisher(
-                                    id: publisher.id,
-                                    name: publisher.name,
-                                    city: publisher.city));
+                                publisherController.deletePublisher(
+                                    PublisherModel(
+                                        id: publisher.id,
+                                        name: publisher.name,
+                                        city: publisher.city));
                                 Modular.to.pop();
                               });
                         },
