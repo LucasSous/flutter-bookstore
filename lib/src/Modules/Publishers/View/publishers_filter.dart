@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/app_bar_filter.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/View/Components/publishers_list.dart';
+import 'package:flutter_bookstore2/src/components/app_bar_filter.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/controller/publisher_controller.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/view/components/publishers_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

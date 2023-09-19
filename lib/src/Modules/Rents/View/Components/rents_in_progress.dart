@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/loading_page.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_list.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/loading_page.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rents_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

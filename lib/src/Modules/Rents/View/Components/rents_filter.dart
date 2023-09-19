@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_list.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rents_list.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 

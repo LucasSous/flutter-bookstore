@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
-import 'package:flutter_bookstore2/src/Components/dialog.dart';
-import 'package:flutter_bookstore2/src/Components/outline_button.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
+import 'package:flutter_bookstore2/src/components/default_button.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
+import 'package:flutter_bookstore2/src/components/dialog.dart';
+import 'package:flutter_bookstore2/src/components/outline_button.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/rent_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 class RentsDetail extends StatefulWidget {
-  final Rent rent;
+  final RentModel rent;
   const RentsDetail({super.key, required this.rent});
 
   @override
@@ -30,7 +28,7 @@ class _RentsDetailState extends State<RentsDetail> {
     if (widget.rent.returnDate != null &&
         widget.rent.returnDate != 'in progress') {
       return Text(
-        formatDate(widget.rent.returnDate),
+        formatDate(widget.rent.returnDate!),
         style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 18,
@@ -48,45 +46,25 @@ class _RentsDetailState extends State<RentsDetail> {
   }
 
   finalizeRent() {
-    rentController.updateRent(Rent(
-        id: widget.rent.id,
-        creationDate: widget.rent.creationDate,
-        returnDate: DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
-        forecastDate: widget.rent.forecastDate,
-        book: Book(
-            id: widget.rent.book!.id,
-            name: '',
-            publisher: null,
-            author: '',
-            launch: '',
-            quantity: ''),
-        user: User(
-            id: widget.rent.user!.id,
-            name: '',
-            address: '',
-            city: '',
-            email: '')));
+    rentController.updateRent(RentModel(
+      id: widget.rent.id,
+      creationDate: widget.rent.creationDate,
+      returnDate: DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+      forecastDate: widget.rent.forecastDate,
+      book: widget.rent.book!,
+      user: widget.rent.user!,
+    ));
   }
 
   deleteRent() {
-    rentController.deleteRent(Rent(
-        id: widget.rent.id,
-        creationDate: widget.rent.creationDate,
-        returnDate: null,
-        forecastDate: widget.rent.forecastDate,
-        book: Book(
-            id: widget.rent.book!.id,
-            name: widget.rent.book!.name,
-            publisher: null,
-            author: '',
-            launch: '',
-            quantity: ''),
-        user: User(
-            id: widget.rent.user!.id,
-            name: '',
-            address: '',
-            city: '',
-            email: '')));
+    rentController.deleteRent(RentModel(
+      id: widget.rent.id,
+      creationDate: widget.rent.creationDate,
+      returnDate: null,
+      forecastDate: widget.rent.forecastDate,
+      book: widget.rent.book!,
+      user: widget.rent.user!,
+    ));
   }
 
   actionButtons() {
@@ -141,7 +119,7 @@ class _RentsDetailState extends State<RentsDetail> {
     status() {
       if (widget.rent.returnDate != null &&
           widget.rent.returnDate != 'in progress') {
-        DateTime returnDate = DateTime.parse(widget.rent.returnDate);
+        DateTime returnDate = DateTime.parse(widget.rent.returnDate!);
         if (returnDate.compareTo(forecastDate) <= 0) {
           return const Text('Entregue no Prazo',
               style: TextStyle(

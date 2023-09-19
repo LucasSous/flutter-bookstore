@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
+import 'package:flutter_bookstore2/src/components/default_button.dart';
+import 'package:flutter_bookstore2/src/components/default_text_field.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/controller/publisher_controller.dart';
 import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,6 +16,7 @@ class PublisherForm extends StatefulWidget {
 }
 
 class _PublisherFormState extends State<PublisherForm> {
+  final _publisherController = Modular.get<PublisherController>();
   final formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
   late final String? Function(String? text)? validator;
@@ -53,8 +54,6 @@ class _PublisherFormState extends State<PublisherForm> {
 
   @override
   Widget build(BuildContext context) {
-    final publisher = Modular.get<PublisherController>();
-
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -126,24 +125,10 @@ class _PublisherFormState extends State<PublisherForm> {
                         height: 25,
                       ),
                       DefaultButton(
-                          text: buttomText(),
-                          isLoading: publisher.loading,
-                          click: () {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-
-                              if (_formData['id'] != null) {
-                                publisher.updatePublisher(PublisherModel(
-                                    id: int.parse(_formData['id']!),
-                                    name: _formData['name']!,
-                                    city: _formData['city']!));
-                              } else {
-                                publisher.createPublisher(PublisherModel(
-                                    name: _formData['name']!,
-                                    city: _formData['city']!));
-                              }
-                            }
-                          })
+                        text: buttomText(),
+                        isLoading: _publisherController.loading,
+                        click: _clickButton,
+                      )
                     ],
                   ),
                 ),
@@ -151,5 +136,28 @@ class _PublisherFormState extends State<PublisherForm> {
             ),
           );
         }));
+  }
+
+  void _clickButton() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      if (_formData['id'] != null) {
+        _publisherController.updatePublisher(
+          PublisherModel(
+            id: int.parse(_formData['id']!),
+            name: _formData['name']!,
+            city: _formData['city']!,
+          ),
+        );
+      } else {
+        _publisherController.createPublisher(
+          PublisherModel(
+            name: _formData['name']!,
+            city: _formData['city']!,
+          ),
+        );
+      }
+    }
   }
 }

@@ -1,12 +1,15 @@
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rent_form.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_details.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_filter.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/rents_page.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rent_form.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rents_details.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rents_filter.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/rents_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class RentsModlule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  List<Bind> get binds => [
+        Bind((i) => RentController(i(), i(), i(), i(), i(), i())),
+      ];
 
   @override
   List<ModularRoute> get routes => [

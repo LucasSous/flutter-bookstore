@@ -1,11 +1,14 @@
-import 'package:flutter_bookstore2/src/Modules/Books/View/book_form.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/View/books_filter.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/View/books_page.dart';
+import 'package:flutter_bookstore2/src/modules/books/controller/book_controller.dart';
+import 'package:flutter_bookstore2/src/modules/books/view/book_form.dart';
+import 'package:flutter_bookstore2/src/modules/books/view/books_filter.dart';
+import 'package:flutter_bookstore2/src/modules/books/view/books_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BooksModule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  List<Bind> get binds => [
+        Bind((i) => BookController(i(), i(), i(), i(), i())),
+      ];
 
   @override
   List<ModularRoute> get routes => [

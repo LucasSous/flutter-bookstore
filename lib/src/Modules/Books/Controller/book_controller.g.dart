@@ -13,13 +13,13 @@ mixin _$BookController on _BookControllerBase, Store {
       Atom(name: '_BookControllerBase.books', context: context);
 
   @override
-  List<Book> get books {
+  List<BookModel> get books {
     _$booksAtom.reportRead();
     return super.books;
   }
 
   @override
-  set books(List<Book> value) {
+  set books(List<BookModel> value) {
     _$booksAtom.reportWrite(value, super.books, () {
       super.books = value;
     });
@@ -29,31 +29,31 @@ mixin _$BookController on _BookControllerBase, Store {
       Atom(name: '_BookControllerBase.booksFilter', context: context);
 
   @override
-  List<Book> get booksFilter {
+  List<BookModel> get booksFilter {
     _$booksFilterAtom.reportRead();
     return super.booksFilter;
   }
 
   @override
-  set booksFilter(List<Book> value) {
+  set booksFilter(List<BookModel> value) {
     _$booksFilterAtom.reportWrite(value, super.booksFilter, () {
       super.booksFilter = value;
     });
   }
 
-  late final _$mostRentedAtom =
-      Atom(name: '_BookControllerBase.mostRented', context: context);
+  late final _$publishersAtom =
+      Atom(name: '_BookControllerBase.publishers', context: context);
 
   @override
-  List<Book> get mostRented {
-    _$mostRentedAtom.reportRead();
-    return super.mostRented;
+  List<PublisherModel> get publishers {
+    _$publishersAtom.reportRead();
+    return super.publishers;
   }
 
   @override
-  set mostRented(List<Book> value) {
-    _$mostRentedAtom.reportWrite(value, super.mostRented, () {
-      super.mostRented = value;
+  set publishers(List<PublisherModel> value) {
+    _$publishersAtom.reportWrite(value, super.publishers, () {
+      super.publishers = value;
     });
   }
 
@@ -89,43 +89,19 @@ mixin _$BookController on _BookControllerBase, Store {
     });
   }
 
-  late final _$loadingMostRentedsAtom =
-      Atom(name: '_BookControllerBase.loadingMostRenteds', context: context);
-
-  @override
-  bool get loadingMostRenteds {
-    _$loadingMostRentedsAtom.reportRead();
-    return super.loadingMostRenteds;
-  }
-
-  @override
-  set loadingMostRenteds(bool value) {
-    _$loadingMostRentedsAtom.reportWrite(value, super.loadingMostRenteds, () {
-      super.loadingMostRenteds = value;
-    });
-  }
-
   late final _$getAllBooksAsyncAction =
       AsyncAction('_BookControllerBase.getAllBooks', context: context);
 
   @override
-  Future getAllBooks() {
+  Future<void> getAllBooks() {
     return _$getAllBooksAsyncAction.run(() => super.getAllBooks());
-  }
-
-  late final _$getMostRentedAsyncAction =
-      AsyncAction('_BookControllerBase.getMostRented', context: context);
-
-  @override
-  Future getMostRented() {
-    return _$getMostRentedAsyncAction.run(() => super.getMostRented());
   }
 
   late final _$createBookAsyncAction =
       AsyncAction('_BookControllerBase.createBook', context: context);
 
   @override
-  Future createBook(Book book) {
+  Future<void> createBook(BookModel book) {
     return _$createBookAsyncAction.run(() => super.createBook(book));
   }
 
@@ -133,7 +109,7 @@ mixin _$BookController on _BookControllerBase, Store {
       AsyncAction('_BookControllerBase.updateBook', context: context);
 
   @override
-  Future updateBook(Book book) {
+  Future<void> updateBook(BookModel book) {
     return _$updateBookAsyncAction.run(() => super.updateBook(book));
   }
 
@@ -141,23 +117,34 @@ mixin _$BookController on _BookControllerBase, Store {
       AsyncAction('_BookControllerBase.deleteBook', context: context);
 
   @override
-  Future deleteBook(Book book) {
+  Future<void> deleteBook(BookModel book) {
     return _$deleteBookAsyncAction.run(() => super.deleteBook(book));
   }
 
-  late final _$filterAsyncAction =
-      AsyncAction('_BookControllerBase.filter', context: context);
+  late final _$getAllPublishersAsyncAction =
+      AsyncAction('_BookControllerBase.getAllPublishers', context: context);
 
   @override
-  Future filter(String value) {
-    return _$filterAsyncAction.run(() => super.filter(value));
+  Future<void> getAllPublishers() {
+    return _$getAllPublishersAsyncAction.run(() => super.getAllPublishers());
   }
 
   late final _$_BookControllerBaseActionController =
       ActionController(name: '_BookControllerBase', context: context);
 
   @override
-  dynamic resetFilter() {
+  void filter(String value) {
+    final _$actionInfo = _$_BookControllerBaseActionController.startAction(
+        name: '_BookControllerBase.filter');
+    try {
+      return super.filter(value);
+    } finally {
+      _$_BookControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetFilter() {
     final _$actionInfo = _$_BookControllerBaseActionController.startAction(
         name: '_BookControllerBase.resetFilter');
     try {
@@ -172,10 +159,9 @@ mixin _$BookController on _BookControllerBase, Store {
     return '''
 books: ${books},
 booksFilter: ${booksFilter},
-mostRented: ${mostRented},
+publishers: ${publishers},
 isEmptyInput: ${isEmptyInput},
-loading: ${loading},
-loadingMostRenteds: ${loadingMostRenteds}
+loading: ${loading}
     ''';
   }
 }

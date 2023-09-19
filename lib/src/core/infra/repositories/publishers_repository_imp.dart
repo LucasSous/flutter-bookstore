@@ -14,16 +14,16 @@ class PublishersRepositoryImp implements PublishersRepository {
 
   @override
   Future<void> save(PublisherModel publisher) async {
-    return await _publishersDataSourse.save(publisher);
+    await _publishersDataSourse.save(publisher);
   }
 
   @override
   Future<void> update(PublisherModel publisher) async {
-    return await _publishersDataSourse.update(publisher);
+    await _publishersDataSourse.update(publisher);
   }
 
   @override
   Future<void> delete(PublisherModel publisher) async {
-    return await _publishersDataSourse.delete(publisher);
+    await _publishersDataSourse.delete(publisher);
   }
 }

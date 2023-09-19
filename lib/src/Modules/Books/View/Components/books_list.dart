@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/button_icon.dart';
-import 'package:flutter_bookstore2/src/Components/dialog.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
-import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
+import 'package:flutter_bookstore2/src/components/button_icon.dart';
+import 'package:flutter_bookstore2/src/components/dialog.dart';
+import 'package:flutter_bookstore2/src/modules/books/controller/book_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/book_model.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BooksList extends StatelessWidget {
-  final Book book;
+  final BookModel book;
   const BooksList({
     Key? key,
     required this.book,
@@ -135,17 +134,7 @@ class BooksList extends StatelessWidget {
                               title: 'Deletar Livro',
                               message: 'O livro ${book.name} será deletado!',
                               confirm: () {
-                                bookController.deleteBook(Book(
-                                    id: book.id,
-                                    name: book.name,
-                                    author: book.author,
-                                    publisher: PublisherModel(
-                                        id: book.publisher!.id,
-                                        name: '',
-                                        city: ''),
-                                    launch: book.launch,
-                                    quantity: book.quantity,
-                                    totalRented: book.totalRented));
+                                bookController.deleteBook(book);
                                 Modular.to.pop();
                               });
                         },

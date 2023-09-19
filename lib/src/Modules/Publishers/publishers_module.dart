@@ -1,11 +1,14 @@
-import 'package:flutter_bookstore2/src/Modules/Publishers/View/publisher_form.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/View/publishers_filter.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/View/publishers_page.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/controller/publisher_controller.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/view/publisher_form.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/view/publishers_filter.dart';
+import 'package:flutter_bookstore2/src/modules/publishers/view/publishers_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PublishersModule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  List<Bind> get binds => [
+        Bind((i) => PublisherController(i(), i(), i(), i())),
+      ];
 
   @override
   List<ModularRoute> get routes => [

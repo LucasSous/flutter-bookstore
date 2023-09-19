@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
+import 'package:flutter_bookstore2/src/components/default_button.dart';
+import 'package:flutter_bookstore2/src/components/default_text_field.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
+import 'package:flutter_bookstore2/src/modules/users/controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/user_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class UserForm extends StatefulWidget {
-  final User? user;
+  final UserModel? user;
   const UserForm({Key? key, required this.user}) : super(key: key);
 
   @override
@@ -16,6 +16,7 @@ class UserForm extends StatefulWidget {
 }
 
 class _UserFormState extends State<UserForm> {
+  final _userController = Modular.get<UserController>();
   final formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
   late final String? Function(String? text)? validator;
@@ -37,7 +38,7 @@ class _UserFormState extends State<UserForm> {
     }
   }
 
-  titulo() {
+  String titulo() {
     if (_formData['id'] != null) {
       return 'Editar Usuário';
     } else {
@@ -45,7 +46,7 @@ class _UserFormState extends State<UserForm> {
     }
   }
 
-  buttomText() {
+  String buttomText() {
     if (_formData['id'] != null) {
       return 'Editar';
     } else {
@@ -55,7 +56,6 @@ class _UserFormState extends State<UserForm> {
 
   @override
   Widget build(BuildContext context) {
-    final userController = Modular.get<UserController>();
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -167,30 +167,8 @@ class _UserFormState extends State<UserForm> {
                       ),
                       DefaultButton(
                         text: buttomText(),
-                        isLoading: userController.loading,
-                        click: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-
-                            if (_formData['id'] != null) {
-                              userController.updateUser(User(
-                                  id: _formData['id'],
-                                  name: _formData['name'],
-                                  address: _formData['address'],
-                                  city: _formData['city'],
-                                  email: _formData['email']));
-                            } else {
-                              userController.createUser(User(
-                                name: _formData['name']
-                                    .toString()
-                                    .replaceAll(RegExp('/( )+/g'), " "),
-                                address: _formData['address'],
-                                city: _formData['city'],
-                                email: _formData['email'],
-                              ));
-                            }
-                          }
-                        },
+                        isLoading: _userController.loading,
+                        click: _clickButton,
                       )
                     ],
                   ),
@@ -199,5 +177,33 @@ class _UserFormState extends State<UserForm> {
             ),
           );
         }));
+  }
+
+  void _clickButton() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      if (_formData['id'] != null) {
+        _userController.updateUser(
+          UserModel(
+            id: int.parse(_formData['id']!),
+            name: _formData['name']!,
+            address: _formData['address']!,
+            city: _formData['city']!,
+            email: _formData['email']!,
+          ),
+        );
+      } else {
+        _userController.createUser(
+          UserModel(
+            name:
+                _formData['name'].toString().replaceAll(RegExp('/( )+/g'), " "),
+            address: _formData['address']!,
+            city: _formData['city']!,
+            email: _formData['email']!,
+          ),
+        );
+      }
+    }
   }
 }

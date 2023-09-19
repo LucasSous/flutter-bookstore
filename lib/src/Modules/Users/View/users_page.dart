@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/add_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_app_bar.dart';
-import 'package:flutter_bookstore2/src/Components/loading_page.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/View/components/users_list.dart';
+import 'package:flutter_bookstore2/src/components/add_button.dart';
+import 'package:flutter_bookstore2/src/components/default_app_bar.dart';
+import 'package:flutter_bookstore2/src/components/loading_page.dart';
+import 'package:flutter_bookstore2/src/modules/users/controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/modules/users/view/components/users_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -16,6 +16,12 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   final userController = Modular.get<UserController>();
+
+  @override
+  void dispose() {
+    Modular.dispose<UserController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

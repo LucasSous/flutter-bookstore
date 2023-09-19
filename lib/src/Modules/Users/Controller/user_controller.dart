@@ -1,26 +1,35 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Repository/user_repository.dart';
+import 'package:flutter_bookstore2/src/components/snack_bar.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/user_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/users/delete_user_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/users/get_all_users_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/users/save_user_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/users/update_user_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'user_controller.g.dart';
 
-class UserController = _UserControllerBase with _$UserController;
+class UserController = UserControllerBase with _$UserController;
 
-abstract class _UserControllerBase with Store {
-  final UserRepository userRepo;
+abstract class UserControllerBase with Store {
+  final GetAllUsersUseCase _getAllUsersUseCase;
+  final SaveUserUseCase _saveUserUseCase;
+  final UpdateUserUseCase _updateUserUseCase;
+  final DeleteUserUseCase _deleteUserUseCase;
 
-  _UserControllerBase(this.userRepo) {
+  UserControllerBase(
+    this._getAllUsersUseCase,
+    this._saveUserUseCase,
+    this._updateUserUseCase,
+    this._deleteUserUseCase,
+  ) {
     getAllUsers();
   }
 
   @observable
-  List<User> users = [];
+  List<UserModel> users = [];
 
   @observable
-  List<User> usersFilter = [];
+  List<UserModel> usersFilter = [];
 
   @observable
   bool isEmptyInput = true;
@@ -29,71 +38,61 @@ abstract class _UserControllerBase with Store {
   bool loading = false;
 
   @action
-  getAllUsers() async {
+  Future<void> getAllUsers() async {
     loading = true;
     try {
-      final response = await userRepo.getAll();
-      response.sort((a, b) => b.id.compareTo(a.id));
+      final response = await _getAllUsersUseCase();
       users = response;
     } catch (e) {
-      showSnackBar('Erro ao tentar listar usuários', 'error');
+      showSnackBar('Erro ao tentar listar usuários', Status.error);
     } finally {
       loading = false;
     }
   }
 
   @action
-  createUser(User user) async {
-    // ignore: unnecessary_null_comparison
-    if (user != null) {
-      loading = true;
+  Future<void> createUser(UserModel user) async {
+    loading = true;
+    try {
+      await _saveUserUseCase(user);
+      showSnackBar('Usuário cadastrado com sucesso', Status.success);
+      await getAllUsers();
+      Modular.to.pop();
+    } catch (e) {
+      showSnackBar(e.toString(), Status.error);
+    } finally {
+      loading = false;
+    }
+  }
+
+  @action
+  Future<void> updateUser(UserModel user) async {
+    if (user.id != null) {
       try {
-        await userRepo.save(user);
-        showSnackBar('Usuário cadastrado com sucesso', 'success');
-        await getAllUsers();
+        await _updateUserUseCase(user);
+        showSnackBar('Usuário editado com sucesso', Status.success);
         Modular.to.pop();
-      } catch (e) {
-        showSnackBar('Erro ao tentar cadastar usuário', 'error');
-      } finally {
-        loading = false;
-      }
-    }
-  }
-
-  @action
-  updateUser(User user) async {
-    // ignore: unnecessary_null_comparison
-    if (user != null && user.id != null) {
-      try {
-        await userRepo.update(user);
-        showSnackBar('Usuário editado com sucesso', 'success');
-        Modular.to.pop();
-      } catch (e) {
-        showSnackBar('Erro ao tentar editar usuário', 'error');
-      } finally {
         await getAllUsers();
-      }
-    }
-  }
-
-  @action
-  deleteUser(User user) async {
-    // ignore: unnecessary_null_comparison
-    if (user != null) {
-      try {
-        await userRepo.delete(user);
-        showSnackBar('Usuário deletado com sucesso', 'success');
-        Modular.to.navigate('/users/');
       } catch (e) {
-        showSnackBar('Erro: Não é possivel deletar este usuário', 'error');
-      } finally {
-        await getAllUsers();
+        showSnackBar(e.toString(), Status.error);
       }
     }
   }
 
   @action
-  filter(String value) async {
+  Future<void> deleteUser(UserModel user) async {
+    try {
+      await _deleteUserUseCase(user);
+      showSnackBar('Usuário deletado com sucesso', Status.success);
+      Modular.to.navigate('/users/');
+      await getAllUsers();
+    } catch (e) {
+      showSnackBar(e.toString(), Status.error);
+    }
+  }
+
+  @action
+  void filter(String value) {
     if (value.isEmpty) {
       usersFilter = [];
       isEmptyInput = true;
@@ -102,7 +101,7 @@ abstract class _UserControllerBase with Store {
       isEmptyInput = false;
     }
 
-    List<User> list = users
+    List<UserModel> list = users
         .where(
           (e) =>
               e.id.toString().toLowerCase().contains(
@@ -127,7 +126,7 @@ abstract class _UserControllerBase with Store {
   }
 
   @action
-  resetFilter() {
+  void resetFilter() {
     usersFilter = [];
     isEmptyInput = true;
   }

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/add_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_app_bar.dart';
-import 'package:flutter_bookstore2/src/Components/loading_page.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/finished_rents.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/View/Components/rents_in_progress.dart';
+import 'package:flutter_bookstore2/src/components/add_button.dart';
+import 'package:flutter_bookstore2/src/components/default_app_bar.dart';
+import 'package:flutter_bookstore2/src/components/loading_page.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/finished_rents.dart';
+import 'package:flutter_bookstore2/src/modules/rents/view/components/rents_in_progress.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -31,7 +31,7 @@ class _RentsPageState extends State<RentsPage> {
     return Observer(
         name: 'observerRentPage',
         builder: (_) {
-          if (rentController.loading == true) {
+          if (rentController.loading) {
             return const LoadingPage();
           } else {
             return DefaultTabController(

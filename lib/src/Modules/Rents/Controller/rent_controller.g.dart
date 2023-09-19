@@ -13,15 +13,47 @@ mixin _$RentController on _RentControllerBase, Store {
       Atom(name: '_RentControllerBase.rents', context: context);
 
   @override
-  List<Rent> get rents {
+  List<RentModel> get rents {
     _$rentsAtom.reportRead();
     return super.rents;
   }
 
   @override
-  set rents(List<Rent> value) {
+  set rents(List<RentModel> value) {
     _$rentsAtom.reportWrite(value, super.rents, () {
       super.rents = value;
+    });
+  }
+
+  late final _$usersAtom =
+      Atom(name: '_RentControllerBase.users', context: context);
+
+  @override
+  List<UserModel> get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(List<UserModel> value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
+    });
+  }
+
+  late final _$booksAtom =
+      Atom(name: '_RentControllerBase.books', context: context);
+
+  @override
+  List<BookModel> get books {
+    _$booksAtom.reportRead();
+    return super.books;
+  }
+
+  @override
+  set books(List<BookModel> value) {
+    _$booksAtom.reportWrite(value, super.books, () {
+      super.books = value;
     });
   }
 
@@ -29,13 +61,13 @@ mixin _$RentController on _RentControllerBase, Store {
       Atom(name: '_RentControllerBase.rentsInProgress', context: context);
 
   @override
-  List<Rent> get rentsInProgress {
+  List<RentModel> get rentsInProgress {
     _$rentsInProgressAtom.reportRead();
     return super.rentsInProgress;
   }
 
   @override
-  set rentsInProgress(List<Rent> value) {
+  set rentsInProgress(List<RentModel> value) {
     _$rentsInProgressAtom.reportWrite(value, super.rentsInProgress, () {
       super.rentsInProgress = value;
     });
@@ -45,13 +77,13 @@ mixin _$RentController on _RentControllerBase, Store {
       Atom(name: '_RentControllerBase.finishedRents', context: context);
 
   @override
-  List<Rent> get finishedRents {
+  List<RentModel> get finishedRents {
     _$finishedRentsAtom.reportRead();
     return super.finishedRents;
   }
 
   @override
-  set finishedRents(List<Rent> value) {
+  set finishedRents(List<RentModel> value) {
     _$finishedRentsAtom.reportWrite(value, super.finishedRents, () {
       super.finishedRents = value;
     });
@@ -62,13 +94,13 @@ mixin _$RentController on _RentControllerBase, Store {
       context: context);
 
   @override
-  List<Rent> get defaultValueRentsInProgress {
+  List<RentModel> get defaultValueRentsInProgress {
     _$defaultValueRentsInProgressAtom.reportRead();
     return super.defaultValueRentsInProgress;
   }
 
   @override
-  set defaultValueRentsInProgress(List<Rent> value) {
+  set defaultValueRentsInProgress(List<RentModel> value) {
     _$defaultValueRentsInProgressAtom
         .reportWrite(value, super.defaultValueRentsInProgress, () {
       super.defaultValueRentsInProgress = value;
@@ -79,13 +111,13 @@ mixin _$RentController on _RentControllerBase, Store {
       name: '_RentControllerBase.defaultValueFinishedRents', context: context);
 
   @override
-  List<Rent> get defaultValueFinishedRents {
+  List<RentModel> get defaultValueFinishedRents {
     _$defaultValueFinishedRentsAtom.reportRead();
     return super.defaultValueFinishedRents;
   }
 
   @override
-  set defaultValueFinishedRents(List<Rent> value) {
+  set defaultValueFinishedRents(List<RentModel> value) {
     _$defaultValueFinishedRentsAtom
         .reportWrite(value, super.defaultValueFinishedRents, () {
       super.defaultValueFinishedRents = value;
@@ -96,13 +128,13 @@ mixin _$RentController on _RentControllerBase, Store {
       Atom(name: '_RentControllerBase.rentsFilter', context: context);
 
   @override
-  List<Rent> get rentsFilter {
+  List<RentModel> get rentsFilter {
     _$rentsFilterAtom.reportRead();
     return super.rentsFilter;
   }
 
   @override
-  set rentsFilter(List<Rent> value) {
+  set rentsFilter(List<RentModel> value) {
     _$rentsFilterAtom.reportWrite(value, super.rentsFilter, () {
       super.rentsFilter = value;
     });
@@ -156,37 +188,35 @@ mixin _$RentController on _RentControllerBase, Store {
     });
   }
 
+  late final _$getAllUsersAsyncAction =
+      AsyncAction('_RentControllerBase.getAllUsers', context: context);
+
+  @override
+  Future<void> getAllUsers() {
+    return _$getAllUsersAsyncAction.run(() => super.getAllUsers());
+  }
+
+  late final _$getAllBooksAsyncAction =
+      AsyncAction('_RentControllerBase.getAllBooks', context: context);
+
+  @override
+  Future<void> getAllBooks() {
+    return _$getAllBooksAsyncAction.run(() => super.getAllBooks());
+  }
+
   late final _$getAllRentsAsyncAction =
       AsyncAction('_RentControllerBase.getAllRents', context: context);
 
   @override
-  Future getAllRents() {
+  Future<void> getAllRents() {
     return _$getAllRentsAsyncAction.run(() => super.getAllRents());
-  }
-
-  late final _$getRentsInProgressAsyncAction =
-      AsyncAction('_RentControllerBase.getRentsInProgress', context: context);
-
-  @override
-  Future getRentsInProgress(bool showAll) {
-    return _$getRentsInProgressAsyncAction
-        .run(() => super.getRentsInProgress(showAll));
-  }
-
-  late final _$getFinishedRentsAsyncAction =
-      AsyncAction('_RentControllerBase.getFinishedRents', context: context);
-
-  @override
-  Future getFinishedRents(bool showAll) {
-    return _$getFinishedRentsAsyncAction
-        .run(() => super.getFinishedRents(showAll));
   }
 
   late final _$createRentAsyncAction =
       AsyncAction('_RentControllerBase.createRent', context: context);
 
   @override
-  Future createRent(Rent rent) {
+  Future<void> createRent(RentModel rent) {
     return _$createRentAsyncAction.run(() => super.createRent(rent));
   }
 
@@ -194,7 +224,7 @@ mixin _$RentController on _RentControllerBase, Store {
       AsyncAction('_RentControllerBase.updateRent', context: context);
 
   @override
-  Future updateRent(Rent rent) {
+  Future<void> updateRent(RentModel rent) {
     return _$updateRentAsyncAction.run(() => super.updateRent(rent));
   }
 
@@ -202,7 +232,7 @@ mixin _$RentController on _RentControllerBase, Store {
       AsyncAction('_RentControllerBase.deleteRent', context: context);
 
   @override
-  Future deleteRent(Rent rent) {
+  Future<void> deleteRent(RentModel rent) {
     return _$deleteRentAsyncAction.run(() => super.deleteRent(rent));
   }
 
@@ -210,7 +240,29 @@ mixin _$RentController on _RentControllerBase, Store {
       ActionController(name: '_RentControllerBase', context: context);
 
   @override
-  dynamic filterFinishedRents(dynamic status) {
+  void getRentsInProgress(bool showAll) {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.getRentsInProgress');
+    try {
+      return super.getRentsInProgress(showAll);
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void getFinishedRents(bool showAll) {
+    final _$actionInfo = _$_RentControllerBaseActionController.startAction(
+        name: '_RentControllerBase.getFinishedRents');
+    try {
+      return super.getFinishedRents(showAll);
+    } finally {
+      _$_RentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void filterFinishedRents(dynamic status) {
     final _$actionInfo = _$_RentControllerBaseActionController.startAction(
         name: '_RentControllerBase.filterFinishedRents');
     try {
@@ -221,7 +273,7 @@ mixin _$RentController on _RentControllerBase, Store {
   }
 
   @override
-  dynamic filterRents(dynamic date) {
+  void filterRents(dynamic date) {
     final _$actionInfo = _$_RentControllerBaseActionController.startAction(
         name: '_RentControllerBase.filterRents');
     try {
@@ -232,7 +284,7 @@ mixin _$RentController on _RentControllerBase, Store {
   }
 
   @override
-  dynamic filterRentsInProgress(dynamic status) {
+  void filterRentsInProgress(dynamic status) {
     final _$actionInfo = _$_RentControllerBaseActionController.startAction(
         name: '_RentControllerBase.filterRentsInProgress');
     try {
@@ -243,7 +295,7 @@ mixin _$RentController on _RentControllerBase, Store {
   }
 
   @override
-  dynamic updateLists() {
+  void updateLists() {
     final _$actionInfo = _$_RentControllerBaseActionController.startAction(
         name: '_RentControllerBase.updateLists');
     try {
@@ -257,6 +309,8 @@ mixin _$RentController on _RentControllerBase, Store {
   String toString() {
     return '''
 rents: ${rents},
+users: ${users},
+books: ${books},
 rentsInProgress: ${rentsInProgress},
 finishedRents: ${finishedRents},
 defaultValueRentsInProgress: ${defaultValueRentsInProgress},

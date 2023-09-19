@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/rent_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 class RentsList extends StatelessWidget {
-  final Rent rent;
+  final RentModel rent;
   const RentsList({super.key, required this.rent});
 
   formatDate(String date) {
@@ -21,7 +21,7 @@ class RentsList extends StatelessWidget {
 
     Color? color() {
       if (rent.returnDate != null && rent.returnDate != 'in progress') {
-        DateTime returnDate = DateTime.parse(rent.returnDate);
+        DateTime returnDate = DateTime.parse(rent.returnDate!);
         if (returnDate.compareTo(forecastDate) <= 0) {
           return const Color(0xFF54D572);
         } else {

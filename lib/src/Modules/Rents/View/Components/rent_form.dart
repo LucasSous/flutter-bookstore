@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
-import 'package:flutter_bookstore2/src/Components/select.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Model/rent_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
+import 'package:flutter_bookstore2/src/components/default_button.dart';
+import 'package:flutter_bookstore2/src/components/default_text_field.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
+import 'package:flutter_bookstore2/src/components/select.dart';
+import 'package:flutter_bookstore2/src/modules/rents/controller/rent_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/book_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/rent_model.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/user_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 class RentForm extends StatefulWidget {
-  final Rent? rent;
+  final RentModel? rent;
   const RentForm({super.key, required this.rent});
 
   @override
@@ -22,6 +20,7 @@ class RentForm extends StatefulWidget {
 }
 
 class _RentFormState extends State<RentForm> {
+  final _rentController = Modular.get<RentController>();
   final formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
   late final String? Function(String? text)? validator;
@@ -47,11 +46,6 @@ class _RentFormState extends State<RentForm> {
 
   @override
   Widget build(BuildContext context) {
-    final rentController = Modular.get<RentController>();
-    final userController = Modular.get<UserController>();
-    final bookController = Modular.get<BookController>();
-    final users = userController.users;
-    final books = bookController.books;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -79,7 +73,7 @@ class _RentFormState extends State<RentForm> {
                             _formData['user'] = value.toString();
                           });
                         },
-                        items: users.map((item) {
+                        items: _rentController.users.map((item) {
                           return DropdownMenuItem(
                             value: item.id.toString(),
                             child: Text(item.name),
@@ -98,7 +92,7 @@ class _RentFormState extends State<RentForm> {
                             _formData['book'] = value.toString();
                           });
                         },
-                        items: books.map((item) {
+                        items: _rentController.books.map((item) {
                           return DropdownMenuItem(
                             value: item.id.toString(),
                             child: Text(item.name),
@@ -166,39 +160,8 @@ class _RentFormState extends State<RentForm> {
                       ),
                       DefaultButton(
                         text: 'Salvar',
-                        isLoading: rentController.loading,
-                        click: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-
-                            String? date = _formData['forecastDate'];
-                            List<String> returnDate = date!.split('/');
-                            DateTime? forecastDate = DateTime.parse(
-                                '${returnDate[2]}-${returnDate[1]}-${returnDate[0]}');
-                            rentController.createRent(Rent(
-                              user: User(
-                                  id: _formData['user'],
-                                  name: '',
-                                  city: '',
-                                  address: '',
-                                  email: ''),
-                              book: Book(
-                                  id: _formData['book'],
-                                  name: '',
-                                  author: '',
-                                  publisher: null,
-                                  launch: '',
-                                  quantity: ''),
-                              creationDate: DateFormat('yyyy-MM-dd')
-                                  .format(DateTime.now())
-                                  .toString(),
-                              forecastDate: DateFormat('yyyy-MM-dd')
-                                  .format(forecastDate)
-                                  .toString(),
-                              returnDate: null,
-                            ));
-                          }
-                        },
+                        isLoading: _rentController.loading,
+                        click: _clickButton,
                       )
                     ],
                   ),
@@ -207,5 +170,35 @@ class _RentFormState extends State<RentForm> {
             ),
           );
         }));
+  }
+
+  void _clickButton() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      String? date = _formData['forecastDate'];
+      List<String> returnDate = date!.split('/');
+      DateTime? forecastDate =
+          DateTime.parse('${returnDate[2]}-${returnDate[1]}-${returnDate[0]}');
+      _rentController.createRent(RentModel(
+        user: UserModel(
+            id: int.parse(_formData['user']!),
+            name: '',
+            city: '',
+            address: '',
+            email: ''),
+        book: BookModel(
+            id: int.parse(_formData['book']!),
+            name: '',
+            author: '',
+            publisher: null,
+            launch: 0,
+            quantity: 0),
+        creationDate:
+            DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+        forecastDate: DateFormat('yyyy-MM-dd').format(forecastDate).toString(),
+        returnDate: null,
+      ));
+    }
   }
 }

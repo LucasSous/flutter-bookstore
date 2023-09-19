@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Home/Controller/home_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Home/View/Components/chart.dart';
-import 'package:flutter_bookstore2/src/Modules/Home/View/Components/item_card.dart';
-import 'package:flutter_bookstore2/src/Modules/Home/View/Components/loading_page.dart';
-import 'package:flutter_bookstore2/src/Modules/Home/View/Components/most_rented.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Rents/Controller/rent_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/modules/home/controller/home_controller.dart';
+import 'package:flutter_bookstore2/src/modules/home/view/components/chart.dart';
+import 'package:flutter_bookstore2/src/modules/home/view/components/item_card.dart';
+import 'package:flutter_bookstore2/src/modules/home/view/components/loading_page.dart';
+import 'package:flutter_bookstore2/src/modules/home/view/components/most_rented.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -19,15 +15,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final homeController = Modular.get<HomeController>();
-  final userController = Modular.get<UserController>();
-  final publisherController = Modular.get<PublisherController>();
-  final bookController = Modular.get<BookController>();
-  final rentController = Modular.get<RentController>();
+  final _homeController = Modular.get<HomeController>();
 
   @override
   void initState() {
-    homeController.setValues();
+    _homeController.getUsersQuantity();
+    _homeController.getBooksQuantity();
+    _homeController.getBooksMostRented();
+    _homeController.getPublishersQuantity();
+    _homeController.getRentsQuantity();
+    _homeController.setValues();
     super.initState();
   }
 
@@ -44,11 +41,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Observer(builder: (_) {
-        if (rentController.loading ||
-            bookController.loading ||
-            bookController.loadingMostRenteds ||
-            publisherController.loading ||
-            userController.loading) {
+        if (_homeController.loading) {
           return const LoadingPage();
         } else {
           return SingleChildScrollView(
@@ -72,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                         ItemCard(
                           name: 'Usuários',
                           icon: Icons.person_outline,
-                          quantity: userController.users.length.toString(),
+                          quantity: _homeController.usersQuantity,
                           cardColor: Theme.of(context).primaryColor,
                           route: '/users/',
                         ),
@@ -82,8 +75,7 @@ class _HomePageState extends State<HomePage> {
                         ItemCard(
                           name: 'Editoras',
                           icon: Icons.align_vertical_bottom_sharp,
-                          quantity:
-                              publisherController.publishers.length.toString(),
+                          quantity: _homeController.publishersQuantity,
                           route: '/publishers/',
                         )
                       ],
@@ -96,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                         ItemCard(
                           name: 'Livros',
                           icon: Icons.book_outlined,
-                          quantity: bookController.books.length.toString(),
+                          quantity: _homeController.booksQuantity,
                           route: '/books/',
                         ),
                         const SizedBox(
@@ -105,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                         ItemCard(
                           name: 'Aluguéis',
                           icon: Icons.calendar_today_outlined,
-                          quantity: rentController.rents.length.toString(),
+                          quantity: _homeController.rentsQuantity,
                           route: '/rents/',
                         )
                       ],
@@ -113,7 +105,8 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    bookController.mostRented[0].totalRented < 1
+                    _homeController.booksMostRented.isNotEmpty &&
+                            _homeController.booksMostRented[0].totalRented! < 1
                         ? const SizedBox()
                         : Container(
                             decoration: BoxDecoration(
@@ -145,10 +138,10 @@ class _HomePageState extends State<HomePage> {
                                     height: 10,
                                   ),
                                   Chart(
-                                    inProgress: homeController.inProgress,
-                                    onTime: homeController.onTime,
-                                    late: homeController.late,
-                                    pending: homeController.pending,
+                                    inProgress: _homeController.inProgress,
+                                    onTime: _homeController.onTime,
+                                    late: _homeController.late,
+                                    pending: _homeController.pending,
                                   )
                                 ],
                               ),
@@ -157,10 +150,11 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    bookController.mostRented.isNotEmpty
+                    _homeController.booksMostRented.isNotEmpty
                         ? MostRentedCard(
-                            name: bookController.mostRented[0].name,
-                            quantity: bookController.mostRented[0].totalRented
+                            name: _homeController.booksMostRented[0].name,
+                            quantity: _homeController
+                                .booksMostRented[0].totalRented
                                 .toString(),
                           )
                         : const SizedBox()

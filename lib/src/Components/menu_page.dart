@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MenuPage extends StatelessWidget {

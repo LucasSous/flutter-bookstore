@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/add_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_app_bar.dart';
-import 'package:flutter_bookstore2/src/Components/loading_page.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/View/Components/books_list.dart';
+import 'package:flutter_bookstore2/src/components/add_button.dart';
+import 'package:flutter_bookstore2/src/components/default_app_bar.dart';
+import 'package:flutter_bookstore2/src/components/loading_page.dart';
+import 'package:flutter_bookstore2/src/modules/books/controller/book_controller.dart';
+import 'package:flutter_bookstore2/src/modules/books/view/components/books_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -16,6 +16,12 @@ class BooksPage extends StatefulWidget {
 
 class _BooksPageState extends State<BooksPage> {
   final bookController = Modular.get<BookController>();
+
+  @override
+  void dispose() {
+    Modular.dispose<BookController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

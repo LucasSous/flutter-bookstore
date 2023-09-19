@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackBarKey = GlobalKey();
 
-showSnackBar(message, status) {
+enum Status {
+  error,
+  success,
+}
+
+void showSnackBar(String message, Status status) {
   snackBarKey.currentState!.showSnackBar(SnackBar(
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -12,11 +17,11 @@ showSnackBar(message, status) {
             child: Text(
               message,
               style: TextStyle(
-                  color: status == 'success' ? Colors.green : Colors.red,
+                  color: status == Status.success ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold),
             ),
           ),
-          status == 'success'
+          status == Status.success
               ? const Icon(
                   Icons.check,
                   color: Colors.green,
@@ -27,8 +32,9 @@ showSnackBar(message, status) {
                 )
         ],
       ),
-      backgroundColor:
-          status == 'success' ? Colors.green.shade100 : Colors.red.shade100,
+      backgroundColor: status == Status.success
+          ? Colors.green.shade100
+          : Colors.red.shade100,
       elevation: 5.0,
       behavior: SnackBarBehavior.fixed));
 }

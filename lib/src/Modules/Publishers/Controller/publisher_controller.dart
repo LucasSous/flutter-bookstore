@@ -1,6 +1,9 @@
-import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
+import 'package:flutter_bookstore2/src/components/snack_bar.dart';
 import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
-import 'package:flutter_bookstore2/src/core/domain/useCases/publishers_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/delete_publisher_usercase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/get_all_publishers_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/save_publisher_usecase.dart';
+import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/update_publisher_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,9 +12,17 @@ part 'publisher_controller.g.dart';
 class PublisherController = PublisherControllerBase with _$PublisherController;
 
 abstract class PublisherControllerBase with Store {
-  final PublishersUseCase _publishersUseCase;
+  final GetAllPublishersUseCase _getAllPublishersUseCase;
+  final SavePublisherUseCase _savePublisherUseCase;
+  final UpdatePublisherUseCase _updatePublisherUseCase;
+  final DeletePublisherUseCase _deletePublisherUseCase;
 
-  PublisherControllerBase(this._publishersUseCase) {
+  PublisherControllerBase(
+    this._getAllPublishersUseCase,
+    this._savePublisherUseCase,
+    this._updatePublisherUseCase,
+    this._deletePublisherUseCase,
+  ) {
     getAllPublishers();
   }
 
@@ -31,10 +42,10 @@ abstract class PublisherControllerBase with Store {
   Future<void> getAllPublishers() async {
     loading = true;
     try {
-      final response = await _publishersUseCase.getAll();
+      final response = await _getAllPublishersUseCase();
       publishers = response;
     } catch (e) {
-      showSnackBar('Erro ao tentar listar editoras', 'error');
+      showSnackBar('Erro ao tentar listar editoras', Status.error);
     } finally {
       loading = false;
     }
@@ -44,12 +55,12 @@ abstract class PublisherControllerBase with Store {
   Future<void> createPublisher(PublisherModel publisher) async {
     loading = true;
     try {
-      await _publishersUseCase.save(publisher);
-      showSnackBar('Editora cadastrada com sucesso', 'success');
+      await _savePublisherUseCase(publisher);
+      showSnackBar('Editora cadastrada com sucesso', Status.success);
       await getAllPublishers();
       Modular.to.pop();
     } catch (e) {
-      showSnackBar('Erro ao tentar cadastrar editora', 'error');
+      showSnackBar('Erro ao tentar cadastrar editora', Status.error);
     } finally {
       loading = false;
     }
@@ -59,11 +70,11 @@ abstract class PublisherControllerBase with Store {
   Future<void> updatePublisher(PublisherModel publisher) async {
     if (publisher.id != null) {
       try {
-        await _publishersUseCase.update(publisher);
-        showSnackBar('Editora editada com sucesso', 'success');
+        await _updatePublisherUseCase(publisher);
+        showSnackBar('Editora editada com sucesso', Status.success);
         Modular.to.pop();
       } catch (e) {
-        showSnackBar('Erro ao tentar editar editora', 'error');
+        showSnackBar('Erro ao tentar editar editora', Status.error);
       } finally {
         await getAllPublishers();
       }
@@ -73,11 +84,11 @@ abstract class PublisherControllerBase with Store {
   @action
   Future<void> deletePublisher(PublisherModel publisher) async {
     try {
-      await _publishersUseCase.delete(publisher);
-      showSnackBar('Editora deletada com sucesso', 'success');
+      await _deletePublisherUseCase(publisher);
+      showSnackBar('Editora deletada com sucesso', Status.success);
       Modular.to.navigate('/publishers/');
     } catch (e) {
-      showSnackBar('Erro: Não é posivel deletar esta editora', 'error');
+      showSnackBar('Erro: Não é posivel deletar esta editora', Status.error);
     } finally {
       await getAllPublishers();
     }

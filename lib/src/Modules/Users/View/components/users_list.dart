@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/button_icon.dart';
-import 'package:flutter_bookstore2/src/Components/dialog.dart';
-import 'package:flutter_bookstore2/src/Modules/Users/Controller/user_controller.dart';
-
-import 'package:flutter_bookstore2/src/Modules/Users/Model/user_model.dart';
+import 'package:flutter_bookstore2/src/components/button_icon.dart';
+import 'package:flutter_bookstore2/src/components/dialog.dart';
+import 'package:flutter_bookstore2/src/modules/users/controller/user_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/user_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class UsersList extends StatelessWidget {
-  final User user;
+  final UserModel user;
   const UsersList({
     Key? key,
     required this.user,
@@ -116,13 +115,7 @@ class UsersList extends StatelessWidget {
                               title: 'Deletar Usuário',
                               message: 'O usuário ${user.name} será deletado!',
                               confirm: () {
-                                userController.deleteUser(User(
-                                  id: user.id,
-                                  name: user.name,
-                                  address: user.address,
-                                  city: user.city,
-                                  email: user.email,
-                                ));
+                                userController.deleteUser(user);
                                 Modular.to.pop();
                               });
                         },

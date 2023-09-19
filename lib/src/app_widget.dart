@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookstore2/src/Components/snack_bar.dart';
+import 'package:flutter_bookstore2/src/components/snack_bar.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

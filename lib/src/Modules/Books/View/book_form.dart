@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bookstore2/src/Components/default_button.dart';
-import 'package:flutter_bookstore2/src/Components/default_text_field.dart';
-import 'package:flutter_bookstore2/src/Components/default_title.dart';
-import 'package:flutter_bookstore2/src/Components/select.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Controller/book_controller.dart';
-import 'package:flutter_bookstore2/src/Modules/Books/Model/book_model.dart';
-import 'package:flutter_bookstore2/src/Modules/Publishers/Controller/publisher_controller.dart';
+import 'package:flutter_bookstore2/src/components/default_button.dart';
+import 'package:flutter_bookstore2/src/components/default_text_field.dart';
+import 'package:flutter_bookstore2/src/components/default_title.dart';
+import 'package:flutter_bookstore2/src/components/select.dart';
+import 'package:flutter_bookstore2/src/modules/books/controller/book_controller.dart';
+import 'package:flutter_bookstore2/src/core/domain/models/book_model.dart';
 import 'package:flutter_bookstore2/src/core/domain/models/publisher_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BookForm extends StatefulWidget {
-  final Book? book;
+  final BookModel? book;
   const BookForm({Key? key, required this.book}) : super(key: key);
 
   @override
@@ -20,6 +19,7 @@ class BookForm extends StatefulWidget {
 }
 
 class _BookFormState extends State<BookForm> {
+  final _bookController = Modular.get<BookController>();
   final formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
   late final String? Function(String? text)? validator;
@@ -43,7 +43,7 @@ class _BookFormState extends State<BookForm> {
     }
   }
 
-  titulo() {
+  String titulo() {
     if (_formData['id'] != null) {
       return 'Editar Livro';
     } else {
@@ -51,7 +51,7 @@ class _BookFormState extends State<BookForm> {
     }
   }
 
-  buttomText() {
+  String buttomText() {
     if (_formData['id'] != null) {
       return 'Editar';
     } else {
@@ -61,9 +61,6 @@ class _BookFormState extends State<BookForm> {
 
   @override
   Widget build(BuildContext context) {
-    final bookController = Modular.get<BookController>();
-    final publisherController = Modular.get<PublisherController>();
-    final publishers = publisherController.publishers;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -140,7 +137,7 @@ class _BookFormState extends State<BookForm> {
                             _formData['publisher'] = value.toString();
                           });
                         },
-                        items: publishers.map((item) {
+                        items: _bookController.publishers.map((item) {
                           return DropdownMenuItem(
                             value: item.id.toString(),
                             child: Text(item.name),
@@ -203,36 +200,8 @@ class _BookFormState extends State<BookForm> {
                       ),
                       DefaultButton(
                         text: buttomText(),
-                        isLoading: bookController.loading,
-                        click: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-                            if (_formData['id'] != null) {
-                              bookController.updateBook(Book(
-                                  id: _formData['id'],
-                                  name: _formData['name'],
-                                  author: _formData['author'],
-                                  publisher: PublisherModel(
-                                      id: int.parse(_formData['publisher']!),
-                                      name: '',
-                                      city: ''),
-                                  launch: _formData['launch'],
-                                  quantity: _formData['quantity'],
-                                  totalRented: _formData['totalRented']));
-                            } else {
-                              bookController.createBook(Book(
-                                name: _formData['name'],
-                                author: _formData['author'],
-                                publisher: PublisherModel(
-                                    id: int.parse(_formData['publisher']!),
-                                    name: '',
-                                    city: ''),
-                                launch: _formData['launch'],
-                                quantity: _formData['quantity'],
-                              ));
-                            }
-                          }
-                        },
+                        isLoading: _bookController.loading,
+                        click: _clickButton,
                       )
                     ],
                   ),
@@ -241,5 +210,34 @@ class _BookFormState extends State<BookForm> {
             ),
           );
         }));
+  }
+
+  void _clickButton() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      if (_formData['id'] != null) {
+        _bookController.updateBook(
+          BookModel(
+            id: int.parse(_formData['id']!),
+            name: _formData['name']!,
+            author: _formData['author']!,
+            publisher: PublisherModel(
+                id: int.parse(_formData['publisher']!), name: '', city: ''),
+            launch: int.parse(_formData['launch']!),
+            quantity: int.parse(_formData['quantity']!),
+            totalRented: int.parse(_formData['totalRented']!),
+          ),
+        );
+      } else {
+        _bookController.createBook(BookModel(
+          name: _formData['name']!,
+          author: _formData['author']!,
+          publisher: PublisherModel(
+              id: int.parse(_formData['publisher']!), name: '', city: ''),
+          launch: int.parse(_formData['launch']!),
+          quantity: int.parse(_formData['quantity']!),
+        ));
+      }
+    }
   }
 }
