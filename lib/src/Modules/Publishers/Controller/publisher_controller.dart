@@ -4,6 +4,8 @@ import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/delete_pu
 import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/get_all_publishers_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/save_publisher_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/update_publisher_usecase.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_int_extension.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_string_extension.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -105,18 +107,10 @@ abstract class PublisherControllerBase with Store {
     }
 
     List<PublisherModel> list = publishers
-        .where(
-          (e) =>
-              e.id.toString().toLowerCase().contains(
-                    value.toString(),
-                  ) ||
-              e.name.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ) ||
-              e.city.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ),
-        )
+        .where((e) =>
+            e.id!.compareIntValue(value) ||
+            e.name.compareStringValue(value) ||
+            e.city.compareStringValue(value))
         .toList();
 
     publishersFilter = list;

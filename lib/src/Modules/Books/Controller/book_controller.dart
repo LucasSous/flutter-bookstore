@@ -8,6 +8,8 @@ import 'package:flutter_bookstore2/src/core/domain/usecases/books/get_all_books_
 import 'package:flutter_bookstore2/src/core/domain/usecases/books/save_book_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/books/update_book_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/publishers/get_all_publishers_usecase.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_int_extension.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_string_extension.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'book_controller.g.dart';
@@ -127,24 +129,12 @@ abstract class _BookControllerBase with Store {
 
     List<BookModel> list = books
         .where((e) =>
-            e.id.toString().toLowerCase().contains(
-                  value.toString(),
-                ) ||
-            e.name.toString().toLowerCase().contains(
-                  (value.toLowerCase()),
-                ) ||
-            e.author.toString().toLowerCase().contains(
-                  (value.toLowerCase()),
-                ) ||
-            e.publisher!.name.toString().toLowerCase().contains(
-                  (value.toLowerCase()),
-                ) ||
-            e.launch.toString().toLowerCase().contains(
-                  (value.toString()),
-                ) ||
-            e.quantity.toString().toLowerCase().contains(
-                  (value.toString()),
-                ))
+            e.id!.compareIntValue(value) ||
+            e.name.compareStringValue(value) ||
+            e.author.compareStringValue(value) ||
+            e.publisher!.name.compareStringValue(value) ||
+            e.launch.compareIntValue(value) ||
+            e.quantity.compareIntValue(value))
         .toList();
 
     booksFilter = list;

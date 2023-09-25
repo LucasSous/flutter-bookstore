@@ -112,16 +112,18 @@ abstract class _RentControllerBase with Store {
     }
   }
 
+  List<RentModel> _noNullDate() {
+    return rents.map((e) {
+      e.returnDate ??= 'in progress';
+      return e;
+    }).toList();
+  }
+
   @action
   void getRentsInProgress(bool showAll) {
     List<RentModel> list = [];
     try {
-      List<RentModel> noNullDate = rents.map((e) {
-        e.returnDate ??= 'in progress';
-        return e;
-      }).toList();
-
-      List<RentModel> filter = noNullDate
+      List<RentModel> filter = _noNullDate()
           .where((e) => e.returnDate.toString() == 'in progress')
           .toList();
 
@@ -146,12 +148,7 @@ abstract class _RentControllerBase with Store {
   void getFinishedRents(bool showAll) {
     List<RentModel> list = [];
     try {
-      List<RentModel> noNullDate = rents.map((e) {
-        e.returnDate ??= 'in progress';
-        return e;
-      }).toList();
-
-      List<RentModel> filter = noNullDate
+      List<RentModel> filter = _noNullDate()
           .where((e) => e.returnDate.toString() != 'in progress')
           .toList();
 

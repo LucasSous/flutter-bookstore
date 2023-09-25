@@ -4,6 +4,8 @@ import 'package:flutter_bookstore2/src/core/domain/usecases/users/delete_user_us
 import 'package:flutter_bookstore2/src/core/domain/usecases/users/get_all_users_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/users/save_user_usecase.dart';
 import 'package:flutter_bookstore2/src/core/domain/usecases/users/update_user_usecase.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_int_extension.dart';
+import 'package:flutter_bookstore2/src/core/extensions/compare_string_extension.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'user_controller.g.dart';
@@ -102,24 +104,12 @@ abstract class UserControllerBase with Store {
     }
 
     List<UserModel> list = users
-        .where(
-          (e) =>
-              e.id.toString().toLowerCase().contains(
-                    value.toString(),
-                  ) ||
-              e.name.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ) ||
-              e.address.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ) ||
-              e.city.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ) ||
-              e.email.toString().toLowerCase().contains(
-                    (value.toLowerCase()),
-                  ),
-        )
+        .where((e) =>
+            e.id!.compareIntValue(value) ||
+            e.name.compareStringValue(value) ||
+            e.address.compareStringValue(value) ||
+            e.city.compareStringValue(value) ||
+            e.email.compareStringValue(value))
         .toList();
 
     usersFilter = list;

@@ -24,7 +24,7 @@ class AppBarFilter extends StatelessWidget implements PreferredSizeWidget {
               color: Theme.of(context).iconTheme.color,
             ),
             hintStyle: const TextStyle(color: Colors.grey),
-            filled: true, //<-- SEE HERE
+            filled: true,
             enabledBorder: UnderlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(4.0)),
